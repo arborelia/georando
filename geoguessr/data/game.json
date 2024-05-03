@@ -1,0 +1,18 @@
+{
+    "game": "GeoGuessr",
+    "player": "arborelia",
+    "filler_item_name": "Map Score +200",
+    "starting_items": [
+        {
+            "items": [
+                "A Community World"
+            ]
+        },
+        {
+            "item_categories": [
+                "Maps"
+            ],
+            "random": 1
+        }
+    ]
+}

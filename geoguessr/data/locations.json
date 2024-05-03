@@ -1,0 +1,1257 @@
+[
+    {
+        "name": "Perfect score on 1 map",
+        "requires": [
+            "Progressive Compass/Car",
+            "Progressive Pan/Zoom/Move:3",
+            "+20 Seconds:15"
+        ],
+        "victory": true
+    },
+    {
+        "name": "Confetti #1",
+        "requires": [
+            "Progressive Compass/Car",
+            "Progressive Pan/Zoom/Move:2",
+            "+20 Seconds:2"
+        ]
+    },
+    {
+        "name": "Confetti #2",
+        "requires": [
+            "Progressive Compass/Car",
+            "Progressive Pan/Zoom/Move:2",
+            "+20 Seconds:4"
+        ]
+    },
+    {
+        "name": "Confetti #3",
+        "requires": [
+            "Progressive Compass/Car",
+            "Progressive Pan/Zoom/Move:2",
+            "+20 Seconds:6"
+        ]
+    },
+    {
+        "name": "Confetti #4",
+        "requires": [
+            "Progressive Compass/Car",
+            "Progressive Pan/Zoom/Move:2",
+            "+20 Seconds:8"
+        ]
+    },
+    {
+        "name": "Confetti #5",
+        "requires": [
+            "Progressive Compass/Car",
+            "Progressive Pan/Zoom/Move:2",
+            "+20 Seconds:10"
+        ]
+    },
+    {
+        "name": "A Balanced Canada 5k",
+        "requires": [
+            "A Balanced Canada",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "A Balanced Canada"
+        ]
+    },
+    {
+        "name": "A Balanced Canada 10k",
+        "requires": [
+            "A Balanced Canada",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "A Balanced Canada"
+        ]
+    },
+    {
+        "name": "A Balanced Canada 15k",
+        "requires": [
+            "A Balanced Canada",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "A Balanced Canada"
+        ]
+    },
+    {
+        "name": "A Balanced Canada 20k",
+        "requires": [
+            "A Balanced Canada",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "A Balanced Canada"
+        ]
+    },
+    {
+        "name": "A Balanced Japan 5k",
+        "requires": [
+            "A Balanced Japan",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "A Balanced Japan"
+        ]
+    },
+    {
+        "name": "A Balanced Japan 10k",
+        "requires": [
+            "A Balanced Japan",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "A Balanced Japan"
+        ]
+    },
+    {
+        "name": "A Balanced Japan 15k",
+        "requires": [
+            "A Balanced Japan",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "A Balanced Japan"
+        ]
+    },
+    {
+        "name": "A Balanced Japan 20k",
+        "requires": [
+            "A Balanced Japan",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "A Balanced Japan"
+        ]
+    },
+    {
+        "name": "A Community World 5k",
+        "requires": [
+            "A Community World",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "A Community World"
+        ]
+    },
+    {
+        "name": "A Community World 10k",
+        "requires": [
+            "A Community World",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "A Community World"
+        ]
+    },
+    {
+        "name": "A Community World 15k",
+        "requires": [
+            "A Community World",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "A Community World"
+        ]
+    },
+    {
+        "name": "A Community World 20k or 5 countries",
+        "requires": [
+            "A Community World",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "A Community World"
+        ]
+    },
+    {
+        "name": "A Well-Covered World 5k",
+        "requires": [
+            "A Well-Covered World"
+        ],
+        "category": [
+            "A Well-Covered World"
+        ]
+    },
+    {
+        "name": "A Well-Covered World 10k",
+        "requires": [
+            "A Well-Covered World",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "A Well-Covered World"
+        ]
+    },
+    {
+        "name": "A Well-Covered World 15k",
+        "requires": [
+            "A Well-Covered World",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "A Well-Covered World"
+        ]
+    },
+    {
+        "name": "A Well-Covered World 20k or 5 countries",
+        "requires": [
+            "A Well-Covered World",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "A Well-Covered World"
+        ]
+    },
+    {
+        "name": "A World of Plants 5k",
+        "requires": [
+            "A World of Plants",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "A World of Plants"
+        ]
+    },
+    {
+        "name": "A World of Plants 10k",
+        "requires": [
+            "A World of Plants",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "A World of Plants"
+        ]
+    },
+    {
+        "name": "A World of Plants 15k",
+        "requires": [
+            "A World of Plants",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "A World of Plants"
+        ]
+    },
+    {
+        "name": "A World of Plants 20k or 5 countries",
+        "requires": [
+            "A World of Plants",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "A World of Plants"
+        ]
+    },
+    {
+        "name": "An Arbitrary Oceania 5k",
+        "requires": [
+            "An Arbitrary Oceania",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "An Arbitrary Oceania"
+        ]
+    },
+    {
+        "name": "An Arbitrary Oceania 10k",
+        "requires": [
+            "An Arbitrary Oceania",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "An Arbitrary Oceania"
+        ]
+    },
+    {
+        "name": "An Arbitrary Oceania 15k",
+        "requires": [
+            "An Arbitrary Oceania",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "An Arbitrary Oceania"
+        ]
+    },
+    {
+        "name": "An Arbitrary Oceania 20k or 5 countries",
+        "requires": [
+            "An Arbitrary Oceania",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "An Arbitrary Oceania"
+        ]
+    },
+    {
+        "name": "An Urban Argentina 5k",
+        "requires": [
+            "An Urban Argentina"
+        ],
+        "category": [
+            "An Urban Argentina"
+        ]
+    },
+    {
+        "name": "An Urban Argentina 10k",
+        "requires": [
+            "An Urban Argentina",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "An Urban Argentina"
+        ]
+    },
+    {
+        "name": "An Urban Argentina 15k",
+        "requires": [
+            "An Urban Argentina",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "An Urban Argentina"
+        ]
+    },
+    {
+        "name": "An Urban Argentina 20k",
+        "requires": [
+            "An Urban Argentina",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "An Urban Argentina"
+        ]
+    },
+    {
+        "name": "Boston/Cambridge/Somerville/Allston/Dorchester 5k",
+        "requires": [
+            "Boston/Cambridge/Somerville/Allston/Dorchester"
+        ],
+        "category": [
+            "Boston/Cambridge/Somerville/Allston/Dorchester"
+        ]
+    },
+    {
+        "name": "Boston/Cambridge/Somerville/Allston/Dorchester 10k",
+        "requires": [
+            "Boston/Cambridge/Somerville/Allston/Dorchester"
+        ],
+        "category": [
+            "Boston/Cambridge/Somerville/Allston/Dorchester"
+        ]
+    },
+    {
+        "name": "Boston/Cambridge/Somerville/Allston/Dorchester 15k",
+        "requires": [
+            "Boston/Cambridge/Somerville/Allston/Dorchester",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "Boston/Cambridge/Somerville/Allston/Dorchester"
+        ]
+    },
+    {
+        "name": "Boston/Cambridge/Somerville/Allston/Dorchester 20k",
+        "requires": [
+            "Boston/Cambridge/Somerville/Allston/Dorchester",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Boston/Cambridge/Somerville/Allston/Dorchester"
+        ]
+    },
+    {
+        "name": "City Skylines 5k",
+        "requires": [
+            "City Skylines",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "City Skylines"
+        ]
+    },
+    {
+        "name": "City Skylines 10k",
+        "requires": [
+            "City Skylines",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "City Skylines"
+        ]
+    },
+    {
+        "name": "City Skylines 15k",
+        "requires": [
+            "City Skylines",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "City Skylines"
+        ]
+    },
+    {
+        "name": "City Skylines 20k or 5 countries",
+        "requires": [
+            "City Skylines",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "City Skylines"
+        ]
+    },
+    {
+        "name": "CityGuessr 5k",
+        "requires": [
+            "CityGuessr"
+        ],
+        "category": [
+            "CityGuessr"
+        ]
+    },
+    {
+        "name": "CityGuessr 10k",
+        "requires": [
+            "CityGuessr",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "CityGuessr"
+        ]
+    },
+    {
+        "name": "CityGuessr 15k",
+        "requires": [
+            "CityGuessr",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "CityGuessr"
+        ]
+    },
+    {
+        "name": "CityGuessr 20k or 5 countries",
+        "requires": [
+            "CityGuessr",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "CityGuessr"
+        ]
+    },
+    {
+        "name": "Coastal Cities 100K+ 5k",
+        "requires": [
+            "Coastal Cities 100K+",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "Coastal Cities 100K+"
+        ]
+    },
+    {
+        "name": "Coastal Cities 100K+ 10k",
+        "requires": [
+            "Coastal Cities 100K+",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "Coastal Cities 100K+"
+        ]
+    },
+    {
+        "name": "Coastal Cities 100K+ 15k",
+        "requires": [
+            "Coastal Cities 100K+",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Coastal Cities 100K+"
+        ]
+    },
+    {
+        "name": "Coastal Cities 100K+ 20k or 5 countries",
+        "requires": [
+            "Coastal Cities 100K+",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Coastal Cities 100K+"
+        ]
+    },
+    {
+        "name": "Dads of the World 5k",
+        "requires": [
+            "Dads of the World",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "Dads of the World"
+        ]
+    },
+    {
+        "name": "Dads of the World 10k",
+        "requires": [
+            "Dads of the World",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "Dads of the World"
+        ]
+    },
+    {
+        "name": "Dads of the World 15k",
+        "requires": [
+            "Dads of the World",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Dads of the World"
+        ]
+    },
+    {
+        "name": "Dads of the World 20k or 5 countries",
+        "requires": [
+            "Dads of the World",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Dads of the World"
+        ]
+    },
+    {
+        "name": "I Like Trains 5k",
+        "requires": [
+            "I Like Trains"
+        ],
+        "category": [
+            "I Like Trains"
+        ]
+    },
+    {
+        "name": "I Like Trains 10k",
+        "requires": [
+            "I Like Trains",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "I Like Trains"
+        ]
+    },
+    {
+        "name": "I Like Trains 15k",
+        "requires": [
+            "I Like Trains",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "I Like Trains"
+        ]
+    },
+    {
+        "name": "I Like Trains 20k or 5 countries",
+        "requires": [
+            "I Like Trains",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "I Like Trains"
+        ]
+    },
+    {
+        "name": "I Saw the Sign 5k",
+        "requires": [
+            "I Saw the Sign",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "I Saw the Sign"
+        ]
+    },
+    {
+        "name": "I Saw the Sign 10k",
+        "requires": [
+            "I Saw the Sign",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "I Saw the Sign"
+        ]
+    },
+    {
+        "name": "I Saw the Sign 15k",
+        "requires": [
+            "I Saw the Sign",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "I Saw the Sign"
+        ]
+    },
+    {
+        "name": "I Saw the Sign 20k or 5 countries",
+        "requires": [
+            "I Saw the Sign",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "I Saw the Sign"
+        ]
+    },
+    {
+        "name": "Malaysia 5k",
+        "requires": [
+            "Malaysia",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "Malaysia"
+        ]
+    },
+    {
+        "name": "Malaysia 10k",
+        "requires": [
+            "Malaysia",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Malaysia"
+        ]
+    },
+    {
+        "name": "Malaysia 15k",
+        "requires": [
+            "Malaysia",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "Malaysia"
+        ]
+    },
+    {
+        "name": "Malaysia 20k",
+        "requires": [
+            "Malaysia",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Malaysia"
+        ]
+    },
+    {
+        "name": "McDonald's Worldwide 5k",
+        "requires": [
+            "McDonald's Worldwide"
+        ],
+        "category": [
+            "McDonald's Worldwide"
+        ]
+    },
+    {
+        "name": "McDonald's Worldwide 10k",
+        "requires": [
+            "McDonald's Worldwide",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "McDonald's Worldwide"
+        ]
+    },
+    {
+        "name": "McDonald's Worldwide 15k",
+        "requires": [
+            "McDonald's Worldwide",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "McDonald's Worldwide"
+        ]
+    },
+    {
+        "name": "McDonald's Worldwide 20k or 5 countries",
+        "requires": [
+            "McDonald's Worldwide",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "McDonald's Worldwide"
+        ]
+    },
+    {
+        "name": "New York City 5k",
+        "requires": [
+            "New York City"
+        ],
+        "category": [
+            "New York City"
+        ]
+    },
+    {
+        "name": "New York City 10k",
+        "requires": [
+            "New York City",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "New York City"
+        ]
+    },
+    {
+        "name": "New York City 15k",
+        "requires": [
+            "New York City",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "New York City"
+        ]
+    },
+    {
+        "name": "New York City 20k",
+        "requires": [
+            "New York City",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "New York City"
+        ]
+    },
+    {
+        "name": "No Roads Mission 5k",
+        "requires": [
+            "No Roads Mission",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "No Roads Mission"
+        ]
+    },
+    {
+        "name": "No Roads Mission 10k",
+        "requires": [
+            "No Roads Mission",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "No Roads Mission"
+        ]
+    },
+    {
+        "name": "No Roads Mission 15k",
+        "requires": [
+            "No Roads Mission",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "No Roads Mission"
+        ]
+    },
+    {
+        "name": "No Roads Mission 20k or 5 countries",
+        "requires": [
+            "No Roads Mission",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "No Roads Mission"
+        ]
+    },
+    {
+        "name": "Peru 5k",
+        "requires": [
+            "Peru",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "Peru"
+        ]
+    },
+    {
+        "name": "Peru 10k",
+        "requires": [
+            "Peru",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Peru"
+        ]
+    },
+    {
+        "name": "Peru 15k",
+        "requires": [
+            "Peru",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "Peru"
+        ]
+    },
+    {
+        "name": "Peru 20k",
+        "requires": [
+            "Peru",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Peru"
+        ]
+    },
+    {
+        "name": "Serbia 5k",
+        "requires": [
+            "Serbia",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "Serbia"
+        ]
+    },
+    {
+        "name": "Serbia 10k",
+        "requires": [
+            "Serbia",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Serbia"
+        ]
+    },
+    {
+        "name": "Serbia 15k",
+        "requires": [
+            "Serbia",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "Serbia"
+        ]
+    },
+    {
+        "name": "Serbia 20k",
+        "requires": [
+            "Serbia",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Serbia"
+        ]
+    },
+    {
+        "name": "Southwest and Central Asia 5k",
+        "requires": [
+            "Southwest and Central Asia",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Southwest and Central Asia"
+        ]
+    },
+    {
+        "name": "Southwest and Central Asia 10k",
+        "requires": [
+            "Southwest and Central Asia",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "Southwest and Central Asia"
+        ]
+    },
+    {
+        "name": "Southwest and Central Asia 15k",
+        "requires": [
+            "Southwest and Central Asia",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Southwest and Central Asia"
+        ]
+    },
+    {
+        "name": "Southwest and Central Asia 20k or 5 countries",
+        "requires": [
+            "Southwest and Central Asia",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Southwest and Central Asia"
+        ]
+    },
+    {
+        "name": "Spain 5k",
+        "requires": [
+            "Spain",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "Spain"
+        ]
+    },
+    {
+        "name": "Spain 10k",
+        "requires": [
+            "Spain",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Spain"
+        ]
+    },
+    {
+        "name": "Spain 15k",
+        "requires": [
+            "Spain",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "Spain"
+        ]
+    },
+    {
+        "name": "Spain 20k",
+        "requires": [
+            "Spain",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Spain"
+        ]
+    },
+    {
+        "name": "Turkey Trash Can Practice 5k",
+        "requires": [
+            "Turkey Trash Can Practice",
+            "+20 Seconds:1"
+        ],
+        "category": [
+            "Turkey Trash Can Practice"
+        ]
+    },
+    {
+        "name": "Turkey Trash Can Practice 10k",
+        "requires": [
+            "Turkey Trash Can Practice",
+            "Progressive Compass/Car",
+            "+20 Seconds:2"
+        ],
+        "category": [
+            "Turkey Trash Can Practice"
+        ]
+    },
+    {
+        "name": "Turkey Trash Can Practice 15k",
+        "requires": [
+            "Turkey Trash Can Practice",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Turkey Trash Can Practice"
+        ]
+    },
+    {
+        "name": "Turkey Trash Can Practice 20k",
+        "requires": [
+            "Turkey Trash Can Practice",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Turkey Trash Can Practice"
+        ]
+    },
+    {
+        "name": "Unexplored World 5k",
+        "requires": [
+            "Unexplored World",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:3"
+        ],
+        "category": [
+            "Unexplored World"
+        ]
+    },
+    {
+        "name": "Unexplored World 10k",
+        "requires": [
+            "Unexplored World",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "Unexplored World"
+        ]
+    },
+    {
+        "name": "Unexplored World 15k",
+        "requires": [
+            "Unexplored World",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Unexplored World"
+        ]
+    },
+    {
+        "name": "Unexplored World 20k",
+        "requires": [
+            "Unexplored World",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "Unexplored World"
+        ]
+    },
+    {
+        "name": "you will NOT have fun 5k",
+        "requires": [
+            "you will NOT have fun",
+            "Progressive Pan/Zoom/Move",
+            "Progressive Compass/Car",
+            "+20 Seconds:4",
+            "Map Score +5000:2"
+        ],
+        "category": [
+            "you will NOT have fun"
+        ]
+    },
+    {
+        "name": "you will NOT have fun 10k",
+        "requires": [
+            "you will NOT have fun",
+            "Progressive Pan/Zoom/Move:2",
+            "Progressive Compass/Car",
+            "+20 Seconds:6",
+            "Terrain Map View",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "you will NOT have fun"
+        ]
+    },
+    {
+        "name": "you will NOT have fun 15k",
+        "requires": [
+            "you will NOT have fun",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "you will NOT have fun"
+        ]
+    },
+    {
+        "name": "you will NOT have fun 20k or 5 countries",
+        "requires": [
+            "you will NOT have fun",
+            "Progressive Pan/Zoom/Move:3",
+            "Progressive Compass/Car:2",
+            "+20 Seconds:12",
+            "Satellite Map View",
+            "Show Author Names",
+            "Map Score +5000:4"
+        ],
+        "category": [
+            "you will NOT have fun"
+        ]
+    }
+]
