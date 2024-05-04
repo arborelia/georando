@@ -65,7 +65,7 @@ SIGHTINGS = [
     "Japanese kana characters",
     "Korean hangul characters",
     "Canadian Aboriginal syllabics",
-    ULTRA_RARE,
+    "Google coverage in an ULTRA RARE country",
 ] + list(STOP.keys())
 
 

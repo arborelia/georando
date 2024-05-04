@@ -580,6 +580,14 @@ COMMUNITY_MAPS = [
         tags=["theme", "world"],
     ),
     community_map(
+        "An Extraordinary World",
+        "Alok",
+        difficulty=6,
+        unofficial_coverage=True,
+        streakable=True,
+        tags=["theme", "world"],
+    ),
+    community_map(
         "A Linguistic World",
         "nuujaku",
         may_provide=[
