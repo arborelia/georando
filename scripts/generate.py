@@ -167,10 +167,6 @@ user_maps = [
         "difficulty": 2,
         "streakable": True,
     },
-    {
-        "name": "A Diverse USA",
-        "author": "Das Schnootz",
-    },
     # {
     #     "name": "Michigan, The Great Lakes State",
     #     "author": "Matt Maillard",
@@ -190,6 +186,10 @@ user_maps = [
         "author": "MatePotato",
         "difficulty": 3,
         "unofficial": True,
+    },
+    {
+        "name": "A Diverse USA",
+        "author": "Das Schnootz",
     },
     {
         "name": "A Drone World",
