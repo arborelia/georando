@@ -13,12 +13,22 @@ from georando.checks import (
 class GeoGuessrMap:
     name: str
     creator: str
+    # suggested difficulty range: 1-7
     difficulty: int
+    # streakable: whether the map covers a reasonable number of countries, so that country streaks
+    # are meaningfule
     streakable: bool
+    # True (default) for maps that only contain official Google coverage, False when there are
+    # photospheres or unofficial street cams
     official_coverage: bool
-    may_provide: List[str]
+    # Features you will definitely get when you play this map
     provides: List[str]
+    # Features that you will probably get from playing this map repeatedly, such as countries that it
+    # includes more than 1% of the time
+    may_provide: List[str]
+    # Tags that help describe and classify the map
     tags: List[str]
+    # I want to store the URL on every map but I haven't gone back and looked most of them up yet
     url: Optional[str] = None
 
 
@@ -87,7 +97,7 @@ OFFICIAL_MAPS = [
     official_country("Cambodia", difficulty=6),
     official_country("Canada"),
     official_country("Chile", difficulty=3, may_provide=[STOP["pare"]]),
-    official_country("Colombia", may),
+    official_country("Colombia", may_provide=[STOP["pare"]]),
     official_country("Croatia"),
     official_country("Curacao", tags=["small"], difficulty=3),
     official_country("Czech Republic"),
@@ -199,9 +209,9 @@ OFFICIAL_MAPS = [
     official_country("Uruguay", difficulty=5, may_provide=[STOP["pare"]]),
 ]
 
-COMMUNITY_MAPS = [
+COMMUNITY_MAPS = {
     # The default starting map
-    community_map(
+    "acw": community_map(
         "A Community World",
         "MatePotato",
         difficulty=3,
@@ -209,7 +219,7 @@ COMMUNITY_MAPS = [
         may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON + EASY_SIGHTINGS,
         tags=["popular", "world"],
     ),
-    community_map(
+    "100_cities_canada": community_map(
         "100 largest cities of Canada",
         "Simi",
         difficulty=2,
@@ -222,7 +232,7 @@ COMMUNITY_MAPS = [
         ],
         tags=["country", "urban"],
     ),
-    community_map(
+    "100_rivers_europe": community_map(
         "100 Longest Rivers in Europe",
         "Simi",
         difficulty=2,
@@ -230,22 +240,34 @@ COMMUNITY_MAPS = [
         streakable=True,
         tags=["theme", "world_region"],
     ),
-    community_map(
+    "aesthetic_world": community_map(
         "Aesthetic World",
         "baszmania",
         difficulty=3,
         streakable=True,
         tags=["theme", "world"],
     ),
-    community_map(
+    "all_about_north": community_map(
         "All about the North",
         "Frímann Stefánsson",
         difficulty=3,
         streakable=True,
-        may_provide=["snow"],
+        may_provide=[
+            "snow",
+            "Iceland",
+            "Greenland",
+            "Faroe Islands",
+            "Canada",
+            "United States",
+            "Norway",
+            "Sweden",
+            "Finland",
+            "Russia",
+            "United Kingdom",
+        ],
         tags=["world_region"],
     ),
-    community_map(
+    "amaizing_corn": community_map(
         "An Amaizing World of Corn",
         "Cinnamonique",
         difficulty=3,
@@ -253,7 +275,16 @@ COMMUNITY_MAPS = [
         provides=["corn (maize)"],
         tags=["theme", "world"],
     ),
-    community_map(
+    "animals_world": community_map(
+        "Animals of the World",
+        "Rhiannonfuller",
+        difficulty=4,
+        unofficial_coverage=True,
+        streakable=True,
+        tags=["world"],
+        may_provide=["a dog", "a cow", "a horse"],
+    ),
+    "arbitrary_asia": community_map(
         "An Arbitrary Asia",
         "slashP",
         difficulty=4,
@@ -300,7 +331,7 @@ COMMUNITY_MAPS = [
         ],
         tags=["arbitrary", "world_region"],
     ),
-    community_map(
+    "arbitrary_africa": community_map(
         "An Arbitrary Africa",
         "slashP",
         difficulty=4,
@@ -327,7 +358,7 @@ COMMUNITY_MAPS = [
         ],
         tags=["arbitrary", "world_region"],
     ),
-    community_map(
+    "arbitrary_oceania": community_map(
         "An Arbitrary Oceania",
         "slashP",
         difficulty=4,
@@ -343,7 +374,7 @@ COMMUNITY_MAPS = [
         ],
         tags=["arbitrary", "world_region"],
     ),
-    community_map(
+    "arbitrary_north_america": community_map(
         "An Arbitrary North America",
         "slashP",
         difficulty=4,
@@ -362,7 +393,7 @@ COMMUNITY_MAPS = [
         ],
         tags=["arbitrary", "world_region"],
     ),
-    community_map(
+    "arbitrary_south_america": community_map(
         "An Arbitrary South America",
         "slashP",
         difficulty=4,
@@ -380,7 +411,7 @@ COMMUNITY_MAPS = [
         ],
         tags=["arbitrary", "world_region"],
     ),
-    community_map(
+    "arbitrary_europe": community_map(
         "An Arbitrary Europe",
         "slashP",
         difficulty=4,
@@ -429,7 +460,7 @@ COMMUNITY_MAPS = [
         ],
         tags=["arbitrary", "world_region"],
     ),
-    community_map(
+    "attractive_bollards": community_map(
         "Attractive Bollards of the Universe",
         "GeoPeter",
         difficulty=3,
@@ -437,29 +468,29 @@ COMMUNITY_MAPS = [
         provides=["a bollard with a red reflector"],
         tags=["theme", "world"],
     ),
-    community_map(
+    "balanced_canada": community_map(
         "A Balanced Canada",
         "slashP",
         difficulty=4,
-        provides=["Canada"],
+        provides=["Canada", "North America"],
         may_provide=[
             STOP["arret"],
             "the trans-Canada highway",
         ],
         tags=["country", "balanced"],
     ),
-    community_map(
+    "balanced_japan": community_map(
         "A Balanced Japan",
         "Kodiak",
         difficulty=4,
-        provides=["Japan"],
+        provides=["Japan", "Asia"],
         may_provide=[
             STOP["tomare"],
             "Japanese kana characters",
         ],
         tags=["country", "balanced"],
     ),
-    community_map(
+    "balanced_urban_world": community_map(
         "A Balanced Urban World",
         "TunaJoe74",
         difficulty=4,
@@ -479,7 +510,7 @@ COMMUNITY_MAPS = [
         streakable=True,
         tags=["world", "balanced"],
     ),
-    community_map(
+    "complete_world": community_map(
         "A Complete World",
         "MatePotato",
         difficulty=5,
@@ -487,7 +518,7 @@ COMMUNITY_MAPS = [
         may_provide=[ULTRA_RARE_CHECK],
         tags=["world"],
     ),
-    community_map(
+    "community_europe": community_map(
         "A Community Europe",
         "Simi",
         difficulty=4,
@@ -537,7 +568,7 @@ COMMUNITY_MAPS = [
         ],
         tags=["world_region"],
     ),
-    community_map(
+    "diverse_complete_world": community_map(
         "A Diverse Complete World",
         "MatePotato",
         difficulty=5,
@@ -545,14 +576,14 @@ COMMUNITY_MAPS = [
         may_provide=[ULTRA_RARE_CHECK],
         tags=["world", "balanced"],
     ),
-    community_map(
+    "diverse_usa": community_map(
         "A Diverse USA",
         "Das Schnootz",
         difficulty=3,
-        provides=["United States"],
-        tags=["balanced"],
+        provides=["United States", "North America"],
+        tags=["balanced", "country"],
     ),
-    community_map(
+    "equidistant_world": community_map(
         "An Equidistant World",
         "Teloso",
         difficulty=4,
@@ -571,7 +602,7 @@ COMMUNITY_MAPS = [
         ],
         tags=["balanced", "world"],
     ),
-    community_map(
+    "extraordinary_cow": community_map(
         "An Extraordinary Cow",
         "KingMoo92",
         url="https://www.geoguessr.com/maps/60bb6eb49541670001e935ba",
@@ -579,7 +610,7 @@ COMMUNITY_MAPS = [
         provides=["a cow"],
         tags=["theme", "world"],
     ),
-    community_map(
+    "extraordinary_world": community_map(
         "An Extraordinary World",
         "Alok",
         difficulty=6,
@@ -587,7 +618,7 @@ COMMUNITY_MAPS = [
         streakable=True,
         tags=["theme", "world"],
     ),
-    community_map(
+    "linguistic_world": community_map(
         "A Linguistic World",
         "nuujaku",
         may_provide=[
@@ -609,7 +640,7 @@ COMMUNITY_MAPS = [
         difficulty=2,
         tags=["world", "theme"],
     ),
-    community_map(
+    "mural_world": community_map(
         "A Mural World",
         "Hugo",
         difficulty=3,
@@ -617,11 +648,105 @@ COMMUNITY_MAPS = [
         provides=["a mural"],
         tags=["theme", "world", "urban"],
     ),
-    community_map(
+    "pinpointable_mongolia": community_map(
+        "A Pinpointable Mongolia",
+        "クリプトナイト",
+        url="https://www.geoguessr.com/maps/655f6d7e812a91133b381b53",
+        difficulty=3,
+        provides=["Mongolia", "Asia"],
+        tags=["pinpointable", "country"],
+    ),
+    "pinpointable_world": community_map(
+        "A Pinpointable World",
+        "ttv.Sverre",
+        url="https://www.geoguessr.com/maps/6029991c5048850001d572a9",
+        difficulty=2,
+        streakable=True,
+        tags=["pinpointable", "world"],
+    ),
+    "pro_world": community_map(
         "A Pro World",
         "slashP",
         difficulty=4,
         streakable=True,
         tags=["world"],
     ),
-]
+    "rural_world": community_map(
+        "A Rural World",
+        "Topotic (YT)",
+        url="https://www.geoguessr.com/maps/5be0de51fe3a84037ca36447",
+        difficulty=5,
+        tags=["rural", "world"],
+        may_provide=[
+            "France",
+            "Germany",
+            "Italy",
+            "Norway",
+            "Poland",
+            "Russia",
+            "Spain",
+            "Sweden",
+            "Türkiye",
+            "Ukraine",
+            "United Kingdom",
+            "Canada",
+            "Mexico",
+            "Guatemala",
+            "United States",
+            "Panama",
+            "Argentina",
+            "Brazil",
+            "Chile",
+            "Colombia",
+            "Peru",
+            "Botswana",
+            "Kenya",
+            "Nigeria",
+            "Senegal",
+            "South Africa",
+            "Bangladesh",
+            "Cambodia",
+            "Indonesia",
+            "Japan",
+            "Malaysia",
+            "Philippines",
+            "Sri Lanka",
+            "Thailand",
+            "Australia",
+            "New Zealand",
+            "a cow",
+            "corn",
+            "rice",
+        ],
+    ),
+    "thrilling_world": community_map(
+        "A Thrilling World",
+        "Zem",
+        url="https://www.geoguessr.com/maps/634266c98f0f00a7e457f4e9",
+        difficulty=3,
+        streakable=True,
+        tags=["world", "theme"],
+    ),
+    "unofficial_street_world": community_map(
+        "An Unofficial Street World",
+        "David Walker",
+        difficulty=5,
+        unofficial=True,
+        tags=["world"],
+    ),
+    "urban_argentina": community_map(
+        "An Urban Argentina",
+        "Lautaro Ruffinengo",
+        difficulty=4,
+        tags=["country", "urban"],
+        provides=["Argentina", "South America"],
+        may_provide=[STOP["pare"]],
+    ),
+    "urban_australia": community_map(
+        "An Urban Australia",
+        "Gertie Goo Goo",
+        difficulty=3,
+        tags=["country", "urban"],
+        provides=["Australia", "Oceania"],
+    ),
+}
