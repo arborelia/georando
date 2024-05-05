@@ -18,7 +18,7 @@ STOP = {
 EASY_SIGHTINGS = ["a flag", "a domain name", "a satellite dish", "Cyrillic letters"]
 
 
-SIGHTINGS = [
+SIGHTINGS = EASY_SIGHTINGS + [
     "a train",
     "a boat or ship",
     "a flag",
@@ -36,6 +36,7 @@ SIGHTINGS = [
     "a mural",
     "a roundabout",
     "a river",
+    "a canal",
     "a tunnel",
     "a map",
     "snow",
@@ -161,7 +162,7 @@ COUNTRY_CHECKS_COMMON = [
 ]
 
 # Countries with 100-399 locations on ACW. Most likely, you get these by being
-# given a map specific to the country. You could also get a very specific regional
+# given a map specific to the country. You could also get a specific regional
 # map, such as North Sea countries, that puts some of these in logic.
 COUNTRY_CHECKS_RARE = [
     "Andorra",
@@ -192,6 +193,7 @@ COUNTRY_CHECKS_RARE = [
     "West Bank",
 ]
 
+COUNTRY_CHECKS = COUNTRY_CHECKS_VERY_COMMON + COUNTRY_CHECKS_COMMON + COUNTRY_CHECKS_RARE
 
 # Countries with _fewer than 100_ locations on ACW. These are not individual checks.
 # You can claim the "Ultra Rare Country" check for getting any one of them.
@@ -232,4 +234,27 @@ COUNTRY_CHECKS_ULTRA_RARE = [
     "United States Minor Outlying Islands",
     "Vanuatu",
     "Venezuela",
+]
+
+
+# Might just end up incorporating these into locations.py
+MAP_GOALS = [
+    {"name": "3k location", "difficulty": 0},
+    {"name": "4k location", "difficulty": 1},
+    {"name": "5k round", "difficulty": 1},
+    {"name": "10k round", "difficulty": 2},
+    {"name": "15k round", "difficulty": 3},
+    {"name": "20k round", "difficulty": 5},
+    {"name": "3 country streak", "difficulty": 2},
+    {"name": "4 country streak", "difficulty": 4},
+    {"name": "5 country streak", "difficulty": 5},
+    {"name": "5k location", "difficulty": 5},
+]
+
+CONTINENT_GOALS = [
+    "4k within",
+    "8k within",
+    "12k within",
+    "16k within",
+    "20k within",
 ]
