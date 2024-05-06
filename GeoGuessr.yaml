@@ -1,0 +1,7 @@
+Manual_GeoGuessr_arborelia:
+  progression_balancing: 50
+  accessibility: items
+
+description: GeoGuessr
+game: Manual_GeoGuessr_arborelia
+name: GeoGuessr
