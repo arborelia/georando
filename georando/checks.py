@@ -18,56 +18,60 @@ STOP = {
 EASY_SIGHTINGS = ["a flag", "a domain name", "a satellite dish", "Cyrillic letters"]
 
 
-SIGHTINGS = EASY_SIGHTINGS + [
-    "a train",
-    "a boat or ship",
-    "a flag",
-    "a domain name",
-    "a bus",
-    "a bicycle",
-    "a rickshaw",
-    "a dog",
-    "a cow",
-    "a horse",
-    "a national border",
-    "an airport",
-    "a metro/subway/light rail station",
-    "a museum",
-    "a mural",
-    "a roundabout",
-    "a river",
-    "a canal",
-    "a tunnel",
-    "a map",
-    "snow",
-    "corn (maize)",
-    "rice",
-    "a satellite dish",
-    "a bollard with a red reflector",
-    "the Google car's reflection",
-    "a US interstate sign",
-    "a European E route sign",
-    "an A road sign",
-    "an M road sign",
-    "an N road sign",
-    "the trans-Canada highway",
-    "an M-PESA shop",
-    "Cyrillic letters",
-    "Arabic letters",
-    "Greek letters",
-    "Thai letters",
-    "Hebrew letters",
-    "Bengali letters",
-    "Devanagari letters (India)",
-    "Tamil letters (India and Sri Lanka)",
-    "Khmer letters (Cambodia)",
-    "Sinhala letters (Sri Lanka)",
-    "Chinese (Han) characters",
-    "Japanese kana characters",
-    "Korean hangul characters",
-    "Canadian Aboriginal syllabics",
-    "Google coverage in an ULTRA RARE country",
-] + list(STOP.keys())
+SIGHTINGS = (
+    EASY_SIGHTINGS
+    + [
+        "a train",
+        "a boat or ship",
+        "a flag",
+        "a domain name",
+        "a bus",
+        "a bicycle",
+        "a rickshaw",
+        "a dog",
+        "a cow",
+        "a horse",
+        "a national border",
+        "an airport",
+        "a metro/subway/light rail station",
+        "a museum",
+        "a mural",
+        "a roundabout",
+        "a river",
+        "a canal",
+        "a tunnel",
+        "a map",
+        "snow",
+        "corn (maize)",
+        "rice",
+        "a satellite dish",
+        "a bollard with a red reflector",
+        "the Google car's reflection",
+        "a US interstate sign",
+        "a European E route sign",
+        "an A road sign",
+        "an M road sign",
+        "an N road sign",
+        "the trans-Canada highway",
+        "an M-PESA shop",
+        "Cyrillic letters",
+        "Arabic letters",
+        "Greek letters",
+        "Thai letters",
+        "Hebrew letters",
+        "Bengali letters",
+        "Devanagari letters (India)",
+        "Tamil letters (India and Sri Lanka)",
+        "Khmer letters (Cambodia)",
+        "Sinhala letters (Sri Lanka)",
+        "Chinese (Han) characters",
+        "Japanese kana characters",
+        "Korean hangul characters",
+        "Canadian Aboriginal syllabics",
+        "Google coverage in an ULTRA RARE country",
+    ]
+    + list(STOP.keys())
+)
 
 
 CONTINENT_CHECKS = [
@@ -193,7 +197,9 @@ COUNTRY_CHECKS_RARE = [
     "West Bank",
 ]
 
-COUNTRY_CHECKS = COUNTRY_CHECKS_VERY_COMMON + COUNTRY_CHECKS_COMMON + COUNTRY_CHECKS_RARE
+COUNTRY_CHECKS = (
+    COUNTRY_CHECKS_VERY_COMMON + COUNTRY_CHECKS_COMMON + COUNTRY_CHECKS_RARE
+)
 
 # Countries with _fewer than 100_ locations on ACW. These are not individual checks.
 # You can claim the "Ultra Rare Country" check for getting any one of them.
@@ -237,24 +243,30 @@ COUNTRY_CHECKS_ULTRA_RARE = [
 ]
 
 
-# Might just end up incorporating these into locations.py
 MAP_GOALS = [
     {"name": "3k location", "difficulty": 0},
     {"name": "4k location", "difficulty": 1},
+    {"name": "4.5k location", "difficulty": 3},
+    {"name": "5k location", "difficulty": 7},
+    {"name": "3 country streak", "difficulty": 3},
+    {"name": "4 country streak", "difficulty": 6},
+    {"name": "5 country streak", "difficulty": 7},
     {"name": "5k round", "difficulty": 1},
-    {"name": "10k round", "difficulty": 2},
-    {"name": "15k round", "difficulty": 3},
-    {"name": "20k round", "difficulty": 5},
-    {"name": "3 country streak", "difficulty": 2},
-    {"name": "4 country streak", "difficulty": 4},
-    {"name": "5 country streak", "difficulty": 5},
-    {"name": "5k location", "difficulty": 5},
+    {"name": "7.5k round", "difficulty": 2},
+    {"name": "10k round", "difficulty": 3},
+    {"name": "12.5k round", "difficulty": 4},
+    {"name": "15k round", "difficulty": 5},
+    {"name": "17.5k round", "difficulty": 6},
+    {"name": "20k round", "difficulty": 7},
+    {"name": "22.5k round", "difficulty": 8},
 ]
 
 CONTINENT_GOALS = [
-    "4k within",
-    "8k within",
-    "12k within",
-    "16k within",
-    "20k within",
+    {"name": "5k total within", "difficulty": 1},
+    {"name": "7.5k total within", "difficulty": 2},
+    {"name": "10k total within", "difficulty": 3},
+    {"name": "12.5k total within", "difficulty": 4},
+    {"name": "15k total within", "difficulty": 5},
+    {"name": "17.5k total within", "difficulty": 6},
+    {"name": "20k total within", "difficulty": 7},
 ]

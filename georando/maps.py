@@ -33,8 +33,16 @@ class GeoGuessrMap:
 
 
 def official_country(
-    name: str, difficulty: int = 4, may_provide: Optional[List[str]] = None
+    name: str,
+    difficulty: int = 4,
+    tags: Optional[List[str]] = None,
+    provides: Optional[List[str]] = None,
+    may_provide: Optional[List[str]] = None,
 ) -> GeoGuessrMap:
+    if provides is None:
+        provides = []
+    # A country provides its own checks in logic
+    provides.append(name)
     return GeoGuessrMap(
         name=name,
         creator="GeoGuessr",
@@ -42,8 +50,8 @@ def official_country(
         streakable=False,
         official_coverage=True,
         may_provide=may_provide or [],
-        provides=[name],
-        tags=[],
+        provides=provides,
+        tags=tags or [],
     )
 
 
@@ -80,133 +88,193 @@ def community_map(
 #
 # Countries are tagged as "small" if they have fewer than 10k locations
 # on their GeoGuessr official map.
-OFFICIAL_MAPS = [
-    official_country("Albania"),
-    official_country("American Samoa", tags=["small"]),
-    official_country("Andorra", tags=["small"]),
-    official_country("Argentina", may_provide=[STOP["pare"]]),
-    official_country("Australia"),
-    official_country("Austria", difficulty=3),
-    official_country("Bangladesh", difficulty=5),
-    official_country("Belgium"),
-    official_country("Bhutan"),
-    official_country("Bolivia"),
-    official_country("Botswana", difficulty=5),
-    official_country("Brazil", may_provide=[STOP["pare"]]),
-    official_country("Bulgaria", may_provide=["Cyrillic letters"]),
-    official_country("Cambodia", difficulty=6, may_provide=["Khmer letters (Cambodia)"]),
-    official_country("Canada"),
-    official_country("Chile", difficulty=3, may_provide=[STOP["pare"]]),
-    official_country("Colombia", may_provide=[STOP["pare"]]),
-    official_country("Croatia"),
-    official_country("Curacao", tags=["small"], difficulty=3),
-    official_country("Czech Republic"),
-    official_country("Denmark"),
-    official_country("Dominican Republic", tags=["small"]),
-    official_country("Ecuador", may_provide=[STOP["pare"]]),
-    official_country("Estonia"),
-    official_country("Eswatini", tags=["small"]),
-    official_country("Faroe Islands", tags=["small"], difficulty=3),
-    official_country("Finland"),
-    official_country("France"),
-    official_country("Germany"),
-    official_country("Ghana", difficulty=5),
-    official_country("Greece", provides=["Greek letters"]),
-    official_country("Greenland", difficulty=5, tags=["small"]),
-    official_country("Guam", difficulty=3, tags=["small"]),
-    official_country("Guatemala", may_provide=[STOP["alto"]]),
+OFFICIAL_MAPS: List[GeoGuessrMap] = [
+    official_country("Albania", provides=["Europe"]),
+    official_country("American Samoa", tags=["small"], provides=["Oceania"]),
+    official_country("Andorra", tags=["small"], provides=["Europe"]),
     official_country(
-        "Hong Kong", difficulty=3, tags=["small"], provides=["Chinese (Han) characters"]
+        "Argentina", provides=["South America"], may_provide=[STOP["pare"]]
     ),
-    official_country("Hungary"),
-    official_country("Iceland"),
+    official_country("Australia", provides=["Oceania"]),
+    official_country("Austria", provides=["Europe"], difficulty=3),
+    official_country("Bangladesh", provides=["Asia"], difficulty=5),
+    official_country("Belgium", provides=["Europe"]),
+    official_country("Bhutan", provides=["Asia"]),
+    official_country("Bolivia", provides=["South America"]),
+    official_country("Botswana", provides=["Africa"], difficulty=5),
+    official_country("Brazil", provides=["South America"], may_provide=[STOP["pare"]]),
+    official_country("Bulgaria", provides=["Europe"], may_provide=["Cyrillic letters"]),
+    official_country(
+        "Cambodia",
+        difficulty=6,
+        provides=["Asia"],
+        may_provide=["Khmer letters (Cambodia)"],
+    ),
+    official_country("Canada", provides=["North America"]),
+    official_country(
+        "Chile", difficulty=3, provides=["South America"], may_provide=[STOP["pare"]]
+    ),
+    official_country(
+        "Colombia", provides=["South America"], may_provide=[STOP["pare"]]
+    ),
+    official_country("Croatia", provides=["Europe"]),
+    official_country(
+        "Curacao", provides=["South America"], tags=["small"], difficulty=3
+    ),
+    official_country("Czech Republic", provides=["Europe"]),
+    official_country("Denmark", provides=["Europe"]),
+    official_country("Dominican Republic", provides=["North America"], tags=["small"]),
+    official_country("Ecuador", provides=["South America"], may_provide=[STOP["pare"]]),
+    official_country("Estonia", provides=["Europe"]),
+    official_country("Eswatini", provides=["Africa"], tags=["small"]),
+    official_country(
+        "Faroe Islands", provides=["Europe"], tags=["small"], difficulty=3
+    ),
+    official_country("Finland", provides=["Europe"]),
+    official_country("France", provides=["Europe"]),
+    official_country("Germany", provides=["Europe"]),
+    official_country("Ghana", provides=["Africa"], difficulty=5),
+    official_country("Greece", provides=["Greek letters", "Europe"]),
+    official_country(
+        "Greenland", provides=["North America"], tags=["small"], difficulty=5
+    ),
+    official_country("Guam", provides=["Oceania"], tags=["small"], difficulty=3),
+    official_country(
+        "Guatemala", provides=["North America"], may_provide=[STOP["alto"]]
+    ),
+    official_country(
+        "Hong Kong",
+        difficulty=3,
+        tags=["small"],
+        provides=["Asia", "Chinese (Han) characters"],
+    ),
+    official_country("Hungary", provides=["Europe"]),
+    official_country("Iceland", provides=["Europe"]),
     official_country(
         "India",
-        provides=["Devanagari letters (India)", "Tamil letters (India and Sri Lanka)"],
+        provides=[
+            "Asia",
+            "Devanagari letters (India)",
+            "Tamil letters (India and Sri Lanka)",
+        ],
     ),
-    official_country("Indonesia"),
-    official_country("Ireland"),
-    official_country("Isle of Man", tags=["small"]),
-    official_country("Israel", provides=["Hebrew letters"]),
-    official_country("Italy"),
+    official_country("Indonesia", provides=["Asia"]),
+    official_country("Ireland", provides=["Europe"]),
+    official_country("Isle of Man", provides=["Europe"], tags=["small"]),
+    official_country("Israel", provides=["Asia", "Hebrew letters"]),
+    official_country("Italy", provides=["Europe"]),
     official_country(
         "Japan",
         difficulty=3,
-        provides=["Japanese kana characters", "Chinese (Han) characters"],
+        provides=["Asia", "Japanese kana characters", "Chinese (Han) characters"],
     ),
-    official_country("Jersey", tags=["small"]),
+    official_country("Jersey", provides=["Europe"], tags=["small"]),
     official_country(
         "Jordan",
         tags=["small"],
         difficulty=3,
-        provides=["Arabic letters"],
+        provides=["Asia", "Arabic letters"],
         may_provide=[STOP["qif"]],
     ),
     official_country(
-        "Kazakhstan", tags=["small"], difficulty=6, provides=["Cyrillic letters"]
+        "Kazakhstan",
+        tags=["small"],
+        difficulty=6,
+        provides=["Asia", "Cyrillic letters"],
     ),
-    official_country("Kenya"),
-    official_country("Kyrgyzstan", provides=["Cyrillic letters"]),
+    official_country("Kenya", provides=["Africa"]),
+    official_country("Kyrgyzstan", provides=["Asia", "Cyrillic letters"]),
     official_country("Laos", tags=["small"], difficulty=3),
-    official_country("Latvia"),
-    official_country("Lesotho", difficulty=5),
+    official_country("Latvia", provides=["Europe"]),
+    official_country("Lesotho", difficulty=5, provides=["Africa"]),
     # Lithuania should be 'small' by my definition, but that feels wrong
-    official_country("Lithuania", difficulty=5),
-    official_country("Madagascar", tags=["small"]),
-    official_country("Malaysia", may_provide=[STOP["berhenti"]]),
-    official_country("Malta", tags=["small"]),
-    official_country("Mexico", may_provide=[STOP["alto"]]),
-    official_country("Mongolia"),
-    official_country("Montenegro", tags=["small"]),
-    official_country("Netherlands", may_provide=["a canal"]),
-    official_country("New Zealand"),
-    official_country("Nigeria"),
-    official_country("North Macedonia", tags=["small"]),
-    official_country("Northern Mariana Islands", tags=["small"]),
-    official_country("Norway"),
-    official_country("Panama", difficulty=5, tags=["small"]),
-    official_country("Peru", difficulty=5, may_provide=[STOP["pare"]]),
-    official_country("Philippines", difficulty=5),
-    official_country("Poland", difficulty=5),
-    official_country("Portugal", difficulty=3),
-    official_country("Puerto Rico", difficulty=3),
-    official_country("Qatar", difficulty=3, tags=["small"], may_provide=["Arabic letters"]),
-    official_country("Romania", difficulty=5),
-    official_country("Russia", difficulty=5, may_provide=["Cyrillic letters", STOP["ctop"]]),
-    official_country("Rwanda", difficulty=2, tags=["small"]),
-    official_country("Senegal", difficulty=5),
-    official_country("Serbia", may_provide=["Cyrillic letters"]),
+    official_country("Lithuania", difficulty=5, provides=["Europe"]),
+    official_country("Madagascar", tags=["small"], provides=["Africa"]),
+    official_country("Malaysia", provides=["Asia"], may_provide=[STOP["berhenti"]]),
+    official_country("Malta", provides=["Europe"], tags=["small"]),
+    official_country("Mexico", provides=["North America"], may_provide=[STOP["alto"]]),
+    official_country("Mongolia", provides=["Asia"]),
+    official_country("Montenegro", provides=["Europe"], tags=["small"]),
+    official_country("Netherlands", provides=["Europe"], may_provide=["a canal"]),
+    official_country("New Zealand", provides=["Oceania"]),
+    official_country("Nigeria", provides=["Africa"]),
+    official_country("North Macedonia", provides=["Europe"], tags=["small"]),
+    official_country("Northern Mariana Islands", provides=["Oceania"], tags=["small"]),
+    official_country("Norway", provides=["Europe"]),
+    official_country(
+        "Panama", difficulty=5, provides=["South America"], tags=["small"]
+    ),
+    official_country(
+        "Peru", difficulty=5, provides=["South America"], may_provide=[STOP["pare"]]
+    ),
+    official_country("Philippines", provides=["Asia"], difficulty=5),
+    official_country("Poland", provides=["Europe"], difficulty=5),
+    official_country("Portugal", provides=["Europe"], difficulty=3),
+    official_country("Puerto Rico", provides=["North America"], difficulty=3),
+    official_country(
+        "Qatar",
+        difficulty=3,
+        tags=["small"],
+        provides=["Asia"],
+        may_provide=["Arabic letters"],
+    ),
+    official_country("Romania", provides=["Europe"], difficulty=5),
+    official_country(
+        "Russia", difficulty=5, may_provide=["Cyrillic letters", STOP["ctop"]]
+    ),
+    official_country("Rwanda", provides=["Africa"], difficulty=3, tags=["small"]),
+    official_country("Senegal", provides=["Africa"], difficulty=5),
+    official_country("Serbia", provides=["Europe"], may_provide=["Cyrillic letters"]),
     official_country(
         "Singapore",
         difficulty=3,
         tags=["small"],
+        provides=["Asia"],
         may_provide=["Chinese (Han) characters"],
     ),
-    official_country("Slovakia"),
-    official_country("Slovenia"),
-    official_country("South Africa", difficulty=5),
-    official_country("South Korea", provides=["Korean hangul characters"]),
+    official_country("Slovakia", provides=["Europe"]),
+    official_country("Slovenia", provides=["Europe"]),
+    official_country("South Africa", provides=["Africa"], difficulty=5),
+    official_country("South Korea", provides=["Asia", "Korean hangul characters"]),
     official_country("Spain"),
     official_country(
         "Sri Lanka",
         difficulty=5,
-        provides=["Sinhala letters (Sri Lanka)"],
+        provides=["Asia", "Sinhala letters (Sri Lanka)"],
         may_provide=["Tamil letters (India and Sri Lanka)"],
     ),
-    official_country("Sweden"),
-    official_country("Switzerland"),
-    official_country("Taiwan", may_provide=["Chinese (Han) characters", STOP["ting"]]),
-    official_country("Thailand", may_provide=["Thai letters", STOP["yud"]]),
-    official_country("Tunisia", may_provide=["Arabic letters", STOP["qif"]]),
-    official_country("Türkiye", may_provide=[STOP["dur"]]),
-    official_country("Uganda", difficulty=3, tags=["small"]),
-    official_country("Ukraine", difficulty=5, may_provide=["Cyrillic letters"]),
+    official_country("Sweden", provides=["Europe"]),
+    official_country("Switzerland", provides=["Europe"]),
     official_country(
-        "United Arab Emirates", difficulty=3, tags=["small"], may_provide=["Arabic letters", STOP["qif"]]
+        "Taiwan",
+        provides=["Asia"],
+        may_provide=["Chinese (Han) characters", STOP["ting"]],
     ),
-    official_country("United Kingdom", may_provide=["a roundabout"]),
-    official_country("United States"),
-    official_country("Uruguay", difficulty=5, may_provide=[STOP["pare"]]),
+    official_country(
+        "Thailand", provides=["Asia"], may_provide=["Thai letters", STOP["yud"]]
+    ),
+    official_country(
+        "Tunisia", provides=["Africa"], may_provide=["Arabic letters", STOP["qif"]]
+    ),
+    official_country("Türkiye", may_provide=[STOP["dur"]]),
+    official_country("Uganda", provides=["Africa"], difficulty=3, tags=["small"]),
+    official_country(
+        "Ukraine", difficulty=5, provides=["Europe"], may_provide=["Cyrillic letters"]
+    ),
+    official_country(
+        "United Arab Emirates",
+        difficulty=3,
+        tags=["small"],
+        provides=["Africa"],
+        may_provide=["Arabic letters", STOP["qif"]],
+    ),
+    official_country(
+        "United Kingdom", provides=["Europe"], may_provide=["a roundabout"]
+    ),
+    official_country("United States", provides=["North America"]),
+    official_country(
+        "Uruguay", difficulty=5, provides=["South America"], may_provide=[STOP["pare"]]
+    ),
 ]
 
 COMMUNITY_MAPS = {
@@ -279,7 +347,7 @@ COMMUNITY_MAPS = {
         "Animals of the World",
         "Rhiannonfuller",
         difficulty=4,
-        unofficial_coverage=True,
+        official_coverage=False,
         streakable=True,
         tags=["world"],
         may_provide=["a dog", "a cow", "a horse"],
@@ -514,7 +582,7 @@ COMMUNITY_MAPS = {
         "A Complete World",
         "MatePotato",
         difficulty=5,
-        unofficial_coverage=True,
+        official_coverage=False,
         may_provide=[ULTRA_RARE_CHECK],
         tags=["world"],
     ),
@@ -572,7 +640,7 @@ COMMUNITY_MAPS = {
         "A Diverse Complete World",
         "MatePotato",
         difficulty=5,
-        unofficial_coverage=True,
+        official_coverage=False,
         may_provide=[ULTRA_RARE_CHECK],
         tags=["world", "balanced"],
     ),
@@ -614,9 +682,16 @@ COMMUNITY_MAPS = {
         "An Extraordinary World",
         "Alok",
         difficulty=6,
-        unofficial_coverage=True,
+        official_coverage=False,
         streakable=True,
         tags=["theme", "world"],
+    ),
+    "i_saw_sign": community_map(
+        "I Saw the Sign 2.0",
+        "Kirsike",
+        difficulty=2,
+        streakable=True,
+        tags=["world"],
     ),
     "linguistic_world": community_map(
         "A Linguistic World",
@@ -772,7 +847,7 @@ COMMUNITY_MAPS = {
         "An Unofficial Street World",
         "David Walker",
         difficulty=5,
-        unofficial=True,
+        official_coverage=False,
         tags=["world"],
     ),
     "urban_argentina": community_map(
@@ -795,6 +870,7 @@ COMMUNITY_MAPS = {
         "0xGG",
         url="https://www.geoguessr.com/maps/64d8c5ec3a31de27be286d6c",
         difficulty=3,
+        streakable=True,
         may_provide=[
             "United States",
             "Brazil",
@@ -822,7 +898,7 @@ COMMUNITY_MAPS = {
             "Colombia",
             "Kenya",
             "Finland",
-        ]
+        ],
     ),
     "world_plants": community_map(
         "A World of Plants",
@@ -836,7 +912,7 @@ COMMUNITY_MAPS = {
         "A World of Waterfalls",
         "CelestialDalek",
         url="https://www.geoguessr.com/maps/5fa2fa8ee27b4900014dde81",
-        unofficial_coverage=True,
+        official_coverage=False,
         difficulty=6,
         streakable=True,
         tags=["world", "theme"],
