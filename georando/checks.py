@@ -122,7 +122,6 @@ COUNTRY_CHECKS_RARE = [
     "Singapore",
     "Uganda",
     "United States Virgin Islands",
-    "West Bank",
 ]
 
 COUNTRY_CHECKS = (

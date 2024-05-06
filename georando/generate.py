@@ -14,14 +14,14 @@ SETTINGS = {
     "num_official": 5,
     # How many community maps to use.
     "num_community": 15,
-    # How many maps to start with
-    "num_starting_maps": 3,
+    # How many random maps to start with
+    "num_starting_maps": 2,
     # Names of maps or countries you find easier, and which should be earlier in logic, because you're
     # particularly familiar with them. For example, you might want to put the country you live in here.
     "familiar": ["United States"],
-    # Official maps that should always be in the pool.
+    # Official maps that should be available from the start.
     "guaranteed_official_maps": ["United States"],
-    # Community maps that should always be in the pool.
+    # Community maps that should be available from the start.
     "guaranteed_community_maps": ["A Community World"],
     # Should maps with relatively few locations, such as Andorra or Guam, be included in the official
     # map pool?
@@ -86,9 +86,9 @@ def run():
     n_medals = SETTINGS["medals_to_win"]
     locations.append(
         {
-            "category": "Victory",
             "name": f"Victory ({n_medals} gold medals)",
             "requires": [f"Gold Medal:{n_medals}"],
+            "victory": True
         }
     )
     items = NON_MAP_ITEMS + [
@@ -97,17 +97,21 @@ def run():
             "progression": True,
             "category": ["Maps"]
         } for map in selected_maps
+    ] + [
+        {
+            "name": "Gold Medal",
+            "progression": ["True"],
+            "category": ["Medals"],
+            "count": len(selected_maps)
+        }
     ]
+    starting_maps = [map.name for map in (guaranteed_community_maps + guaranteed_official_maps)]
     game_data = {
         "game": "GeoGuessr",
         "player": "arborelia",
         "filler_item_name": "Score Boost +200",
         "starting_items": [
-            {
-                "items": [
-                    "+10 seconds"
-                ]
-            },
+            {"items": starting_maps},
             {
                 "item_categories": [
                     "Maps"

@@ -31,13 +31,12 @@ def format_logic(disjunction: List[List[str]]) -> list:
 
 
 def make_country_individual_goal(country: str, maps: List[GeoGuessrMap], skill_modifier: int = 0) -> List[dict]:
-    # TODO: include pan/zoom in logic on easier skill levels
     categories = ["Correctly identify countries"]
     logic_options = []
     if country in maps:
         categories.append(country)
     for map in maps:
-        difficulty_logic = DIFFICULTY_LOGIC[3 - skill_modifier]
+        difficulty_logic = DIFFICULTY_LOGIC[map.difficulty - skill_modifier]
         if country in map.provides:
             # this is a freebie, like recognizing Albania on the Albania map
             difficulty_logic = [[]]
@@ -81,7 +80,10 @@ DIFFICULTY_LOGIC = {
     # - 7.5k round on A Speedrun World
     # - 5k round on A Pinpointable World
     # - 4k location on an urban map
-    3: [["+10 seconds:2"]],
+    3: [
+        ["Compass"],
+        ["Progressive Pan/Zoom/Move"],
+    ],
     # Difficulty 4
     # Examples:
     # - 10k round on A Speedrun World
@@ -95,8 +97,6 @@ DIFFICULTY_LOGIC = {
     # - 10k round on A Linguistic World
     # - 5k round on An Arbitrary Asia
     5: [
-        ["Progressive Pan/Zoom/Move", "+10 seconds:6"],
-        ["Compass", "+10 seconds:8"],
         ["Progressive Pan/Zoom/Move", "Compass", "+10 seconds:4"],
     ],
     # Difficulty 6
@@ -107,7 +107,7 @@ DIFFICULTY_LOGIC = {
     # - 3k location on A Soiled World
     # - 3 country streak on Attractive Bollards of the Universe
     6: [
-        [ZOOM, "+10 seconds:4"],
+        [ZOOM, "Compass", "+10 seconds:4"],
         ["Progressive Pan/Zoom/Move", "Compass", "+10 seconds:9"],
     ],
     # Difficulty 7
@@ -251,32 +251,35 @@ DIFFICULTY_LOGIC = {
 def make_map_goals(map: GeoGuessrMap, skill_modifier: int = 0) -> List[dict]:
     goals = []
     for goal in MAP_GOALS:
+        if "streak" in goal and not map.streakable:
+            continue
         difficulty = map.difficulty + goal["difficulty"] - skill_modifier
         goal_name = goal["name"]
         if map.official_coverage:
             # Streaks are easier if they're narrowed down to a continent
             if (set(map.provides) & set(CONTINENT_CHECKS)) and "streak" in goal:
                 difficulty -= 1
-            logic_options = DIFFICULTY_LOGIC[difficulty]
+            base_logic_options = DIFFICULTY_LOGIC[difficulty]
         else:
             # Streaks are harder when there's unofficial coverage
             if "streak" in goal:
                 difficulty += 1
             # "Move" can't be relied on when there's unofficial coverage
-            logic_options = [
+            base_logic_options = [
                 option for option in DIFFICULTY_LOGIC[difficulty] if MOVE not in option
             ]
-            if not logic_options:
-                logic_options = ["unobtainable"]
 
-        goal_data = {
-            "name": f"{map.name}: {goal_name}",
-            "category": map.name,
-            "requires": format_logic(logic_options),
-        }
-        if goal_name == "22.5k round":
-            goal_data["place_item"] = ["Gold Medal"]
-        goals.append(goal_data)
+        logic_options = [([map.name] + option) for option in base_logic_options]
+
+        if logic_options:
+            goal_data = {
+                "name": f"{map.name}: {goal_name}",
+                "category": [map.name],
+                "requires": format_logic(logic_options),
+            }
+            if goal_name == "22.5k round":
+                goal_data["place_item"] = ["Gold Medal"]
+            goals.append(goal_data)
     return goals
 
 
@@ -298,7 +301,7 @@ def make_continent_goals(
             goals.append(
                 {
                     "name": f"{goal_name} {continent}",
-                    "category": "Continent goals",
+                    "category": ["Continent goals"],
                     "requires": format_logic(logic_options),
                 }
             )
