@@ -913,7 +913,7 @@ COMMUNITY_MAPS = {
         "CelestialDalek",
         url="https://www.geoguessr.com/maps/5fa2fa8ee27b4900014dde81",
         official_coverage=False,
-        difficulty=6,
+        difficulty=7,
         streakable=True,
         tags=["world", "theme"],
     ),

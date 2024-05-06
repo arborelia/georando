@@ -7,23 +7,18 @@ from georando.locations import make_goals
 SETTINGS = {
     # How many official (country) maps to use. These maps are harder than most community maps.
     "num_official": 5,
-
     # How many community maps to use.
     "num_community": 15,
-
     # Names of maps or countries you find easier, and which should be earlier in logic, because you're
     # particularly familiar with them. For example, you might want to put the country you live in here.
     "familiar": ["United States"],
-
     # Should maps with relatively few locations, such as Andorra or Guam, be included in the official
     # map pool?
     "allow_small_official": False,
-
     # Should maps be allowed to include locations with photospheres or street cameras that aren't
     # operated by Google? The logic for these maps will never require you to have Move unlocked, because
     # Move doesn't work in most of these locations.
     "allow_unofficial_coverage": True,
-
     # This number changes the logic, and at the low end it also changes which maps are available.
     # Here's my estimation of what the skill levels mean:
     #
@@ -38,23 +33,38 @@ SETTINGS = {
     #  9: I'm a world class GeoGuessr player
     # 10: Just put everything conceivably possible in logic
     "skill_level": 4,
+    # You get a Gold Medal for scoring 22.5k on a map (probably adjustable later). The victory condition
+    # is getting some number of them. Choose that number here.
+    "medals_to_win": 10,
 }
 
 
 def run():
     map_pool_official = [
-        map for map in OFFICIAL_MAPS
+        map
+        for map in OFFICIAL_MAPS
         if map.difficulty - SETTINGS["skill_level"] <= 3
         and ("small" not in map.tags or SETTINGS["allow_small_official"])
     ]
     map_pool_community = [
-        map for map in COMMUNITY_MAPS.values()
+        map
+        for map in COMMUNITY_MAPS.values()
         if map.difficulty - SETTINGS["skill_level"] <= 3
         and (map.official_coverage or SETTINGS["allow_unofficial_coverage"])
     ]
     skill_modifier = SETTINGS["skill_level"] - 5
-    selected_maps = random.sample(map_pool_official, SETTINGS["num_official"]) + random.sample(map_pool_community, SETTINGS["num_community"])
+    selected_maps = random.sample(
+        map_pool_official, SETTINGS["num_official"]
+    ) + random.sample(map_pool_community, SETTINGS["num_community"])
     goals = make_goals(selected_maps, SETTINGS["familiar"], skill_modifier)
+    n_medals = SETTINGS["medals_to_win"]
+    goals.append(
+        {
+            "category": "Victory",
+            "name": f"Victory ({n_medals} gold medals)",
+            "requires": [f"Gold Medal:{n_medals}"],
+        }
+    )
     pprint.pprint(goals)
 
 

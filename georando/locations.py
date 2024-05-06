@@ -136,7 +136,6 @@ DIFFICULTY_LOGIC = {
     # Difficulty 9
     # Examples:
     # - 10k round on A Soiled World
-    # - 10k round on A World of Waterfalls
     # - 4 country streak on A Community World
     # - 5k location on I Saw the Sign
     9: [
@@ -149,7 +148,7 @@ DIFFICULTY_LOGIC = {
     # Examples:
     # - 5k location on A Community World
     # - 20k round on A Community World
-    # - 3 country streak on A World of Waterfalls (unofficial adds difficulty to country streaks)
+    # - 10k round on A World of Waterfalls
     # - 4 country streak on An Arbitrary Asia
     # - 15k round on A Rural World
     # - 22.5k (gold medal) on I Saw the Sign
@@ -170,7 +169,7 @@ DIFFICULTY_LOGIC = {
     # Difficulty 14+
     # Examples:
     # - 22.5k round on A World of Plants
-    # - 22.5k round on A World of Waterfalls (not considered possible because you won't have Move)
+    # - 20k round on A World of Waterfalls (not considered possible because you won't have Move)
     14: [
         [
             MOVE,
@@ -265,13 +264,14 @@ def make_map_goals(map: GeoGuessrMap, skill_modifier: int = 0) -> List[dict]:
             if not logic_options:
                 logic_options = ["unobtainable"]
 
-        goals.append(
-            {
-                "name": f"{map.name}: {goal_name}",
-                "category": map.name,
-                "requires": format_logic(logic_options),
-            }
-        )
+        goal_data = {
+            "name": f"{map.name}: {goal_name}",
+            "category": map.name,
+            "requires": format_logic(logic_options),
+        }
+        if goal_name == "22.5k round":
+            goal_data["place_item"] = ["Gold Medal"]
+        goals.append(goal_data)
     return goals
 
 
@@ -286,8 +286,7 @@ def make_continent_goals(
             if continent in map.provides:
                 difficulty = goal["difficulty"] + map.difficulty - skill_modifier
                 logic_options_here = [
-                    [map] + option
-                    for option in DIFFICULTY_LOGIC[difficulty]
+                    [map] + option for option in DIFFICULTY_LOGIC[difficulty]
                 ]
                 logic_options.extend(logic_options_here)
         if logic_options:
