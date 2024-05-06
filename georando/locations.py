@@ -30,15 +30,20 @@ def format_logic(disjunction: List[List[str]]) -> list:
     return formatted
 
 
-def make_country_individual_goal(country: str, maps: List[GeoGuessrMap]) -> List[dict]:
+def make_country_individual_goal(country: str, maps: List[GeoGuessrMap], skill_modifier: int = 0) -> List[dict]:
     # TODO: include pan/zoom in logic on easier skill levels
     categories = ["Correctly identify countries"]
     logic_options = []
     if country in maps:
         categories.append(country)
     for map in maps:
+        difficulty_logic = DIFFICULTY_LOGIC[3 - skill_modifier]
+        if country in map.provides:
+            # this is a freebie, like recognizing Albania on the Albania map
+            difficulty_logic = [[]]
         if country in map.provides or country in map.may_provide:
-            logic_options.append([map.name])
+            for diff_option in difficulty_logic:
+                logic_options.append([map.name] + diff_option)
 
     if logic_options:
         return [
@@ -54,7 +59,7 @@ def make_country_individual_goal(country: str, maps: List[GeoGuessrMap]) -> List
 
 def make_country_goals(maps: List[GeoGuessrMap]) -> List[dict]:
     goals = []
-    for country in COUNTRY_CHECKS:
+    for country in sorted(COUNTRY_CHECKS):
         goals.extend(make_country_individual_goal(country, maps))
     return goals
 
@@ -286,7 +291,7 @@ def make_continent_goals(
             if continent in map.provides:
                 difficulty = goal["difficulty"] + map.difficulty - skill_modifier
                 logic_options_here = [
-                    [map] + option for option in DIFFICULTY_LOGIC[difficulty]
+                    [map.name] + option for option in DIFFICULTY_LOGIC[difficulty]
                 ]
                 logic_options.extend(logic_options_here)
         if logic_options:
