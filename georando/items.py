@@ -1,4 +1,4 @@
-non_map_items = [
+NON_MAP_ITEMS = [
     {
         "name": "Progressive Pan/Zoom/Move",
         "progression": True,

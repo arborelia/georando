@@ -3,10 +3,9 @@ from typing import List, Optional
 from georando.checks import (
     CONTINENT_CHECKS,
     COUNTRY_CHECKS_VERY_COMMON,
-    EASY_SIGHTINGS,
-    STOP,
     ULTRA_RARE_CHECK,
 )
+from georando.sightings import EASY_SIGHTINGS, STOP
 
 
 @dataclass
