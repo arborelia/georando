@@ -41,6 +41,7 @@ def make_country_individual_goal(country: str, maps: List[GeoGuessrMap], skill_m
             # this is a freebie, like recognizing Albania on the Albania map
             difficulty_logic = [[]]
         if country in map.provides or country in map.may_provide:
+            print(f"Identify {country} from map {map.name} at difficulty {map.difficulty - skill_modifier}")
             for diff_option in difficulty_logic:
                 logic_options.append([map.name] + diff_option)
 
@@ -56,15 +57,17 @@ def make_country_individual_goal(country: str, maps: List[GeoGuessrMap], skill_m
         return []
 
 
-def make_country_goals(maps: List[GeoGuessrMap]) -> List[dict]:
+def make_country_goals(maps: List[GeoGuessrMap], skill_modifier: int = 0) -> List[dict]:
     goals = []
     for country in sorted(COUNTRY_CHECKS):
-        goals.extend(make_country_individual_goal(country, maps))
+        goals.extend(make_country_individual_goal(country, maps, skill_modifier))
     return goals
 
 
 DIFFICULTY_LOGIC = {
     # Difficulty <= 2 has no requirements
+    -9: [[]],
+    -8: [[]],
     -7: [[]],
     -6: [[]],
     -5: [[]],
@@ -82,7 +85,7 @@ DIFFICULTY_LOGIC = {
     # - 4k location on an urban map
     3: [
         ["Compass"],
-        ["Progressive Pan/Zoom/Move"],
+        ["+10 seconds:2"],
     ],
     # Difficulty 4
     # Examples:
@@ -102,7 +105,6 @@ DIFFICULTY_LOGIC = {
     # Difficulty 6
     # Examples:
     # - 15k round on A Speedrun World
-    # - 10k round on Chile or Japan
     # - 10k round on A Mural World
     # - 3k location on A Soiled World
     # - 3 country streak on Attractive Bollards of the Universe
@@ -113,7 +115,7 @@ DIFFICULTY_LOGIC = {
     # Difficulty 7
     # Examples:
     # - 4 country streak on A Speedrun World
-    # - 10k round on most countries
+    # - 10k round on Chile or Japan
     # - 4k location on A Soiled World
     # - 3k location on a troll map
     7: [
@@ -128,7 +130,7 @@ DIFFICULTY_LOGIC = {
     ],
     # Difficulty 8
     # Examples:
-    # - 10k round in Bangladesh
+    # - 10k round on most countries
     # - 15k round on A Community World
     # - 20k round on A Speedrun World
     # - 5k location on A Speedrun World
@@ -140,6 +142,7 @@ DIFFICULTY_LOGIC = {
     ],
     # Difficulty 9
     # Examples:
+    # - 10k round in Bangladesh
     # - 10k round on A Soiled World
     # - 4 country streak on A Community World
     # - 5k location on I Saw the Sign
@@ -251,7 +254,7 @@ DIFFICULTY_LOGIC = {
 def make_map_goals(map: GeoGuessrMap, skill_modifier: int = 0) -> List[dict]:
     goals = []
     for goal in MAP_GOALS:
-        if "streak" in goal and not map.streakable:
+        if "streak" in goal["name"] and not map.streakable:
             continue
         difficulty = map.difficulty + goal["difficulty"] - skill_modifier
         goal_name = goal["name"]
@@ -262,7 +265,7 @@ def make_map_goals(map: GeoGuessrMap, skill_modifier: int = 0) -> List[dict]:
             base_logic_options = DIFFICULTY_LOGIC[difficulty]
         else:
             # Streaks are harder when there's unofficial coverage
-            if "streak" in goal:
+            if "streak" in goal["name"]:
                 difficulty += 1
             # "Move" can't be relied on when there's unofficial coverage
             base_logic_options = [
@@ -312,7 +315,7 @@ def make_goals(
     maps: List[GeoGuessrMap], familiar: List[str] = [], skill_modifier: int = 0
 ) -> List[dict]:
     goals = []
-    goals.extend(make_country_goals(maps))
+    goals.extend(make_country_goals(maps, skill_modifier))
     for continent in CONTINENT_CHECKS:
         goals.extend(make_continent_goals(continent, maps, skill_modifier))
     for map in maps:

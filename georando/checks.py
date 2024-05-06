@@ -171,6 +171,7 @@ COUNTRY_CHECKS_ULTRA_RARE = [
 
 
 MAP_GOALS = [
+    {"name": "2k location", "difficulty": -2},
     {"name": "3k location", "difficulty": 0},
     {"name": "4k location", "difficulty": 1},
     {"name": "4.5k location", "difficulty": 3},

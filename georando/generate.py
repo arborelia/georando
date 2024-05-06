@@ -20,7 +20,7 @@ SETTINGS = {
     # particularly familiar with them. For example, you might want to put the country you live in here.
     "familiar": ["United States"],
     # Official maps that should be available from the start.
-    "guaranteed_official_maps": ["United States"],
+    "guaranteed_official_maps": [],
     # Community maps that should be available from the start.
     "guaranteed_community_maps": ["A Community World"],
     # Should maps with relatively few locations, such as Andorra or Guam, be included in the official
@@ -33,9 +33,9 @@ SETTINGS = {
     # This number changes the logic, and at the low end it also changes which maps are available.
     # Here's my estimation of what the skill levels mean:
     #
-    #  1: I'm new to GeoGuessr -- all maps are easy to average difficulty, hard goals are never expected
-    #  2: Include more maps, expected goals are mostly easy, get Move early in the logic
-    #  3: Include all but the hardest maps, goals have lots of requirements before they're expected by logic
+    #  1: I'm new to GeoGuessr -- mostly easy maps and goals, start with Zoom and Compass, get Move early
+    #  2: Include more maps, expected goals are mostly easy, start with Pan and Compass, get Zoom and Move early in the logic
+    #  3: Include all but the hardest maps, start with Pan, get Zoom and Move early in the logic
     #  4: All maps are in logic, but the logic for which goals are required is generous
     #  5: Default skill level. arborelia's skill level that she designed the rando around
     #  6: I'd defeat arborelia in a GeoGuessr duel
@@ -43,7 +43,7 @@ SETTINGS = {
     #  8: I'm a GeoGuessr expert and I want to suffer
     #  9: I'm a world class GeoGuessr player
     # 10: Just put everything conceivably possible in logic
-    "skill_level": 4,
+    "skill_level": 5,
     # You get a Gold Medal for scoring 22.5k on a map (probably adjustable later). The victory condition
     # is getting some number of them. Choose that number here.
     "medals_to_win": 10,
@@ -56,7 +56,7 @@ def run():
     map_pool_official = [
         map
         for map in OFFICIAL_MAPS
-        if map.difficulty - SETTINGS["skill_level"] <= 3
+        if map.difficulty - SETTINGS["skill_level"] <= 4
         and ("small" not in map.tags or SETTINGS["allow_small_official"])
     ]
     map_pool_community = [
@@ -82,7 +82,6 @@ def run():
     selected_maps = selected_community_maps + selected_official_maps
 
     locations = make_goals(selected_maps, SETTINGS["familiar"], skill_modifier)
-    pprint.pprint(locations)
     n_medals = SETTINGS["medals_to_win"]
     locations.append(
         {
@@ -106,11 +105,7 @@ def run():
         }
     ]
     starting_maps = [map.name for map in (guaranteed_community_maps + guaranteed_official_maps)]
-    game_data = {
-        "game": "GeoGuessr",
-        "player": "arborelia",
-        "filler_item_name": "Score Boost +200",
-        "starting_items": [
+    starting_items = [
             {"items": starting_maps},
             {
                 "item_categories": [
@@ -119,6 +114,25 @@ def run():
                 "random": SETTINGS["num_starting_maps"]
             }
         ]
+    if skill_modifier == -4:
+        starting_items.append({"items": ["Progressive Pan/Zoom/Move"], "random": 2})
+        starting_items.append({"items": ["Compass"]})
+        starting_items.append({"items": ["+10 seconds"], "random": 6})
+    elif skill_modifier == -3:
+        starting_items.append({"items": ["Progressive Pan/Zoom/Move"], "random": 1})
+        starting_items.append({"items": ["Compass"]})
+        starting_items.append({"items": ["+10 seconds"], "random": 3})
+    elif skill_modifier == -2:
+        starting_items.append({"items": ["Progressive Pan/Zoom/Move"], "random": 1})
+        starting_items.append({"items": ["+10 seconds"], "random": 2})
+    else:
+        starting_items.append({"items": ["+10 seconds"], "random": 1})
+
+    game_data = {
+        "game": "GeoGuessr",
+        "player": "arborelia",
+        "filler_item_name": "Score Boost +200",
+        "starting_items": starting_items
     }
     region_data = {}
     world_name = f"manual_geoguessr_{player_name}"
@@ -141,8 +155,6 @@ def run():
 
         with the_zip.open(f"{world_name}/data/regions.json", "w") as out:
             out.write(json.dumps(region_data, indent=4).encode("utf-8"))
-
-    pprint.pprint(locations)
 
 
 if __name__ == "__main__":

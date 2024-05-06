@@ -33,7 +33,7 @@ class GeoGuessrMap:
 
 def official_country(
     name: str,
-    difficulty: int = 4,
+    difficulty: int = 5,
     tags: Optional[List[str]] = None,
     provides: Optional[List[str]] = None,
     may_provide: Optional[List[str]] = None,
@@ -95,12 +95,12 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
         "Argentina", provides=["South America"], may_provide=[STOP["pare"]]
     ),
     official_country("Australia", provides=["Oceania"]),
-    official_country("Austria", provides=["Europe"], difficulty=3),
-    official_country("Bangladesh", provides=["Asia"], difficulty=5),
+    official_country("Austria", provides=["Europe"], difficulty=4),
+    official_country("Bangladesh", provides=["Asia"], difficulty=6),
     official_country("Belgium", provides=["Europe"]),
     official_country("Bhutan", provides=["Asia"]),
     official_country("Bolivia", provides=["South America"]),
-    official_country("Botswana", provides=["Africa"], difficulty=5),
+    official_country("Botswana", provides=["Africa"], difficulty=6),
     official_country("Brazil", provides=["South America"], may_provide=[STOP["pare"]]),
     official_country("Bulgaria", provides=["Europe"], may_provide=["Cyrillic letters"]),
     official_country(
@@ -118,7 +118,7 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
     ),
     official_country("Croatia", provides=["Europe"]),
     official_country(
-        "Curacao", provides=["South America"], tags=["small"], difficulty=3
+        "Curacao", provides=["South America"], tags=["small"], difficulty=4
     ),
     official_country("Czech Republic", provides=["Europe"]),
     official_country("Denmark", provides=["Europe"]),
@@ -127,23 +127,23 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
     official_country("Estonia", provides=["Europe"]),
     official_country("Eswatini", provides=["Africa"], tags=["small"]),
     official_country(
-        "Faroe Islands", provides=["Europe"], tags=["small"], difficulty=3
+        "Faroe Islands", provides=["Europe"], tags=["small"], difficulty=4
     ),
     official_country("Finland", provides=["Europe"]),
     official_country("France", provides=["Europe"]),
     official_country("Germany", provides=["Europe"]),
-    official_country("Ghana", provides=["Africa"], difficulty=5),
+    official_country("Ghana", provides=["Africa"], difficulty=6),
     official_country("Greece", provides=["Greek letters", "Europe"]),
     official_country(
-        "Greenland", provides=["North America"], tags=["small"], difficulty=5
+        "Greenland", provides=["North America"], tags=["small"], difficulty=6
     ),
-    official_country("Guam", provides=["Oceania"], tags=["small"], difficulty=3),
+    official_country("Guam", provides=["Oceania"], tags=["small"], difficulty=4),
     official_country(
         "Guatemala", provides=["North America"], may_provide=[STOP["alto"]]
     ),
     official_country(
         "Hong Kong",
-        difficulty=3,
+        difficulty=4,
         tags=["small"],
         provides=["Asia", "Chinese (Han) characters"],
     ),
@@ -164,30 +164,30 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
     official_country("Italy", provides=["Europe"]),
     official_country(
         "Japan",
-        difficulty=3,
+        difficulty=4,
         provides=["Asia", "Japanese kana characters", "Chinese (Han) characters"],
     ),
     official_country("Jersey", provides=["Europe"], tags=["small"]),
     official_country(
         "Jordan",
         tags=["small"],
-        difficulty=3,
+        difficulty=4,
         provides=["Asia", "Arabic letters"],
         may_provide=[STOP["qif"]],
     ),
     official_country(
         "Kazakhstan",
         tags=["small"],
-        difficulty=6,
+        difficulty=7,
         provides=["Asia", "Cyrillic letters"],
     ),
     official_country("Kenya", provides=["Africa"]),
     official_country("Kyrgyzstan", provides=["Asia", "Cyrillic letters"]),
-    official_country("Laos", tags=["small"], difficulty=3),
+    official_country("Laos", tags=["small"], difficulty=4),
     official_country("Latvia", provides=["Europe"]),
-    official_country("Lesotho", difficulty=5, provides=["Africa"]),
+    official_country("Lesotho", difficulty=6, provides=["Africa"]),
     # Lithuania should be 'small' by my definition, but that feels wrong
-    official_country("Lithuania", difficulty=5, provides=["Europe"]),
+    official_country("Lithuania", difficulty=6, provides=["Europe"]),
     official_country("Madagascar", tags=["small"], provides=["Africa"]),
     official_country("Malaysia", provides=["Asia"], may_provide=[STOP["berhenti"]]),
     official_country("Malta", provides=["Europe"], tags=["small"]),
@@ -206,27 +206,27 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
     official_country(
         "Peru", difficulty=5, provides=["South America"], may_provide=[STOP["pare"]]
     ),
-    official_country("Philippines", provides=["Asia"], difficulty=5),
-    official_country("Poland", provides=["Europe"], difficulty=5),
-    official_country("Portugal", provides=["Europe"], difficulty=3),
-    official_country("Puerto Rico", provides=["North America"], difficulty=3),
+    official_country("Philippines", provides=["Asia"], difficulty=6),
+    official_country("Poland", provides=["Europe"], difficulty=6),
+    official_country("Portugal", provides=["Europe"], difficulty=4),
+    official_country("Puerto Rico", provides=["North America"], difficulty=6),
     official_country(
         "Qatar",
-        difficulty=3,
+        difficulty=4,
         tags=["small"],
         provides=["Asia"],
         may_provide=["Arabic letters"],
     ),
-    official_country("Romania", provides=["Europe"], difficulty=5),
+    official_country("Romania", provides=["Europe"], difficulty=6),
     official_country(
         "Russia", difficulty=5, may_provide=["Cyrillic letters", STOP["ctop"]]
     ),
-    official_country("Rwanda", provides=["Africa"], difficulty=3, tags=["small"]),
-    official_country("Senegal", provides=["Africa"], difficulty=5),
+    official_country("Rwanda", provides=["Africa"], difficulty=4, tags=["small"]),
+    official_country("Senegal", provides=["Africa"], difficulty=6),
     official_country("Serbia", provides=["Europe"], may_provide=["Cyrillic letters"]),
     official_country(
         "Singapore",
-        difficulty=3,
+        difficulty=4,
         tags=["small"],
         provides=["Asia"],
         may_provide=["Chinese (Han) characters"],
@@ -238,7 +238,7 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
     official_country("Spain"),
     official_country(
         "Sri Lanka",
-        difficulty=5,
+        difficulty=6,
         provides=["Asia", "Sinhala letters (Sri Lanka)"],
         may_provide=["Tamil letters (India and Sri Lanka)"],
     ),
@@ -256,13 +256,13 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
         "Tunisia", provides=["Africa"], may_provide=["Arabic letters", STOP["qif"]]
     ),
     official_country("Türkiye", may_provide=[STOP["dur"]]),
-    official_country("Uganda", provides=["Africa"], difficulty=3, tags=["small"]),
+    official_country("Uganda", provides=["Africa"], difficulty=4, tags=["small"]),
     official_country(
-        "Ukraine", difficulty=5, provides=["Europe"], may_provide=["Cyrillic letters"]
+        "Ukraine", difficulty=6, provides=["Europe"], may_provide=["Cyrillic letters"]
     ),
     official_country(
         "United Arab Emirates",
-        difficulty=3,
+        difficulty=4,
         tags=["small"],
         provides=["Africa"],
         may_provide=["Arabic letters", STOP["qif"]],
@@ -272,7 +272,7 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
     ),
     official_country("United States", provides=["North America"]),
     official_country(
-        "Uruguay", difficulty=5, provides=["South America"], may_provide=[STOP["pare"]]
+        "Uruguay", difficulty=6, provides=["South America"], may_provide=[STOP["pare"]]
     ),
 ]
 
