@@ -1,4 +1,3 @@
-import pprint
 import json
 import random
 from pathlib import Path
@@ -15,7 +14,7 @@ SETTINGS = {
     # How many community maps to use.
     "num_community": 15,
     # How many random maps to start with
-    "num_starting_maps": 2,
+    "num_starting_maps": 3,
     # Names of maps or countries you find easier, and which should be earlier in logic, because you're
     # particularly familiar with them. For example, you might want to put the country you live in here.
     "familiar": ["United States"],
@@ -33,11 +32,11 @@ SETTINGS = {
     # This number changes the logic, and at the low end it also changes which maps are available.
     # Here's my estimation of what the skill levels mean:
     #
-    #  1: I'm new to GeoGuessr -- mostly easy maps and goals, start with Zoom and Compass, get Move early
+    #  1: I'm new to GeoGuessr -- easy maps and goals, start with Pan and Compass, get Zoom and Move early in the logic
     #  2: Include more maps, expected goals are mostly easy, start with Pan and Compass, get Zoom and Move early in the logic
-    #  3: Include all but the hardest maps, start with Pan, get Zoom and Move early in the logic
-    #  4: All maps are in logic, but the logic for which goals are required is generous
-    #  5: Default skill level. arborelia's skill level that she designed the rando around
+    #  3: Include some hard maps, start with Pan, get Zoom and Move early in the logic
+    #  4: Include most hard maps, with generous logic
+    #  5: Default skill level. All maps included. arborelia's skill level that she designed the rando around
     #  6: I'd defeat arborelia in a GeoGuessr duel
     #  7: I'm a GeoGuessr expert
     #  8: I'm a GeoGuessr expert and I want to suffer
@@ -56,28 +55,42 @@ def run():
     map_pool_official = [
         map
         for map in OFFICIAL_MAPS
-        if map.difficulty - SETTINGS["skill_level"] <= 4
+        if map.difficulty - SETTINGS["skill_level"] <= 3
         and ("small" not in map.tags or SETTINGS["allow_small_official"])
     ]
     map_pool_community = [
         map
         for map in COMMUNITY_MAPS.values()
-        if map.difficulty - SETTINGS["skill_level"] <= 3
+        if map.difficulty - SETTINGS["skill_level"] <= 2
         and (map.official_coverage or SETTINGS["allow_unofficial_coverage"])
     ]
     skill_modifier = SETTINGS["skill_level"] - 5
 
     guaranteed_community_names = SETTINGS["guaranteed_community_maps"]
-    guaranteed_community_maps = [map for map in map_pool_community if map.name in guaranteed_community_names]
-    num_random_community_maps = SETTINGS["num_community"] - len(guaranteed_community_maps)
-    random_community_maps = [map for map in map_pool_community if map.name not in guaranteed_community_names]
-    selected_community_maps = guaranteed_community_maps + random.sample(random_community_maps, num_random_community_maps)
+    guaranteed_community_maps = [
+        map for map in map_pool_community if map.name in guaranteed_community_names
+    ]
+    num_random_community_maps = SETTINGS["num_community"] - len(
+        guaranteed_community_maps
+    )
+    random_community_maps = [
+        map for map in map_pool_community if map.name not in guaranteed_community_names
+    ]
+    selected_community_maps = guaranteed_community_maps + random.sample(
+        random_community_maps, num_random_community_maps
+    )
 
     guaranteed_official_names = SETTINGS["guaranteed_official_maps"]
-    guaranteed_official_maps = [map for map in map_pool_official if map.name in guaranteed_official_names]
+    guaranteed_official_maps = [
+        map for map in map_pool_official if map.name in guaranteed_official_names
+    ]
     num_random_official_maps = SETTINGS["num_official"] - len(guaranteed_official_maps)
-    random_official_maps = [map for map in map_pool_official if map.name not in guaranteed_official_names]
-    selected_official_maps = guaranteed_official_maps + random.sample(random_official_maps, num_random_official_maps)
+    random_official_maps = [
+        map for map in map_pool_official if map.name not in guaranteed_official_names
+    ]
+    selected_official_maps = guaranteed_official_maps + random.sample(
+        random_official_maps, num_random_official_maps
+    )
 
     selected_maps = selected_community_maps + selected_official_maps
 
@@ -87,35 +100,28 @@ def run():
         {
             "name": f"Victory ({n_medals} gold medals)",
             "requires": [f"Gold Medal:{n_medals}"],
-            "victory": True
+            "victory": True,
         }
     )
-    items = NON_MAP_ITEMS + [
-        {
-            "name": map.name,
-            "progression": True,
-            "category": ["Maps"]
-        } for map in selected_maps
-    ] + [
-        {
-            "name": "Gold Medal",
-            "progression": ["True"],
-            "category": ["Medals"],
-            "count": len(selected_maps)
-        }
-    ]
-    starting_maps = [map.name for map in (guaranteed_community_maps + guaranteed_official_maps)]
-    starting_items = [
-            {"items": starting_maps},
+    items = (
+        NON_MAP_ITEMS
+        + [map.as_item() for map in selected_maps]
+        + [
             {
-                "item_categories": [
-                    "Maps"
-                ],
-                "random": SETTINGS["num_starting_maps"]
+                "name": "Gold Medal",
+                "progression": ["True"],
+                "category": ["Medals"],
+                "count": len(selected_maps),
             }
         ]
+    )
+    possible_starter_maps = [map.name for map in selected_maps if "starter" in map.tags]
+    starting_items = [
+        {"items": possible_starter_maps, "random": 1},
+        {"item_categories": ["Maps"], "random": SETTINGS["num_starting_maps"] - 1},
+    ]
     if skill_modifier == -4:
-        starting_items.append({"items": ["Progressive Pan/Zoom/Move"], "random": 2})
+        starting_items.append({"items": ["Progressive Pan/Zoom/Move"], "random": 1})
         starting_items.append({"items": ["Compass"]})
         starting_items.append({"items": ["+10 seconds"], "random": 6})
     elif skill_modifier == -3:
@@ -132,7 +138,7 @@ def run():
         "game": "GeoGuessr",
         "player": "arborelia",
         "filler_item_name": "Score Boost +200",
-        "starting_items": starting_items
+        "starting_items": starting_items,
     }
     region_data = {}
     world_name = f"manual_geoguessr_{player_name}"
