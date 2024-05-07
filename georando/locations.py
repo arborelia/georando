@@ -140,9 +140,8 @@ DIFFICULTY_LOGIC = {
     # - 5k location on A Speedrun World
     8: [
         [MOVE, "Compass", "+10 seconds:8"],
-        [ZOOM, "Compass", "+10 seconds:12", "Satellite Map View"],
-        [ZOOM, "Compass", "+10 seconds:14", "Car visibility"],
-        [ZOOM, "Compass", "+10 seconds:16", "Terrain Map View"],
+        [ZOOM, "Compass", "+10 seconds:12", "Satellite Map View", "Car visibility"],
+        [ZOOM, "Compass", "+10 seconds:15", "Terrain Map View", "Car visibility"],
     ],
     # Difficulty 9
     # Examples:
@@ -152,9 +151,8 @@ DIFFICULTY_LOGIC = {
     # - 5k location on I Saw the Sign
     9: [
         [MOVE, "Compass", "+10 seconds:12"],
-        [ZOOM, "Compass", "+10 seconds:18", "Satellite Map View"],
-        [ZOOM, "Compass", "+10 seconds:20", "Car visibility"],
-        [ZOOM, "Compass", "+10 seconds:22", "Terrain Map View"],
+        [ZOOM, "Compass", "+10 seconds:18", "Satellite Map View", "Car visibility"],
+        [ZOOM, "Compass", "+10 seconds:21", "Terrain Map View", "Car visibility"],
     ],
     # Difficulty 10
     # Examples:
@@ -286,6 +284,7 @@ def make_map_goals(map: GeoGuessrMap, skill_modifier: int = 0) -> List[dict]:
             }
             if goal_name == "22.5k round":
                 goal_data["place_item"] = ["Gold Medal"]
+                goal_data["category"].append("Gold Medals")
             goals.append(goal_data)
     return goals
 

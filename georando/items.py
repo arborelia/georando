@@ -22,7 +22,7 @@ NON_MAP_ITEMS = [
     {"name": "OpenStreetMap View", "useful": True, "category": ["Features"]},
     {"name": "Fast Driving", "useful": True, "category": ["Features"]},
     {"name": "Show Author Names", "useful": True, "category": ["Features"]},
-    {"name": "Score Boost +1000", "useful": True, "count": 20, "category": ["Boosts"]},
+    {"name": "Score Boost +500", "useful": True, "count": 30, "category": ["Boosts"]},
     {"name": "+10 seconds", "progression": True, "count": 62, "category": ["Features"]},
     {"name": "20 Second Timer Trap", "count": 2, "trap": True, "category": ["Traps"]},
     {"name": "Death Metal Map Trap", "count": 1, "trap": True, "category": ["Traps"]},

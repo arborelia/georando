@@ -41,6 +41,7 @@ def official_map(
     provides: Optional[List[str]] = None,
     may_provide: Optional[List[str]] = None,
     official_coverage: bool = True,
+    streakable: bool = False,
 ) -> GeoGuessrMap:
     if provides is None:
         provides = []
@@ -50,7 +51,7 @@ def official_map(
         name=name,
         creator="GeoGuessr",
         difficulty=difficulty,
-        streakable=False,
+        streakable=streakable,
         official_coverage=official_coverage,
         may_provide=may_provide or [],
         provides=provides,
@@ -306,6 +307,7 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
         difficulty=1,
         official_coverage=False,
         tags=["popular", "world", "theme"],
+        streakable=True,
     ),
     official_map(
         "World",
@@ -313,6 +315,7 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
         official_coverage=False,
         may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON + EASY_SIGHTINGS,
         tags=["world", "starter"],
+        streakable=True,
     ),
 ]
 
@@ -322,6 +325,7 @@ COMMUNITY_MAPS = {
         "A Community World",
         "MatePotato",
         difficulty=3,
+        streakable=True,
         provides=[],
         may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON + EASY_SIGHTINGS,
         tags=["popular", "world", "starter"],
@@ -1144,7 +1148,8 @@ COMMUNITY_MAPS = {
         "TheMatty",
         url="https://www.geoguessr.com/maps/5ed2f830282ad28b94ff17d6/play",
         difficulty=3,
-        streakable=True,
+        streakable=False,
+        official_coverage=False,
         provides=["United Kingdom"],
         may_provide=["a train"],
         tags=["country", "theme"]
@@ -1161,6 +1166,7 @@ COMMUNITY_MAPS = {
         "An Unofficial Street World",
         "David Walker",
         difficulty=5,
+        streakable=True,
         official_coverage=False,
         tags=["world"],
     ),

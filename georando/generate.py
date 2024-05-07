@@ -12,15 +12,15 @@ SETTINGS = {
     # How many official (country) maps to use. These maps are harder than most community maps.
     "num_official": 5,
     # How many community maps to use.
-    "num_community": 15,
+    "num_community": 10,
     # How many random maps to start with
     "num_starting_maps": 3,
     # Names of maps or countries you find easier, and which should be earlier in logic, because you're
     # particularly familiar with them. For example, you might want to put the country you live in here.
     "familiar": ["United States"],
-    # Official maps that should be available from the start.
+    # Official maps that should be in the pool.
     "guaranteed_official_maps": [],
-    # Community maps that should be available from the start.
+    # Community maps that should be in the pool.
     "guaranteed_community_maps": ["A Community World"],
     # Should maps with relatively few locations, such as Andorra or Guam, be included in the official
     # map pool?
@@ -45,7 +45,7 @@ SETTINGS = {
     "skill_level": 5,
     # You get a Gold Medal for scoring 22.5k on a map (probably adjustable later). The victory condition
     # is getting some number of them. Choose that number here.
-    "medals_to_win": 10,
+    "medals_to_win": 5,
 }
 
 
@@ -95,11 +95,14 @@ def run():
     selected_maps = selected_community_maps + selected_official_maps
 
     locations = make_goals(selected_maps, SETTINGS["familiar"], skill_modifier)
-    n_medals = SETTINGS["medals_to_win"]
+    n_medals_total = len([
+        loc for loc in locations if "Gold Medals" in loc["category"]
+    ])
+    n_medals_to_win = SETTINGS["medals_to_win"]
     locations.append(
         {
-            "name": f"Victory ({n_medals} gold medals)",
-            "requires": [f"Gold Medal:{n_medals}"],
+            "name": f"Victory ({n_medals_to_win} gold medals)",
+            "requires": [f"Gold Medal:{n_medals_to_win}"],
             "victory": True,
         }
     )
@@ -111,7 +114,7 @@ def run():
                 "name": "Gold Medal",
                 "progression": ["True"],
                 "category": ["Medals"],
-                "count": len(selected_maps),
+                "count": n_medals_total,
             }
         ]
     )
@@ -137,7 +140,7 @@ def run():
     game_data = {
         "game": "GeoGuessr",
         "player": "arborelia",
-        "filler_item_name": "Score Boost +200",
+        "filler_item_name": "Score Boost +100",
         "starting_items": starting_items,
     }
     region_data = {}
