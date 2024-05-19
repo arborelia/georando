@@ -56,15 +56,26 @@ For example, if you scored 11,000 on A Community World, you unlock **A Community
 
 On maps that are not localized to one country, you can get country streaks from correctly identifying the country N times in a row. The map category will have **3 Country Streak**, **4 Country Streak**, and **5 Country Streak** unlocks for when you accomplish this.
 
-Continent checks are a bit more complex. Look at your score summary for the game. Add up your total score for locations that were _within each continent_. (Europe meets Asia at the Ural mountains; use your best judgment for which side you're on.) Choose the unlocks for scores you exceeded within a continent from the **Continent checks** category -- for example, if there were two locations in Europe and you got 9,000 total on them, unlock **5k within Europe**.
+Continent checks are a bit more complex. Look at your score summary for the game. Add up your total score for locations that were _within each continent_. Choose the unlocks for scores you exceeded within a continent from the **Continent checks** category -- for example, if there were two locations in Europe and you got 9,000 total on them, unlock **5k within Europe**.
 
 Some of the filler items are "Score Boost +100" and "Score Boost +500" items. You can consume these to add to your score when you get close to a target score.
+
+### Arbitrary decisions about continents
+
+When adding up your score for a continent:
+
+- Europe meets Asia at the Ural mountains, and at the Bosphorus Strait that goes through Istanbul. If you're in the Ural mountains, use your best judgment.
+- Greenland is in North America.
+- Iceland is in Europe.
+- Hawaii and Midway Atoll are in Oceania.
+- The Philippines are in Asia.
+- Réunion is in Africa.
 
 ### Sometimes checks are easy
 
 You may ask yourself, "I just got the Serbia map. Am I allowed to play one location of it and then unlock **Identify Serbia**?" Yes. It's free and the logic expects you to do it.
 
-Most country-specific maps also give you easy continent checks, like a United States map lets you count your score toward North America unlocks as well. The only countries where you'd have to count it up differently are those on multiple continents, like Russia or Türkiye, or if you consider Hawaii part of Oceania.
+Most country-specific maps also give you easy continent checks, like a United States map lets you count your score toward North America unlocks as well. The only countries where you'd have to count it up differently are those on multiple continents, like Russia, Türkiye, or technically the United States.
 
 ### Unlocking features
 
