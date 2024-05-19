@@ -19,7 +19,7 @@ Here are instructions for how to get an APworld:
 
 - Install Python 3.8 or later
 - Check out this git repository
-- Change options in `georando/generate.py` if you want
+- Change options in `georando/generate.py` if you want. This is where you can change things like the difficulty of the logic based on how good you are at GeoGuessr.
 - Run `python3 georando/generate.py` from the root of the repository
 - It outputs an .apworld, which you can copy into Archipelago/lib/worlds
 - An example .yaml template is in the main directory here. Put it in your Archipelago/Players folder and generate a world.
@@ -60,12 +60,19 @@ Continent checks are a bit more complex. Look at your score summary for the game
 
 Some of the filler items are "Score Boost +100" and "Score Boost +500" items. You can consume these to add to your score when you get close to a target score.
 
+### Sometimes checks are easy
+
+You may ask yourself, "I just got the Serbia map. Am I allowed to play one location of it and then unlock **Identify Serbia**?" Yes. It's free and the logic expects you to do it.
+
+Most country-specific maps also give you easy continent checks, like a United States map lets you count your score toward North America unlocks as well. The only countries where you'd have to count it up differently are those on multiple continents, like Russia or Türkiye, or if you consider Hawaii part of Oceania.
+
 ### Unlocking features
 
 - Increase your time per round whenever you get a **+10 Seconds** item.
 - The first time you get a **Progressive Pan/Zoom/Move** item, enable the Pan ability. The second time, enable Zoom, and the third time, enable Move.
 - When you get the **Compass**, press Shift+K to un-hide the compass.
 - When you get **Car visibility**, turn off the GeoNoCar script from the Tampermonkey menu, and reload the page. Incidentally, because of the way this is implemented, if you don't have Compass yet, this gives you the compass for free! You probably won't mind.
+- When you get **Terrain Map View** or **Satellite Map View**, you can click the yellow sidebar button that the Unity script added and choose "Satellite" or "Terrain" as appropriate, to change your mini-map view. **Satellite Map View** also allows you to choose "Hybrid", to overlay roads on the satellite map.
 - When you get **Show Author Names**, if you are using GeoGuessr Ultimate Script to block out the name of the location creator, you can unblock it. Otherwise, it's just a meaningless item.
 - If you have Move unlocked and you get **Fast Driving**, you're now allowed to press "4" to go forward 100 meters using the GeoGuessr Unity Script.
 - Some items name a new map that you're now allowed to play on -- you can choose that map and get unlocks on it from now on.
