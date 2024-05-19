@@ -64,6 +64,7 @@ When adding up your score for a continent:
 
 - Europe meets Asia at the Ural mountains, and at the Bosphorus Strait that goes through Istanbul. If you're in the Ural mountains, use your best judgment.
 - Greenland is in North America.
+- Curaçao is in South America.
 - Iceland is in Europe.
 - Hawaii and Midway Atoll are in Oceania.
 - The Philippines are in Asia.
