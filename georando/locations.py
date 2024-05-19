@@ -43,9 +43,6 @@ def make_country_individual_goal(
             # this is a freebie, like recognizing Albania on the Albania map
             difficulty_logic = [[]]
         if country in map.provides or country in map.may_provide:
-            print(
-                f"Identify {country} from map {map.name} at difficulty {map.difficulty - skill_modifier}"
-            )
             for diff_option in difficulty_logic:
                 logic_options.append([map.name] + diff_option)
 
