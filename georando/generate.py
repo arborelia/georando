@@ -24,7 +24,7 @@ SETTINGS = {
     "guaranteed_community_maps": ["A Community World"],
     # Should maps with relatively few locations, such as Andorra or Guam, be included in the official
     # map pool?
-    "allow_small_official": False,
+    "allow_small_official": True,
     # Should maps be allowed to include locations with photospheres or street cameras that aren't
     # operated by Google? The logic for these maps will never require you to have Move unlocked, because
     # Move doesn't work in most of these locations.
@@ -45,7 +45,9 @@ SETTINGS = {
     "skill_level": 5,
     # You get a Gold Medal for scoring 22.5k on a map (probably adjustable later). The victory condition
     # is getting some number of them. Choose that number here.
-    "medals_to_win": 5,
+    "medals_to_win": 3,
+    # Maximum number of community maps that are allowed to have the "troll" tag.
+    "max_troll": 1,
 }
 
 
@@ -73,9 +75,16 @@ def run():
     num_random_community_maps = SETTINGS["num_community"] - len(
         guaranteed_community_maps
     )
-    random_community_maps = [
-        map for map in map_pool_community if map.name not in guaranteed_community_names
-    ]
+    for iter in range(10):
+        # Try hard not to pick too many troll maps
+        random_community_maps = [
+            map
+            for map in map_pool_community
+            if map.name not in guaranteed_community_names
+        ]
+        n_troll = len([map for map in random_community_maps if "troll" in map.tags])
+        if n_troll <= SETTINGS["max_troll"]:
+            break
     selected_community_maps = guaranteed_community_maps + random.sample(
         random_community_maps, num_random_community_maps
     )
@@ -95,9 +104,7 @@ def run():
     selected_maps = selected_community_maps + selected_official_maps
 
     locations = make_goals(selected_maps, SETTINGS["familiar"], skill_modifier)
-    n_medals_total = len([
-        loc for loc in locations if "Gold Medals" in loc["category"]
-    ])
+    n_medals_total = len([loc for loc in locations if "Gold Medals" in loc["category"]])
     n_medals_to_win = SETTINGS["medals_to_win"]
     locations.append(
         {
