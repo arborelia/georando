@@ -180,7 +180,7 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
     ),
     official_map("Kenya", provides=["Africa"]),
     official_map("Kyrgyzstan", provides=["Asia", "Cyrillic letters"]),
-    official_map("Laos", tags=["small"], difficulty=4),
+    official_map("Laos", provides=["Asia"], tags=["small"], difficulty=4),
     official_map("Latvia", provides=["Europe"]),
     official_map("Lesotho", difficulty=6, provides=["Africa"]),
     # Lithuania should be 'small' by my definition, but that feels wrong
@@ -250,7 +250,7 @@ OFFICIAL_MAPS: List[GeoGuessrMap] = [
     official_map(
         "Tunisia", provides=["Africa"], may_provide=["Arabic letters", STOP["qif"]]
     ),
-    official_map("Türkiye", may_provide=[STOP["dur"]]),
+    official_map("Türkiye", may_provide=["Europe", "Asia", STOP["dur"]]),
     official_map("Uganda", provides=["Africa"], difficulty=4, tags=["small"]),
     official_map(
         "Ukraine", difficulty=6, provides=["Europe"], may_provide=["Cyrillic letters"]
@@ -326,7 +326,6 @@ COMMUNITY_MAPS = {
         "MatePotato",
         difficulty=3,
         streakable=True,
-        provides=[],
         may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON + EASY_SIGHTINGS,
         tags=["popular", "world", "starter"],
     ),
@@ -334,7 +333,7 @@ COMMUNITY_MAPS = {
         "100 largest cities of Canada",
         "Simi",
         difficulty=2,
-        provides=["Canada"],
+        provides=["Canada", "North America"],
         streakable=False,
         may_provide=[
             "a mural",
@@ -367,6 +366,9 @@ COMMUNITY_MAPS = {
         streakable=True,
         may_provide=[
             "snow",
+            "Europe",
+            "North America",
+            "Asia",
             "Iceland",
             "Greenland",
             "Faroe Islands",
@@ -691,6 +693,34 @@ COMMUNITY_MAPS = {
         "Coastal Cities 100K+",
         "Scribbles",
         url="https://www.geoguessr.com/maps/60ea152d6228100001e6e0ee",
+        # Common checks where coastal cities are likely
+        may_provide=CONTINENT_CHECKS
+        + [
+            "Australia",
+            "Brazil",
+            "Canada",
+            "Chile",
+            "Finland",
+            "France",
+            "Ghana",
+            "Greece",
+            "Indonesia",
+            "Italy",
+            "Japan",
+            "Malaysia",
+            "Mexico",
+            "New Zealand",
+            "Norway",
+            "Peru",
+            "Philippines",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Thailand",
+            "Türkiye",
+            "United Kingdom",
+            "United States",
+        ],
         difficulty=2,
         streakable=True,
         tags=["world", "urban"],
@@ -701,7 +731,7 @@ COMMUNITY_MAPS = {
         difficulty=5,
         official_coverage=False,
         streakable=True,
-        may_provide=[ULTRA_RARE_CHECK],
+        may_provide=[ULTRA_RARE_CHECK] + CONTINENT_CHECKS,
         tags=["world"],
     ),
     "community_europe": community_map(
@@ -784,6 +814,7 @@ COMMUNITY_MAPS = {
         "Scribbles",
         difficulty=2,
         streakable=True,
+        may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON,
         tags=["world", "pinpointable"],
     ),
     "diverse_complete_world": community_map(
@@ -792,7 +823,7 @@ COMMUNITY_MAPS = {
         difficulty=5,
         official_coverage=False,
         streakable=True,
-        may_provide=[ULTRA_RARE_CHECK],
+        may_provide=[ULTRA_RARE_CHECK] + CONTINENT_CHECKS,
         tags=["world", "balanced"],
     ),
     "diverse_usa": community_map(
@@ -806,6 +837,7 @@ COMMUNITY_MAPS = {
         "La Diversité Française",
         "La Commu GeoFrance",
         url="https://www.geoguessr.com/maps/5eb5ea048734a02c543f2ae1",
+        provides=["France", "Europe"],
         difficulty=5,
         tags=["balanced", "country", "pinpointable"],
     ),
@@ -815,7 +847,8 @@ COMMUNITY_MAPS = {
         url="https://www.geoguessr.com/maps/64d02e3339429d08f644e153",
         difficulty=7,
         streakable=True,
-        may_provide=["United States", "Turkey", "Mongolia", "Russia", "Australia"],
+        may_provide=["United States", "Turkey", "Mongolia", "Russia", "Australia"]
+        + CONTINENT_CHECKS,
         tags=["rural", "world"],
     ),
     "equidistant_world": community_map(
@@ -835,7 +868,8 @@ COMMUNITY_MAPS = {
             "Australia",
             "India",
             "Russia",
-        ],
+        ]
+        + CONTINENT_CHECKS,
         tags=["balanced", "world", "starter"],
     ),
     "extraordinary_cow": community_map(
@@ -853,6 +887,7 @@ COMMUNITY_MAPS = {
         difficulty=6,
         official_coverage=False,
         streakable=True,
+        may_provide=CONTINENT_CHECKS,
         tags=["theme", "world"],
     ),
     "every_us_train": community_map(
@@ -860,7 +895,7 @@ COMMUNITY_MAPS = {
         "Acela2163",
         url="https://www.geoguessr.com/maps/65976dd83835e9e68d393f8d",
         difficulty=3,
-        provides=["United States"],
+        provides=["United States", "North America"],
         may_provide=["a train"],
         tags=["country", "theme"],
     ),
@@ -878,6 +913,10 @@ COMMUNITY_MAPS = {
             "Australia",
             "Indonesia",
             "Mexico",
+            "Europe",
+            "Asia",
+            "North America",
+            "South America",
         ],
         tags=["world", "starter"],
     ),
@@ -888,6 +927,7 @@ COMMUNITY_MAPS = {
         streakable=True,
         official_coverage=False,
         provides=["a national flag"],
+        may_provide=CONTINENT_CHECKS,
         tags=["world", "theme"],
     ),
     "geodetective_world": community_map(
@@ -897,7 +937,8 @@ COMMUNITY_MAPS = {
         difficulty=2,
         streakable=True,
         official_coverage=False,
-        tags=["world", "pinpointable"]
+        may_provide=CONTINENT_CHECKS,
+        tags=["world", "pinpointable"],
     ),
     "geoguessr_in_2069": community_map(
         "GeoGuessr in 2069 - IMPROVED",
@@ -906,7 +947,7 @@ COMMUNITY_MAPS = {
         difficulty=5,
         streakable=True,
         official_coverage=False,
-        may_provide=[ULTRA_RARE_CHECK],
+        may_provide=[ULTRA_RARE_CHECK] + CONTINENT_CHECKS,
         tags=["world"],
     ),
     "haer_raader": community_map(
@@ -924,7 +965,24 @@ COMMUNITY_MAPS = {
         "baszmania",
         url="https://www.geoguessr.com/maps/62e402e93b3df96f2e031afc",
         difficulty=3,
-        provides=["a train"],
+        provides=[
+            "a train",
+            "Europe",
+            "North America",
+            "Asia",
+            "Austria",
+            "Brazil",
+            "Finland",
+            "France",
+            "Germany",
+            "India",
+            "Italy",
+            "Russia",
+            "Spain",
+            "United States",
+            "United Kingdom",
+            "Japan",
+        ],
         streakable=True,
         tags=["theme", "world"],
     ),
@@ -935,7 +993,8 @@ COMMUNITY_MAPS = {
         streakable=True,
         provides=["an airport"],
         # fill more of these in based on observation:
-        may_provide=[
+        may_provide=CONTINENT_CHECKS
+        + [
             "United States",
             "Mexico",
             "France",
@@ -950,6 +1009,7 @@ COMMUNITY_MAPS = {
         "Kirsike",
         difficulty=2,
         streakable=True,
+        may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON,
         tags=["world"],
     ),
     "learning_world": community_map(
@@ -962,7 +1022,18 @@ COMMUNITY_MAPS = {
     "linguistic_world": community_map(
         "A Linguistic World",
         "nuujaku",
-        may_provide=[
+        # may_provide country list could be more complete
+        may_provide=CONTINENT_CHECKS
+        + [
+            "France",
+            "Spain",
+            "United Kingdom",
+            "Italy",
+            "South Africa",
+            "Russia",
+            "Europe",
+            "Asia",
+            "Africa",
             "Cyrillic letters",
             "Arabic letters",
             "Greek letters",
@@ -987,6 +1058,7 @@ COMMUNITY_MAPS = {
         difficulty=3,
         streakable=True,
         provides=["a mural"],
+        may_provide=CONTINENT_CHECKS,
         tags=["theme", "world", "urban"],
     ),
     "pinpointable_mongolia": community_map(
@@ -1003,6 +1075,7 @@ COMMUNITY_MAPS = {
         url="https://www.geoguessr.com/maps/6029991c5048850001d572a9",
         difficulty=2,
         streakable=True,
+        may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON,
         tags=["pinpointable", "world"],
     ),
     "pro_world": community_map(
@@ -1010,6 +1083,7 @@ COMMUNITY_MAPS = {
         "slashP",
         difficulty=4,
         streakable=True,
+        may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON,
         tags=["world"],
     ),
     "rural_world": community_map(
@@ -1019,6 +1093,12 @@ COMMUNITY_MAPS = {
         difficulty=5,
         tags=["rural", "world"],
         may_provide=[
+            "Europe",
+            "North America",
+            "South America",
+            "Africa",
+            "Asia",
+            "Oceania",
             "France",
             "Germany",
             "Italy",
@@ -1068,6 +1148,12 @@ COMMUNITY_MAPS = {
         streakable=True,
         tags=["world", "rural"],
         may_provide=[
+            "Africa",
+            "Oceania",
+            "Europe",
+            "North America",
+            "Asia",
+            "South America",
             "Kenya",
             "South Africa",
             "Senegal",
@@ -1099,6 +1185,7 @@ COMMUNITY_MAPS = {
         "Scribbles",
         difficulty=1,
         streakable=True,
+        may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON,
         tags=["world", "pinpointable", "urban"],
     ),
     "terminus": community_map(
@@ -1107,6 +1194,12 @@ COMMUNITY_MAPS = {
         difficulty=4,
         streakable=True,
         may_provide=[
+            "Asia",
+            "Europe",
+            "South America",
+            "North America",
+            "Oceania",
+            "Africa",
             "Russia",
             "Turkey",
             "France",
@@ -1131,7 +1224,7 @@ COMMUNITY_MAPS = {
             "United States",
             "Mexico",
             "Canada",
-            "Australia"
+            "Australia",
         ],
         tags=["world", "theme"],
     ),
@@ -1150,9 +1243,9 @@ COMMUNITY_MAPS = {
         difficulty=3,
         streakable=False,
         official_coverage=False,
-        provides=["United Kingdom"],
+        provides=["United Kingdom", "Europe"],
         may_provide=["a train"],
-        tags=["country", "theme"]
+        tags=["country", "theme"],
     ),
     "unesco_world_heritage": community_map(
         "UNESCO World Heritage Sites",
@@ -1160,6 +1253,7 @@ COMMUNITY_MAPS = {
         difficulty=5,
         streakable=True,
         official_coverage=False,
+        may_provide=CONTINENT_CHECKS,
         tags=["theme", "world"],
     ),
     "unofficial_street_world": community_map(
@@ -1168,6 +1262,7 @@ COMMUNITY_MAPS = {
         difficulty=5,
         streakable=True,
         official_coverage=False,
+        may_provide=CONTINENT_CHECKS,
         tags=["world"],
     ),
     "urban_argentina": community_map(
@@ -1192,6 +1287,12 @@ COMMUNITY_MAPS = {
         difficulty=3,
         streakable=True,
         may_provide=[
+            "North America",
+            "South America",
+            "Asia",
+            "Africa",
+            "Oceania",
+            "Europe",
             "United States",
             "Brazil",
             "Canada",
@@ -1227,6 +1328,7 @@ COMMUNITY_MAPS = {
         url="https://www.geoguessr.com/maps/630ccd1d612a29ef2a3913a2",
         difficulty=6,
         streakable=True,
+        may_provide=CONTINENT_CHECKS,
         tags=["world", "theme", "rural"],
     ),
     "world_waterfalls": community_map(
