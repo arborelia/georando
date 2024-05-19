@@ -95,6 +95,11 @@ Some country checks just won't exist -- this particularly happens when it's a ch
 - Some items name a new map that you're now allowed to play on -- you can choose that map and get unlocks on it from now on.
 
 
+### Traps
+
+- When you get a "Mega Plonk Trap", you have to click your next location while fully zoomed out on the mini-map.
+- When you get a "20 Second Timer Trap", you have to play a round with a 20 second timer instead of the time amount you've unlocked.
+
 ### The goal
 
 When you score 22,500 or more on a GeoGuessr map, choose the appropriate 22.5k unlock to get a Gold Medal. You have to get that score naturally, without using Score Boosts.
