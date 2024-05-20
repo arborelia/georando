@@ -289,6 +289,10 @@ def make_map_goals(map: GeoGuessrMap, skill_modifier: int = 0) -> List[dict]:
 def make_continent_goals(
     continent: str, maps: List[GeoGuessrMap], skill_modifier: int = 0
 ) -> List[dict]:
+    """
+    An experiment that I think didn't work well, where you'd add up your total score on a round within
+    each continent and get checks for that.
+    """
     goals = []
     for goal in CONTINENT_GOALS:
         logic_options = []
@@ -316,8 +320,6 @@ def make_goals(
 ) -> List[dict]:
     goals = []
     goals.extend(make_country_goals(maps, skill_modifier))
-    for continent in CONTINENT_CHECKS:
-        goals.extend(make_continent_goals(continent, maps, skill_modifier))
     for map in maps:
         map_skill_mod = skill_modifier
         if map.name in familiar or (set(familiar) & set(map.provides)):

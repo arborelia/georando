@@ -31,12 +31,11 @@ Part of the fun of GeoRando is playing on different maps every time, which means
 
 I understand that I could use "hooks" in Manual for Archipelago to implement this, but I would rather spend that development time on making a full-fledged APWorld instead of making the Manual easier to generate.
 
-
 ## How to play GeoRando
 
 Run the Manual Client from the Archipelago Launcher so you can see what you have unlocked and interact with your world.
 
-You will start with:
+If you don't have additional starting items, you will start with:
 
 - Some number of GeoGuessr maps to play (default 3)
 - 10 seconds per round
@@ -48,39 +47,25 @@ Choose a map, set up your browser extensions to block the compass and car (Shift
 
 Whenever you choose a location **in the correct country**, find that country in the "Correctly Identify Countries" category and unlock that check if you haven't already. For example, the first time you choose Kenya when the location is in Kenya, you will unlock **Identify Kenya**.
 
+There are checks for exceeding score thresholds on a single location. If you get 4800 points for one location in Famous Places, check off **Famous Places: 2k location**, **Famous Places: 3k location**, **Famous Places: 4k location**, and **Famous Places: 4.5k location**.
+
 When you play a round of 5 locations, look at your total score, and go to the category for that map. Click all the unlocks for score thresholds you exceeded.
 
-For example, if you scored 11,000 on A Community World, you unlock **A Community World 5k**, **A Community World 7.5k**, and **A Community World 10k**.
+For example, if you scored 11,000 on A Community World, you unlock **A Community World: 5k round**, **A Community World: 7.5k round**, and **A Community World: 10k round**.
 
 On maps that are not localized to one country, you can get country streaks from correctly identifying the country N times in a row. The map category will have **3 Country Streak**, **4 Country Streak**, and **5 Country Streak** unlocks for when you accomplish this.
 
-Continent checks are a bit more complex. Look at your score summary for the game. Add up your total score for locations that were _within each continent_. Choose the unlocks for scores you exceeded within a continent from the **Continent checks** category -- for example, if there were two locations in Europe and you got 9,000 total on them, unlock **5k within Europe**.
-
-Some of the filler items are "Score Boost +100" and "Score Boost +500" items. You can consume these to add to your score when you get close to a target score.
-
-### Arbitrary decisions about continents
-
-When adding up your score for a continent:
-
-- Europe meets Asia at the Ural mountains, and at the Bosphorus Strait that goes through Istanbul. If you're in the Ural mountains, use your best judgment.
-- Greenland is in North America.
-- Curaçao is in South America.
-- Iceland is in Europe.
-- Hawaii and Midway Atoll are in Oceania.
-- The Philippines are in Asia.
-- Réunion is in Africa.
+Some of the filler items are "Score Boost +100" and "Score Boost +500" items. You can consume these to add to your score for a round when you get close to a target score. You cannot add them to a single location.
 
 ### Sometimes checks are easy
 
 You may ask yourself, "I just got the Serbia map. Am I allowed to play one location of it and then unlock **Identify Serbia**?" Yes. It's free and the logic expects you to do it.
 
-Most country-specific maps also give you easy continent checks, like a United States map lets you count your score toward North America unlocks as well. The only countries where you'd have to count it up differently are those on multiple continents, like Russia, Türkiye, or technically the United States.
-
 ### Notes on checks
 
 Remember, Googling during a round is considered to be cheating at GeoGuessr. Set the difficulty level (see [Settings](#settings) below) so that you won't have to cheat.
 
-The country and continent checks are only in logic when you have a map that's likely to put you there. Countries with relatively few locations need a more specific map to be in logic. For example, you will not be expected to get Lesotho from a world map, but you will from an Africa map.
+The country checks are only in logic when you have a map that's likely to put you there. Countries with relatively few locations need a more specific map to be in logic. For example, you will not be expected to get Lesotho from a world map, but you will from an Africa map.
 
 Some country checks just won't exist -- this particularly happens when it's a check that's unlikely no matter what you have unlocked. There won't be an "Identify Monaco" check, for example.
 
@@ -94,7 +79,6 @@ Some country checks just won't exist -- this particularly happens when it's a ch
 - When you get **Show Author Names**, if you are using GeoGuessr Ultimate Script to block out the name of the location creator, you can unblock it. Otherwise, it's just a meaningless item.
 - If you have Move unlocked and you get **Fast Driving**, you're now allowed to press "4" to go forward 100 meters using the GeoGuessr Unity Script.
 - Some items name a new map that you're now allowed to play on -- you can choose that map and get unlocks on it from now on.
-
 
 ### Traps
 
