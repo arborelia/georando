@@ -17,6 +17,12 @@ NON_MAP_ITEMS = [
         "count": 1,
         "category": ["Features"],
     },
+    {
+        "name": "Map Fragment",
+        "count": 21,
+        "useful": True,
+        "category": ["Maps"],
+    },
     {"name": "Terrain Map View", "progression": True, "category": ["Features"]},
     {"name": "Satellite Map View", "progression": True, "category": ["Features"]},
     {"name": "OpenStreetMap View", "useful": True, "category": ["Features"]},

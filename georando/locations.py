@@ -128,6 +128,11 @@ DIFFICULTY_LOGIC = {
             "+10 seconds:12",
             "Terrain Map View",
         ],
+        [
+            "Progressive Pan/Zoom/Move",
+            "Compass",
+            "+10 seconds:15",
+        ],
     ],
     # Difficulty 8
     # Examples:
