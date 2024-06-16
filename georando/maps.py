@@ -607,6 +607,8 @@ COMMUNITY_MAPS = {
         streakable=True,
         tags=["world", "urban", "starter"],
     ),
+    # remove this one? it's got a lot of indoor locations and may be
+    # just a polygonal map
     "ciudades": community_map(
         "Ciudades España",
         "ItsMoler",
@@ -1214,6 +1216,7 @@ COMMUNITY_MAPS = {
         "0xGG",
         url="https://www.geoguessr.com/maps/64c9d1fea046340237ac216d",
         difficulty=4,
+        official_coverage=False,
         may_provide=[
             "United States",
             "Norway",
@@ -1237,7 +1240,7 @@ COMMUNITY_MAPS = {
             "Asia",
             "Oceania",
         ],
-        tags=["theme", "world", "starter"],
+        tags=["theme", "world"],
     ),
     "mcdonalds": community_map(
         "McDonald's Worldwide",
@@ -1295,15 +1298,6 @@ COMMUNITY_MAPS = {
         streakable=True,
         may_provide=CONTINENT_CHECKS,
         tags=["theme", "world"],
-    ),
-    "pain_suffering": community_map(
-        "Pain and Suffering",
-        "0xGG",
-        url="https://www.geoguessr.com/maps/64c9ec177034900d1c258dd2",
-        difficulty=7,
-        streakable=True,
-        may_provide=CONTINENT_CHECKS,
-        tags=["theme", "world", "troll"],
     ),
     "perfect_detective": community_map(
         "Perfect Detective Map",
