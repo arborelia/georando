@@ -63,7 +63,7 @@ def run():
 
     selected_maps = selected_community_maps + selected_official_maps
 
-    locations = make_goals(selected_maps, SETTINGS["familiar"], skill_modifier)
+    locations = make_goals(selected_maps, SETTINGS)
     n_medals_total = len([loc for loc in locations if "Gold Medals" in loc["category"]])
     n_medals_to_win = SETTINGS["medals_to_win"]
     locations.append(

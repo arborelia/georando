@@ -1,7 +1,6 @@
 from typing import List
 from georando.checks import (
     CONTINENT_CHECKS,
-    CONTINENT_GOALS,
     COUNTRY_CHECKS,
     MAP_GOALS,
 )
@@ -250,10 +249,14 @@ DIFFICULTY_LOGIC = {
 }
 
 
-def make_map_goals(map: GeoGuessrMap, skill_modifier: int = 0) -> List[dict]:
+def make_map_goals(
+    map: GeoGuessrMap, settings: dict, skill_modifier: int = 0
+) -> List[dict]:
     goals = []
     for goal in MAP_GOALS:
         if "streak" in goal["name"] and not map.streakable:
+            continue
+        if "streak" in goal["name"] and not settings["streaks"]:
             continue
         difficulty = map.difficulty + goal["difficulty"] - skill_modifier
         goal_name = goal["name"]
@@ -286,43 +289,17 @@ def make_map_goals(map: GeoGuessrMap, skill_modifier: int = 0) -> List[dict]:
     return goals
 
 
-def make_continent_goals(
-    continent: str, maps: List[GeoGuessrMap], skill_modifier: int = 0
-) -> List[dict]:
-    """
-    An experiment that I think didn't work well, where you'd add up your total score on a round within
-    each continent and get checks for that.
-    """
-    goals = []
-    for goal in CONTINENT_GOALS:
-        logic_options = []
-        goal_name = goal["name"]
-        for map in maps:
-            if continent in map.provides:
-                difficulty = goal["difficulty"] + map.difficulty - skill_modifier
-                logic_options_here = [
-                    [map.name] + option for option in DIFFICULTY_LOGIC[difficulty]
-                ]
-                logic_options.extend(logic_options_here)
-        if logic_options:
-            goals.append(
-                {
-                    "name": f"{goal_name} {continent}",
-                    "category": ["Continent goals"],
-                    "requires": format_logic(logic_options),
-                }
-            )
-    return goals
-
-
 def make_goals(
-    maps: List[GeoGuessrMap], familiar: List[str] = [], skill_modifier: int = 0
+    maps: List[GeoGuessrMap],
+    settings: dict,
 ) -> List[dict]:
+    skill_modifier = settings["skill_level"] - 5
+    familiar = settings["familiar"]
     goals = []
     goals.extend(make_country_goals(maps, skill_modifier))
     for map in maps:
         map_skill_mod = skill_modifier
         if map.name in familiar or (set(familiar) & set(map.provides)):
             map_skill_mod += 1
-        goals.extend(make_map_goals(map, map_skill_mod))
+        goals.extend(make_map_goals(map, settings, map_skill_mod))
     return goals

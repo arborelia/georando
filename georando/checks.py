@@ -177,24 +177,14 @@ MAP_GOALS = [
     {"name": "4.5k location", "difficulty": 3},
     {"name": "5k location", "difficulty": 7},
     {"name": "3 country streak", "difficulty": 3},
-    {"name": "4 country streak", "difficulty": 6},
+    # {"name": "4 country streak", "difficulty": 6},
     {"name": "5 country streak", "difficulty": 7},
     {"name": "5k round", "difficulty": 1},
-    {"name": "7.5k round", "difficulty": 2},
+    # {"name": "7.5k round", "difficulty": 2},
     {"name": "10k round", "difficulty": 3},
-    {"name": "12.5k round", "difficulty": 4},
+    # {"name": "12.5k round", "difficulty": 4},
     {"name": "15k round", "difficulty": 5},
-    {"name": "17.5k round", "difficulty": 6},
+    # {"name": "17.5k round", "difficulty": 6},
     {"name": "20k round", "difficulty": 7},
     {"name": "22.5k round", "difficulty": 8},
-]
-
-CONTINENT_GOALS = [
-    {"name": "5k total within", "difficulty": 1},
-    {"name": "7.5k total within", "difficulty": 2},
-    {"name": "10k total within", "difficulty": 3},
-    {"name": "12.5k total within", "difficulty": 4},
-    {"name": "15k total within", "difficulty": 5},
-    {"name": "17.5k total within", "difficulty": 6},
-    {"name": "20k total within", "difficulty": 7},
 ]
