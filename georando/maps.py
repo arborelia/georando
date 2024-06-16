@@ -3,6 +3,7 @@ from typing import List, Optional
 from georando.checks import (
     CONTINENT_CHECKS,
     COUNTRY_CHECKS_VERY_COMMON,
+    COUNTRY_CHECKS_COMMON,
     ULTRA_RARE_CHECK,
 )
 
@@ -366,6 +367,14 @@ COMMUNITY_MAPS = {
         streakable=True,
         tags=["world"],
     ),
+    "antarctica": community_map(
+        "Antarctica",
+        "Dioguessr",
+        difficulty=5,
+        official_coverage=False,
+        streakable=False,
+        tags=["country"]
+    ),
     "arbitrary_asia": community_map(
         "An Arbitrary Asia",
         "slashP",
@@ -548,6 +557,7 @@ COMMUNITY_MAPS = {
         "TunaJoe74",
         difficulty=4,
         streakable=True,
+        may_provide=COUNTRY_CHECKS_VERY_COMMON + COUNTRY_CHECKS_COMMON,
         tags=["world", "balanced", "starter"],
     ),
     "balanced_malaysia": community_map(
@@ -557,6 +567,14 @@ COMMUNITY_MAPS = {
         difficulty=5,
         provides=["Malaysia"],
         tags=["country", "balanced"],
+    ),
+    "basic_metas": community_map(
+        "Basic Metas",
+        "Mirsthy",
+        difficulty=3,
+        streakable=True,
+        url="https://www.geoguessr.com/maps/66542e61b3740db3a7159395",
+        tags=["world"]
     ),
     "border_control": community_map(
         "Border Control",
@@ -657,6 +675,14 @@ COMMUNITY_MAPS = {
         streakable=True,
         may_provide=[ULTRA_RARE_CHECK] + CONTINENT_CHECKS,
         tags=["world"],
+    ),
+    "community_germany": community_map(
+        "A Community Germany",
+        "Kodiak",
+        difficulty=5,
+        streakable=False,
+        provides=["Germany"],
+        tags=["country"],
     ),
     "community_europe": community_map(
         "A Community Europe",
@@ -860,7 +886,13 @@ COMMUNITY_MAPS = {
         difficulty=2,
         streakable=True,
         official_coverage=False,
-        may_provide=CONTINENT_CHECKS,
+        may_provide=CONTINENT_CHECKS + [
+            "Chile",
+            "United States",
+            "Peru",
+            "Czechia",
+            "Sri Lanka",
+        ],
         tags=["world", "pinpointable"],
     ),
     "geoguessr_in_2069": community_map(
@@ -881,6 +913,7 @@ COMMUNITY_MAPS = {
         streakable=True,
         # _technically_ it's all official coverage. but it's all trekkers. You cannot find a road.
         official_coverage=False,
+        may_provide=["United States", "Canada", "Switzerland"],
         tags=["theme", "world", "rural"],
     ),
     "i_like_trains": community_map(
@@ -1213,6 +1246,7 @@ COMMUNITY_MAPS = {
         may_provide=[
             "Canada",
             "United States",
+            "Japan",
             "North America",
             "Europe",
             "Asia",
@@ -1392,6 +1426,14 @@ COMMUNITY_MAPS = {
         ],
         tags=["world", "theme", "starter"],
     ),
+    "simple_world": community_map(
+        "A Simple World",
+        "Deppkcong",
+        url="https://www.geoguessr.com/maps/6658db55ad566bbba630047b",
+        difficulty=2,
+        streakable=True,
+        tags=["world"],
+    ),
     "soiled_world": community_map(
         "A Soiled World",
         "Havrd",
@@ -1520,6 +1562,15 @@ COMMUNITY_MAPS = {
         provides=["United Kingdom", "Europe"],
         tags=["country", "theme"],
     ),
+    "unbalanced_saskatchewan": community_map(
+        "An Unbalanced Saskatchewan",
+        "ConnorDunnoMe",
+        url="https://www.geoguessr.com/maps/665558d81a1ef59b58354a2a",
+        difficulty=6,
+        streakable=False,
+        provides=["Canada"],
+        tags=["state"],
+    ),
     "urban_latin_america": community_map(
         "Urban Latin America",
         "Radu C",
@@ -1631,6 +1682,24 @@ COMMUNITY_MAPS = {
         ],
         tags=["world", "starter"],
     ),
+    "where_lidl": community_map(
+        "Where's that Lidl?",
+        "cozy",
+        url="https://www.geoguessr.com/maps/665393b97d7842436fe95c34",
+        difficulty=2,
+        streakable=True,
+        may_provide=[
+            "Germany",
+            "Austria",
+            "Netherlands",
+            "Serbia",
+            "France",
+            "Italy",
+            "United Kingdom",
+            "Poland",
+            "Europe",
+        ]
+    ),
     "world_plants": community_map(
         "A World of Plants",
         "atillandsia",
@@ -1639,14 +1708,5 @@ COMMUNITY_MAPS = {
         streakable=True,
         may_provide=CONTINENT_CHECKS,
         tags=["world", "theme", "rural"],
-    ),
-    "world_waterfalls": community_map(
-        "A World of Waterfalls",
-        "CelestialDalek",
-        url="https://www.geoguessr.com/maps/5fa2fa8ee27b4900014dde81",
-        official_coverage=False,
-        difficulty=7,
-        streakable=True,
-        tags=["world", "theme"],
     ),
 }
