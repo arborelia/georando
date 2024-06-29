@@ -1,7 +1,3 @@
-# complex check names that we should not have to repeat
-ULTRA_RARE_CHECK = "Correctly identify an ULTRA RARE country"
-
-
 CONTINENT_CHECKS = [
     "Africa",
     "Asia",
