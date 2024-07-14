@@ -1556,6 +1556,18 @@ function UnityInitiate() {
                     console.error("Error:", e);
                 }
             });
+            this.addListener('pov_changed', () => {
+                const { heading, pitch } = this.getPov();
+                if (KakaoPlayer) {
+                    if (typeof KakaoPlayer !== 'string') {
+                        const vp = KakaoPlayer.getViewpoint();
+                        // Prevent a recursive loop: only update kakao's viewpoint if it got out of sync with google's
+                        if ((!almostEqual(vp.pan, heading) || !almostEqual(vp.tilt, pitch)) && nextPlayer == "Kakao") {
+                            KakaoPlayer.setViewpoint({ pan: heading, tilt: pitch, zoom: vp.zoom });
+                        }
+                    }
+                }
+            });
         }
     };
 
@@ -2281,6 +2293,7 @@ function UnityInitiate() {
                 MAPBOX_INJECTED = true;
             }
             nextPlayer = "Mapbox Satellite";
+            injectCanvas();
             satCallback();
 
             sat_choice = true;
@@ -2294,6 +2307,7 @@ function UnityInitiate() {
                 satelliteSwitchButton.innerHTML = `Satellite (${di2})`;
 
                 nextPlayer = "Mapbox Satellite";
+                injectCanvas();
                 satCallback();
                 nextPlayer = nextPlayer_save;
 
@@ -2309,7 +2323,11 @@ function UnityInitiate() {
                     nextPlayer = nextPlayer_save;
                 }
 
+                injectCanvas();
                 if (sat_choice) {
+                    if (nextPlayer !== "Google") {
+                        goToLocation(true);
+                    }
                     handleButtons();
                 }
                 sat_choice = false;
@@ -2525,6 +2543,33 @@ function UnityInitiate() {
             }
         }
     });
+
+
+
+    var wikiLocalLang = document.createElement("Button");
+    wikiLocalLang.classList.add("unity-btn", "full", "horizontal-1", "vertical-0");
+    wikiLocalLang.id = "local language";
+    wikiLocalLang.state = true;
+    wikiLocalLang.innerHTML = "Switch to Local Language";
+    document.body.appendChild(wikiLocalLang);
+    wikiLocalLang.addEventListener("click", () => {
+        if (wikiLocalLang.state && global_cc) {
+            let cc = langDict[global_cc];
+            let fi = "en";
+            if (typeof cc !== typeof undefined) {
+                fi = cc[Math.floor(Math.random() * cc.length)];
+            }
+            wiki(fi, document.getElementById("i_container"), teleportMenu);
+            wikiLocalLang.innerHTML = "Switch to English";
+            wikiLocalLang.state = false;
+        }
+        else {
+            wiki("en", document.getElementById("i_container"), teleportMenu);
+            wikiLocalLang.innerHTML = "Switch to Local Language";
+            wikiLocalLang.state = true;
+        }
+    });
+
 
     var specialMapMain = document.createElement("Button");
     specialMapMain.classList.add("unity-btn", "special-map-btn", "full", "vertical-1");
@@ -2902,6 +2947,73 @@ function setDisable(cond) {
             }
         }
     }
+
+    if (teleportBtn != null) {
+        if (rtded) {
+            setAll("red", true);
+            setMapstyle("red", true);
+        }
+        else {
+            setMapstyle("#ff69b4", false)
+            if (cond === "NMPZ") {
+                setAll("red", true);
+                if (nextPlayer !== "Baidu") {
+                    satelliteSwitchButton.style.backgroundColor = "#ba55d3";
+                    satelliteSwitchButton.disabled = false;
+                }
+                if (NZ) {
+                    if (ms_radius > 5000) {
+                        ms_radius = 5000;
+                    }
+                }
+                if (NM) {
+                    if (ms_radius > 2000) {
+                        ms_radius = 2000;
+                    }
+                }
+                if (NM && NP && NZ) {
+                    if (ms_radius > 1000) {
+                        ms_radius = 1000;
+                    }
+                }
+            }
+            else if (nextPlayer == "Google" || nextPlayer === "Wikipedia" || nextPlayer === "Youtube") {
+                setAll("#ba55d3", false);
+            }
+            else if (nextPlayer === "Baidu" || nextPlayer === "Image" || nextPlayer === "Minecraft" || nextPlayer === "Carte") {
+                setAll("red", true);
+                if (nextPlayer !== "Baidu") {
+                    satelliteSwitchButton.style.backgroundColor = "#ba55d3";
+                    satelliteSwitchButton.disabled = false;
+                }
+            }
+            else if (nextPlayer == "Kakao" || nextPlayer == "Yandex" || nextPlayer == "Mapillary" || nextPlayer == "Bing Streetside" || nextPlayer == "Mapy") {
+                setAll("#ba55d3", false);
+                timeMachineBtn.style.backgroundColor = "red";
+                timeMachineBtn.disabled = true;
+                let li = [RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn]
+                for (let btns of li) {
+                    btns.style.backgroundColor = "red";
+                    btns.disabled = true;
+                }
+
+            }
+            else if (nextPlayer == "Mapbox Satellite") {
+                setAll("#ba55d3", false);
+                timeMachineBtn.style.backgroundColor = "red";
+                timeMachineBtn.disabled = true;
+                for (let btns of document.getElementsByClassName("teleport-btn")) {
+                    btns.style.backgroundColor = "red";
+                    btns.disabled = true;
+                }
+            }
+        }
+        timeMachineNewerBtn.style.backgroundColor = "red";
+        timeMachineNewerBtn.disabled = true;
+        timeMachineOlderBtn.style.backgroundColor = "red";
+        timeMachineOlderBtn.disabled = true;
+
+    }
 }
 
 
@@ -3067,7 +3179,7 @@ function detectGamePage() {
         waitLoad();
 
     }
-    let toLoad = !playerLoaded;
+    let toLoad = !playerLoaded && !YANDEX_INJECTED && !KAKAO_INJECTED && !MAPILLARY_INJECTED && !MS_INJECTED && !MAPBOX_INJECTED && !MAPY_INJECTED;
     const PATHNAME = window.location.pathname;
     // console.log(PATHNAME)
     if (PATHNAME.startsWith("/game/") || PATHNAME.startsWith("/challenge/")) {
@@ -3135,6 +3247,23 @@ function detectGamePage() {
 
 function rstValues() {
     ROUND = 0;
+    YandexPlayer = null;
+    KakaoPlayer = null;
+    MapillaryPlayer = null;
+    MSStreetPlayer = null;
+    MapyPlayer = null;
+
+    // MapboxPlayer = null;
+    // MapboxMarker = null;
+
+    BAIDU_INJECTED = false;
+    YANDEX_INJECTED = false;
+    KAKAO_INJECTED = false;
+    MAPILLARY_INJECTED = false;
+    MS_INJECTED = false;
+    MAPBOX_INJECTED = false;
+    MAPY_INJECTED = false;
+
     nextPlayer = "Google";
     nextPlayer_save = "Google";
     global_lat = 0;
@@ -3155,6 +3284,13 @@ function rstValues() {
     playerLoaded = false;
     handleBtwRoundsClear();
     setHidden(true);
+    yandex_map = false;
+    Kakao_map = false;
+    Wikipedia_map = false;
+    Minecraft_map = false;
+    Youtube_map = false;
+    bing_map = false;
+    Mapy_map = false;
     mmKey = 0;
     CURRENT_ROUND_DATA = null;
     ms_radius = 15000;
@@ -3163,14 +3299,35 @@ function rstValues() {
     isBattleRoyale = false;
     isBullseye = false;
     isLiveChallenge = false;
+
+    BR_LOAD_KAKAO = false;
+    BR_LOAD_YANDEX = false;
+    BR_LOAD_MS = false;
+    BR_LOAD_MP = false;
+    BR_LOAD_MAPILLARY = false;
+    BR_LOAD_MAPY = false;
+
+    ms_sat_map = false;
     rtded = false;
 
     NM = false;
     NP = false;
     NZ = false;
+    initBing = false;
+
+    bullseyeMapillary = false;
 
     GAME_CANVAS = "";
     DUEL_CANVAS = "";
+
+    //     let RestrictBoundsBtn = document.getElementById("Restrict Bounds Main");
+    //     let RestrictBoundsEnableBtn = document.getElementById("Restrict Bounds Enable");
+    //     if (RestrictBoundsBtn && RestrictBoundsEnableBtn)
+    //     {
+    //         RestrictBoundsBtn.innerHTML = "No Escape Mode Disabled";
+    //         RestrictBoundsBtn.enabled = false;
+    //         RestrictBoundsEnableBtn.innerHTML = "Enable Limit";
+    //     }
 }
 
 /**
@@ -3226,7 +3383,28 @@ function btnAll() {
 }
 
 function waitLoad() {
-    checkRound();
+    if (!YandexPlayer || !KakaoPlayer || !MapillaryPlayer || !MSStreetPlayer || !MapboxPlayer || !MapyPlayer || !document.getElementById("i_container") || !YANDEX_INJECTED || !KAKAO_INJECTED || !MAPILLARY_INJECTED || !MS_INJECTED || !MAPBOX_INJECTED || !MAPY_INJECTED) {
+        // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
+
+        if ((isBullseye || isLiveChallenge) && (document.getElementById("player") == null)) {
+            BAIDU_INJECTED = false;
+            YANDEX_INJECTED = false;
+            KAKAO_INJECTED = false;
+            MAPILLARY_INJECTED = false;
+            MS_INJECTED = false;
+            MAPBOX_INJECTED = false;
+            MAPY_INJECTED = false;
+            initializeCanvas();
+            // document.querySelector(BULLSEYE_CANVAS).id = "player";
+            // injectContainer();
+        }
+        btnAll();
+        // console.log("wait");
+        // console.log([!YandexPlayer, !KakaoPlayer,!MapillaryPlayer,!MSStreetPlayer,!MapboxPlayer,!MapyPlayer,!document.getElementById("i_container"),!YANDEX_INJECTED,!KAKAO_INJECTED,!MAPILLARY_INJECTED,!MS_INJECTED,!MAPBOX_INJECTED,!MAPY_INJECTED])
+        setTimeout(waitLoad, 250);
+    } else {
+        checkRound();
+    }
 }
 
 /**
@@ -3273,6 +3451,10 @@ function finalDetail() {
 
 function nextButtonCallback() {
     let nextButton = document.querySelector("button[data-qa='close-round-result']");
+    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
+    //     if (nextButton != null && fire1)
+    //     {
+    //         fire1 = false;
     nextButton.addEventListener("click", (e) => {
 
         if (ROUND == 5) {
@@ -3319,11 +3501,18 @@ function handleReturnToStart() {
     let rtsButton = document.querySelector("button[data-qa='return-to-start']");
     // console.log("Handle Return to start");
     rtsButton.addEventListener("click", (e) => {
+        if (nextPlayer !== "Baidu") {
+            goToLocation(true);
+        }
+        else {
+            document.getElementById("i_container").src = "https://map.baidu.com/?panotype=street&pid=" + global_BDID + "&panoid=" + global_BDID + "&from=api";
+        }
         const elementClicked = e.target;
         elementClicked.setAttribute('listener', 'true');
         console.log("Return to start");
     });
     guessButtonCallback();
+    // setTimeout(function () {goToLocation();}, 1000);
 }
 
 function handleUndo() {
@@ -3342,12 +3531,36 @@ function handleUndo() {
  */
 
 function satCallback() {
+    if (typeof MapboxPlayer.flyTo !== typeof undefined) {
+        goToLocation(false);
+    }
+    else {
+        setTimeout(satCallback, 250);
+    }
+}
+
+function kakaoCallback() {
+    console.log("Kakao callback")
+    if (typeof kakao.maps !== typeof undefined) {
+        goToLocation(true);
+        setTimeout(function () { goToLocation(true); }, 3000);
+    }
+    else {
+        setTimeout(kakaoCallback, 250);
+    }
 }
 
 
 function modularget(data) {
     if (data) {
         locationCheck(data);
+        if (nextPlayer == "Kakao") {
+            kakaoCallback();
+        }
+        else {
+            goToLocation(true);
+        }
+        // handleMinimapCallback();
         handleButtons();
     }
 }
@@ -3458,7 +3671,28 @@ function handleButtons() {
     }
 
     if (waitCond && cpCond && comCond) {
-        moduleButtons("");
+        // console.log("Handle Buttons");
+        if (nextPlayer === "Google" || nextPlayer === "Wikipedia" || nextPlayer === "Youtube") {
+            moduleButtons("");
+        }
+        else if (nextPlayer === "Baidu" || nextPlayer === "Image" || nextPlayer === "Mapbox Satellite" || nextPlayer === "Minecraft" || nextPlayer === "Carte") {
+            moduleButtons("hidden");
+        }
+        else if (nextPlayer === "Yandex" || nextPlayer === "Kakao" || nextPlayer === "Mapillary" || nextPlayer === "Bing Streetside" || nextPlayer === "Mapy") {
+            moduleButtons("hidden");
+            if (nextPlayer === "Yandex" || nextPlayer === "Kakao") {
+                if (C5) {
+                    DEFAULT_COMPASS.style.visibility = "";
+                }
+                if (C6) {
+                    NEW_COMPASS.style.visibility = "";
+                }
+            }
+            if (!NM) {
+                UNDO_MOVE.style.visibility = "";
+                handleUndo();
+            }
+        }
         if (!NM) {
             handleReturnToStart();
         }
@@ -3561,6 +3795,12 @@ function locationCheck(data) {
         satelliteSwitchButton.innerHTML = "Streetview mode";
     }
     console.log(nextPlayer_save + "," + nextPlayer);
+    if (!rtded) {
+        injectCanvas();
+    }
+    else {
+        console.log("rated game, no canvas injection");
+    }
 }
 
 
@@ -3614,6 +3854,373 @@ function initializeCanvas() {
     }
 
 }
+
+/**
+ * Hide or show players based on where the next location is
+ */
+
+function injectCanvas() {
+    if (isDuel) {
+        if (!rtded) {
+            canvasSwitch(); // TODO remove this feature
+        }
+    }
+    else {
+        Google();
+        Baidu();
+        if (BR_LOAD_KAKAO) {
+            Kakao();
+        }
+        if (BR_LOAD_YANDEX) {
+            Yandex();
+        }
+        if (BR_LOAD_MS) {
+            // console.log("Yes")
+            Bing();
+        }
+        if (BR_LOAD_MP) {
+            // console.log("Yes")
+            Mapbox();
+        }
+        if (BR_LOAD_MAPILLARY) {
+            Mapillary();
+        }
+        if (BR_LOAD_MAPY) {
+            Mapy();
+        }
+    }
+
+}
+
+// for duels (class ID change)
+
+function canvasSwitch() {
+
+    // console.log("canvas switch")
+    //     let cond = true;
+    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
+    let teleportMenu = document.getElementById("Teleport Button");
+
+    let GOOGLE_MAPS_CANVAS = document.querySelector(DUELS_CANVAS);
+    let BAIDU_MAPS_CANVAS = document.getElementById("i_container");
+    let KAKAO_MAPS_CANVAS = document.getElementById("roadview");
+    let YANDEX_MAPS_CANVAS = document.querySelector(".ymaps-2-1-79-panorama-screen");
+    let BING_MAPS_CANVAS = document.getElementById("ms-player");
+    let MAPILLARY_MAPS_CANVAS = document.getElementById("mapillary-player");
+    let MAPBOX_MAPS_CANVAS = document.getElementById("mapbox-player");
+    let MAPY_MAPS_CANVAS = document.getElementById("mapy-player");
+    // console.log([GOOGLE_MAPS_CANVAS, BAIDU_MAPS_CANVAS, MAPILLARY_MAPS_CANVAS, BR_LOAD_KAKAO, KAKAO_MAPS_CANVAS, BR_LOAD_MS, BING_MAPS_CANVAS, BR_LOAD_YANDEX, YANDEX_MAPS_CANVAS])
+
+    if (GOOGLE_MAPS_CANVAS && BAIDU_MAPS_CANVAS && (!BR_LOAD_MAPILLARY || MAPILLARY_MAPS_CANVAS) && (!BR_LOAD_KAKAO || KAKAO_MAPS_CANVAS) &&
+        (!BR_LOAD_MS || BING_MAPS_CANVAS) && (!BR_LOAD_YANDEX || YANDEX_MAPS_CANVAS) && (!BR_LOAD_MP || MAPBOX_MAPS_CANVAS) && (!BR_LOAD_MAPY || MAPY_MAPS_CANVAS)) {
+        document.getElementById("default_player").style.position = "absolute";
+        document.getElementById("default_player").className = "inactive";
+        BAIDU_MAPS_CANVAS.style.position = "absolute";
+        BAIDU_MAPS_CANVAS.className = "inactive";
+        BAIDU_MAPS_CANVAS.visibility = "hidden";
+
+        if (BR_LOAD_MAPILLARY) {
+            MAPILLARY_MAPS_CANVAS.style.visibility = "hidden";
+            MAPILLARY_MAPS_CANVAS.style.position = "absolute";
+            MAPILLARY_MAPS_CANVAS.className = "inactive";
+        }
+
+        if (BR_LOAD_KAKAO) {
+            KAKAO_MAPS_CANVAS.style.visibility = "hidden";
+            KAKAO_MAPS_CANVAS.style.position = "absolute";
+            KAKAO_MAPS_CANVAS.className = "inactive";
+        }
+        if (BR_LOAD_YANDEX) {
+            YANDEX_MAPS_CANVAS.style.visibility = "hidden";
+            YANDEX_MAPS_CANVAS.style.position = "absolute";
+        }
+        if (BR_LOAD_MS) {
+            BING_MAPS_CANVAS.style.visibility = "hidden";
+            BING_MAPS_CANVAS.style.position = "absolute";
+            BING_MAPS_CANVAS.className = "inactive";
+        }
+
+        if (BR_LOAD_MP) {
+            MAPBOX_MAPS_CANVAS.style.visibility = "hidden";
+            MAPBOX_MAPS_CANVAS.style.position = "absolute";
+            MAPBOX_MAPS_CANVAS.classList.remove("game-panorama_panorama__rdhFg")
+            MAPBOX_MAPS_CANVAS.classList.add("inactive");
+        }
+
+        if (BR_LOAD_MAPY) {
+            MAPY_MAPS_CANVAS.style.visibility = "hidden";
+            MAPY_MAPS_CANVAS.style.position = "absolute";
+            MAPY_MAPS_CANVAS.className = "inactive";
+        }
+
+        teleportMenu.google = false;
+
+        if (nextPlayer === "Google") {
+            document.getElementById("default_player").className = "game-panorama_panoramaCanvas__PNKve";
+            document.getElementById("default_player").style.visibility = "";
+            teleportMenu.google = true;
+            console.log("Google Duel Canvas loaded");
+        }
+        else if (nextPlayer === "Baidu" || nextPlayer === "Youtube" || nextPlayer === "Image" || nextPlayer === "Wikipedia" || nextPlayer === "Minecraft" || nextPlayer === "Carte") {
+            BAIDU_MAPS_CANVAS.style.visibility = "";
+            BAIDU_MAPS_CANVAS.className = "game-panorama_panoramaCanvas__PNKve";
+            console.log("Container Duel Canvas loaded");
+        }
+        else if (nextPlayer === "Kakao") {
+            if (BR_LOAD_KAKAO) {
+                KAKAO_MAPS_CANVAS.style.visibility = "";
+                KAKAO_MAPS_CANVAS.className = "game-panorama_panorama__rdhFg";
+            }
+            console.log("Kakao Duel Canvas loaded");
+        }
+        else if (nextPlayer === "Yandex") {
+            if (BR_LOAD_YANDEX) {
+                YANDEX_MAPS_CANVAS.style.visibility = "";
+            }
+            console.log("Yandex Duel Canvas loaded");
+        }
+        else if (nextPlayer === "Mapillary") {
+            if (BR_LOAD_MAPILLARY) {
+                MAPILLARY_MAPS_CANVAS.style.visibility = "";
+                MAPILLARY_MAPS_CANVAS.className = "game-panorama_panorama__rdhFg";
+                MapillaryPlayer.resize();
+            }
+            //
+            console.log("Mapillary Duel Canvas loaded");
+        }
+        else if (nextPlayer === "Bing Streetside") {
+            if (BR_LOAD_MS) {
+                BING_MAPS_CANVAS.style.visibility = "";
+                BING_MAPS_CANVAS.className = "game-panorama_panorama__rdhFg";
+            }
+            console.log("MS Duel Canvas loaded");
+        }
+        else if (nextPlayer === "Mapbox Satellite") {
+            if (BR_LOAD_MP) {
+                MAPBOX_MAPS_CANVAS.style.visibility = "";
+                MAPBOX_MAPS_CANVAS.classList.remove("inactive");
+                MAPBOX_MAPS_CANVAS.classList.add("game-panorama_panorama__rdhFg");
+                try {
+                    MapboxPlayer.resize();
+                }
+                catch (e) {
+                    console.error("MapboxPlayer resize failed", e);
+                }
+            }
+            console.log("Mapbox Satellite Duel Canvas loaded");
+        }
+        else if (nextPlayer === "Mapy") {
+            if (BR_LOAD_MAPY) {
+                MAPY_MAPS_CANVAS.style.visibility = "";
+                MAPY_MAPS_CANVAS.className = "game-panorama_panorama__rdhFg";
+            }
+            console.log("Mapy Duel Canvas loaded");
+        }
+    }
+    else {
+        setTimeout(canvasSwitch(), 1000);
+    }
+}
+
+// for Battle Royale and classic (change visibility)
+
+function gCanvas() {
+    let GOOGLE_MAPS_CANVAS = ""
+    if (isBattleRoyale) {
+        if (isBullseye) {
+            GOOGLE_MAPS_CANVAS = document.querySelector(BULLSEYE_CANVAS2);
+        }
+        else if (isLiveChallenge) {
+            GOOGLE_MAPS_CANVAS = document.querySelector(LIVE_CANVAS2);
+        }
+        else if (isDuel) {
+            GOOGLE_MAPS_CANVAS = document.getElementById("default_player");
+        }
+        else {
+            GOOGLE_MAPS_CANVAS = document.querySelector(BR_CANVAS);
+        }
+    }
+    else {
+        GOOGLE_MAPS_CANVAS = document.querySelector(GENERAL_CANVAS);
+    }
+    return GOOGLE_MAPS_CANVAS;
+}
+
+function Google() {
+    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
+    let teleportMenu = document.getElementById("Teleport Button");
+
+    let GOOGLE_MAPS_CANVAS = gCanvas();
+
+    if (GOOGLE_MAPS_CANVAS !== null) {
+        if (nextPlayer === "Google") {
+            GOOGLE_MAPS_CANVAS.style.visibility = "";
+            teleportMenu.google = true;
+        }
+        else {
+            GOOGLE_MAPS_CANVAS.style.visibility = "hidden";
+            teleportMenu.google = false;
+        }
+    }
+    else {
+        setTimeout(Google, 250);
+    }
+}
+
+function Baidu() {
+    let BAIDU_MAPS_CANVAS = document.getElementById("i_container");
+    // console.log("Baidu canvas");
+    if (BAIDU_MAPS_CANVAS !== null) {
+        BAIDU_MAPS_CANVAS.style.position = "absolute";
+        if (nextPlayer === "Baidu" || nextPlayer === "Youtube" || nextPlayer === "Image" || nextPlayer === "Wikipedia" || nextPlayer === "Minecraft" || nextPlayer === "Carte") {
+            BAIDU_MAPS_CANVAS.style.visibility = "";
+            console.log("Container Canvas loaded");
+        }
+        else {
+            BAIDU_MAPS_CANVAS.style.visibility = "hidden";
+            // console.log("Container Canvas hidden");
+        }
+    }
+    else {
+        setTimeout(Baidu, 250);
+    }
+
+}
+
+function Kakao() {
+    let KAKAO_MAPS_CANVAS = document.getElementById("roadview");
+    // console.log("Kakao canvas");
+    if (KAKAO_MAPS_CANVAS != null) {
+        KAKAO_MAPS_CANVAS.style.position = "absolute";
+        if (nextPlayer === "Kakao") {
+            KAKAO_MAPS_CANVAS.style.visibility = "";
+            console.log("Kakao Canvas loaded");
+        }
+        else {
+            KAKAO_MAPS_CANVAS.style.visibility = "hidden";
+            // console.log("Kakao Canvas hidden");
+        }
+    }
+    else {
+        setTimeout(Kakao, 250);
+    }
+
+}
+
+function Yandex() {
+    let YANDEX_MAPS_CANVAS = document.querySelector(".ymaps-2-1-79-panorama-screen");
+    if (YANDEX_MAPS_CANVAS != null) {
+        if (isBullseye) {
+            let div = document.getElementById("player");
+            YANDEX_MAPS_CANVAS.classList.add("game-panorama_panorama__ncMwh");
+            div.prepend(YANDEX_MAPS_CANVAS);
+        }
+        if (isLiveChallenge) {
+            let div = document.getElementById("player");
+            YANDEX_MAPS_CANVAS.classList.add("game-panorama_panorama__IuPsO");
+            div.prepend(YANDEX_MAPS_CANVAS);
+        }
+        // console.log("Yandex canvas");
+        document.querySelector(".ymaps-2-1-79-panorama-screen").style.position = "absolute";
+        // console.log("Yandex canvas");
+        /*   console.log(YANDEX_MAPS_CANVAS); */
+        if (nextPlayer === "Yandex") {
+            YANDEX_MAPS_CANVAS.style.visibility = "";
+            console.log("Yandex Canvas loaded");
+        }
+        else {
+            YANDEX_MAPS_CANVAS.style.visibility = "hidden";
+            console.log("Yandex Canvas hidden");
+        }
+    }
+    else {
+        setTimeout(Yandex, 250);
+    }
+
+}
+
+function Mapillary() {
+    let MAPILLARY_MAPS_CANVAS = document.getElementById("mapillary-player");
+    if (MAPILLARY_MAPS_CANVAS != null) {
+        // console.log("Mapillary canvas");
+        MAPILLARY_MAPS_CANVAS.style.position = "absolute";
+        if (nextPlayer === "Mapillary") {
+            MAPILLARY_MAPS_CANVAS.style.visibility = "";
+            console.log("Mapillary Canvas loaded");
+
+        }
+        else {
+            MAPILLARY_MAPS_CANVAS.style.visibility = "hidden";
+            // console.log("Mapillary Canvas hidden");
+        }
+    }
+    else {
+        setTimeout(Mapillary, 250);
+    }
+
+}
+
+function Bing() {
+    let BING_MAPS_CANVAS = document.getElementById("ms-player");
+    // console.log("stuck")
+    if (BING_MAPS_CANVAS != null) {
+        // console.log("Mapillary canvas");
+        BING_MAPS_CANVAS.style.position = "absolute";
+        if (nextPlayer === "Bing Streetside") {
+            BING_MAPS_CANVAS.style.visibility = "";
+            console.log("Bing Canvas loaded");
+        }
+        else {
+            BING_MAPS_CANVAS.style.visibility = "hidden";
+            console.log("Bing Canvas hidden");
+        }
+    }
+    else {
+        setTimeout(Bing, 500)
+    }
+}
+
+function Mapbox() {
+    let MAPBOX_CANVAS = document.getElementById("mapbox-player");
+    if (MAPBOX_CANVAS != null) {
+        // console.log("Mapillary canvas");
+        MAPBOX_CANVAS.style.position = "absolute";
+        if (nextPlayer === "Mapbox Satellite") {
+            MAPBOX_CANVAS.style.visibility = "";
+            console.log("Mapbox Satellite Canvas loaded");
+
+        }
+        else {
+            MAPBOX_CANVAS.style.visibility = "hidden";
+            // console.log("Mapillary Canvas hidden");
+        }
+    }
+    else {
+        setTimeout(Mapbox, 250);
+    }
+
+}
+
+function Mapy() {
+    let MAPY_MAPS_CANVAS = document.getElementById("mapy-player");
+    // console.log("Kakao canvas");
+    if (MAPY_MAPS_CANVAS != null) {
+        MAPY_MAPS_CANVAS.style.position = "absolute";
+        if (nextPlayer === "Mapy") {
+            MAPY_MAPS_CANVAS.style.visibility = "";
+            console.log("Mapy Canvas loaded");
+        }
+        else {
+            MAPY_MAPS_CANVAS.style.visibility = "hidden";
+            // console.log("Kakao Canvas hidden");
+        }
+    }
+    else {
+        setTimeout(Mapy, 250);
+    }
+
+}
+
 
 /**
  * Adjust button placement
@@ -3677,6 +4284,53 @@ function updateCompass() {
  * Open next location in streetview player given next player and next coordinate
  */
 
+function wiki(cc, iframe, teleportMenu) {
+    let url = `https://${cc}.wikipedia.org/w/api.php`;
+    let widthRight = 325;
+    //     console.log(cc);
+    //     if (cc == "fr")
+    //     {
+    //         widthRight = 1200;
+    //     }
+
+    let params = {
+        action: "query",
+        list: "geosearch",
+        gscoord: `${global_lat}|${global_lng}`,
+        gsradius: "10000",
+        gslimit: "1",
+        format: "json"
+    };
+
+    url = url + "?origin=*";
+    Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
+    let GOOGLE_MAPS_CANVAS = gCanvas();
+
+    fetch(url)
+        .then(function (response) { return response.json(); })
+        .then(function (response) {
+            // console.log(response)
+            var pages = response.query.geosearch;
+            if (pages.length !== 0) {
+                GOOGLE_MAPS_CANVAS.style.visibility = "hidden";
+                let pageId = pages[0].pageid;
+                iframe.src = `https://${cc}.wikipedia.org/?curid=${pageId}`;
+                wikiUrl = `https://${cc}.wikipedia.org/?curid=${pageId}`;
+                iframe.style.visibility = "";
+                iframe.style.right = `-${widthRight}px`;
+                iframe.style.width = (window.innerWidth + widthRight) + 'px';
+
+                // console.log(iframe.style.width);
+                // iframe.style.visibility = "";
+            }
+            else {
+                GOOGLE_MAPS_CANVAS.style.visibility = "";
+                teleportMenu.google = true;
+                iframe.style.right = '0px';
+                iframe.style.width = window.innerWidth + 'px';
+            }
+        }).catch(function (error) { console.log(error); });
+}
 
 function handleSpecialColor() {
     document.getElementById("Circus Sky").style.background = skySpecial ? "#ff1493" : "#ff69b4";
@@ -3685,6 +4339,253 @@ function handleSpecialColor() {
     document.getElementById("Circus Zoom").style.background = zoomSpecial ? "#ff1493" : "#ff69b4";
     document.getElementById("Circus Random").style.background = randomSpecial ? "#ff1493" : "#ff69b4";
     document.getElementById("Circus NMPZ").style.background = nmpzSpecial ? "#ff1493" : "#ff69b4";
+}
+
+
+function goToLocation(cond) {
+    let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn] = setButtons();
+    console.log("Going to location");
+    console.log(nextPlayer);
+
+    let mosaicBtn = document.getElementById("Mosaic Enable");
+    if (mosaicPre) {
+        if (mosaicPre && mosaicBtn.grid == 0) {
+            mosaicBtn.grid = 5;
+            document.getElementById("Mosaic Menu").click();
+        }
+        else if (mosaicBtn.grid !== 0) {
+            document.getElementById("Mosaic Menu").click();
+        }
+        loadGridBtn(mosaicBtn.grid);
+    }
+
+    if (restrictMovement) {
+        //         if (teleportMenu.style.visibility == "hidden")
+        //         {
+        //             document.getElementById("Teleport Menu").click();
+        //         }
+        RestrictBoundsEnableBtn.innerHTML = "Disable Limit";
+        if (RestrictBoundsBtn.innerHTML == "No Escape Mode Disabled") {
+            RestrictBoundsBtn.innerHTML = "No Escape Mode Enabled";
+        }
+    }
+
+    if (skySpecial || soilSpecial || skewedSpecial || zoomSpecial || randomSpecial || nmpzSpecial) {
+        if (nmpzSpecial && !document.getElementById("specialNMPZ")) {
+            loadNMPZ();
+        }
+        handleSpecialColor();
+    }
+
+    let OverlayBtn = document.getElementById("Overlay Button");
+
+    if (nextPlayer === "Yandex") {
+        let options = {};
+        YandexPlayer.moveTo([global_lat, global_lng], options);
+        YandexPlayer.setDirection([0, 16]);
+        YandexPlayer.setSpan([10, 67]);
+    }
+    else if (nextPlayer === "Baidu" || nextPlayer === "Youtube" || nextPlayer === "Image" || nextPlayer === "Wikipedia" || nextPlayer === "Minecraft" || nextPlayer === "Carte") {
+        if (document.getElementById("i_container") !== null) {
+            let iframe = document.getElementById("i_container");
+
+            if (nextPlayer === "Baidu") {
+                if (!isFirefox) {
+                    iframe.style.top = '-60px';
+                    iframe.style.height = (window.innerHeight + 200) + 'px';
+                }
+                else {
+                    iframe.style.top = '-60px';
+                    iframe.style.height = (window.innerHeight + 219) + 'px';
+                }
+
+                if (!isFirefox) {
+                    iframe.style.right = '-55px';
+                    iframe.style.width = (window.innerWidth + 55) + 'px';
+                }
+                else {
+                    iframe.style.right = '-15px';
+                    iframe.style.width = (window.innerWidth + 15) + 'px';
+                }
+                let urlStr2 = "https://map.baidu.com/?panotype=street&pid=" + global_BDID + "&panoid=" + global_BDID + "&from=api";
+                let urlStr = "https://map.baidu.com/@" + global_BDAh + "," + global_BDBh + "#panoid=" + global_BDID + "&panotype=street&l=12&tn=B_NORMAL_MAP&sc=0&newmap=1&shareurl=1&pid=" + global_BDID;
+                // console.log(urlStr)
+                if (global_BDAh != null) {
+                    iframe.src = urlStr;
+                }
+                else {
+                    iframe.src = urlStr2;
+                }
+                iframe.style.visibility = "";
+            }
+            else if (nextPlayer === "Youtube") {
+                iframe.src = "";
+                for (let yBtn of document.getElementsByClassName("youtube-btn")) {
+                    yBtn.style.visibility = "";
+                    if (yBtn.id === "Youtube Button") {
+                        yBtn.innerHTML = "Check YouTube";
+                    }
+                }
+                iframe.allow = "autoplay";
+                iframe.style.visibility = "hidden";
+                iframe.style.top = '-250px';
+                iframe.style.bottom = '250px';
+                iframe.style.height = (window.innerHeight + 500) + 'px';
+                iframe.style.right = '0px';
+                iframe.style.width = window.innerWidth + 'px';
+            }
+            else if (nextPlayer === "Image") {
+                iframe.style.top = '0px';
+                iframe.style.height = (window.innerHeight) + 'px';
+                iframe.style.right = '0px';
+                iframe.style.width = window.innerWidth + 'px';
+                iframe.style.visibility = "";
+                iframe.src = iId;
+            }
+            else if (nextPlayer === "Wikipedia") {
+                let wikiLocalLang = document.getElementById("local language")
+                wikiLocalLang.style.visibility = "";
+                iframe.style.top = '0px';
+                iframe.style.height = (window.innerHeight) + 'px';
+                let fi = "en";
+                if (!wikiLocalLang.state && global_cc) {
+                    let cc = langDict[global_cc];
+                    if (typeof cc !== typeof undefined) {
+                        fi = cc[Math.floor(Math.random() * cc.length)];
+                    }
+                }
+                wiki(fi, iframe, teleportMenu);
+            }
+            else if (nextPlayer === "Minecraft") {
+                iframe.style.top = '0px';
+                iframe.style.height = (window.innerHeight) + 'px';
+                iframe.style.right = '0px';
+                iframe.style.width = window.innerWidth + 'px';
+                iframe.style.visibility = "";
+                iframe.src = "https://classic.minecraft.net/?size=huge";
+            }
+            else if (nextPlayer === "Carte") {
+                iframe.style.bottom = '190px';
+                if ((1.14 * window.innerHeight) >= window.innerWidth) {
+                    iframe.style.top = '-100px';
+                    iframe.style.height = (window.innerHeight + 290) + 'px';
+                }
+                else {
+                    iframe.style.top = '-60px';
+                    iframe.style.height = (window.innerHeight + 250) + 'px';
+                }
+                iframe.style.left = '-20px';
+                iframe.style.right = '20px';
+                iframe.style.width = (window.innerWidth + 40) + 'px';
+                iframe.style.visibility = "";
+                iframe.src = corsString + carteCity;
+            }
+        }
+
+        else {
+            setTimeout(goToLocation(true), 250);
+        }
+        //         let a = new BMap.Point(global_lng, global_lat);
+        //         BaiduPlayer.setPov({ heading: -40, pitch: 6 });
+        //         BaiduPlayer.setPosition(a);
+    }
+    else if (nextPlayer === "Kakao") {
+        var roadviewClient = new kakao.maps.RoadviewClient();
+        var position = new kakao.maps.LatLng(global_lat, global_lng);
+        roadviewClient.getNearestPanoId(position, 500, function (panoId) {
+            KakaoPlayer.setPanoId(panoId, position);
+            KakaoPlayer.setViewpoint({ pan: global_heading, tilt: global_pitch, zoom: -3 })
+        });
+    }
+    else if (nextPlayer === "Mapillary") {
+        MapillaryPlayer.resize()
+        MapillaryPlayer.moveTo(mmKey).then(
+            image => { //console.log(image);
+            },
+            error => { console.log(error); });
+    }
+    else if (nextPlayer === "Google" && !rtded) {
+        if (!bullseyeMapillary) {
+            handleMapillary({ lat: global_lat, lng: global_lng }, { meters: 500, limit: 500 });
+        }
+    }
+    else if (nextPlayer === "Bing Streetside") {
+        let mTId = MSStreetPlayer.getMapTypeId();
+        if (mTId !== Microsoft.Maps.MapTypeId.streetside && mTId !== Microsoft.Maps.MapTypeId.road) {
+            console.log("Reset Bing map type to Streetside")
+            MSStreetPlayer = new Microsoft.Maps.Map(document.getElementById('ms-player'), { disableStreetsideAutoCoverage: true, allowHidingLabelsOfRoad: true });
+        }
+        MSStreetPlayer.setOptions({ disableStreetside: false });
+        MSStreetPlayer.setView({
+            mapTypeId: Microsoft.Maps.MapTypeId.streetside,
+            zoom: 18,
+            streetsideOptions: {
+                overviewMapMode: Microsoft.Maps.OverviewMapMode.hidden,
+                showCurrentAddress: false,
+                showProblemReporting: false,
+                showExitButton: false,
+            },
+            center: new Microsoft.Maps.Location(global_lat, global_lng),
+            heading: 90,
+            pitch: -30
+        });
+    }
+    else if (nextPlayer === "Mapbox Satellite") {
+        // MapboxPlayer.resize();
+        let satelliteStyleBtn = document.getElementById("Satellite Style Button");
+        let satelliteTypeBtn = document.getElementById("Satellite Type Button");
+        function waitSky() {
+            try {
+                let l = [];
+                for (let element of MapboxPlayer.getStyle().layers) {
+                    l.push(element.id);
+                }
+                if (l.includes('sky')) {
+                    styleMapboxAll("All", true);
+                }
+                else {
+                    setTimeout(waitSky, 250);
+                }
+            }
+            catch (error) {
+                console.log(error)
+                setTimeout(waitSky, 250);
+            }
+        }
+        waitSky();
+    }
+    else if (nextPlayer === "Mapy") {
+        if (global_BDID) {
+            SMap.Pano.get(parseInt(global_BDID)).then(function (place) {
+                // console.log(place)
+                MapyPlayer.show(place);
+            }, function () {
+                alert("Panorama se nepodařilo zobrazit !");
+            });
+        }
+        else {
+            let mpcz = SMap.Coords.fromWGS84(global_lng, global_lat);
+            // zobrazime panorama dle ID
+            SMap.Pano.getBest(mpcz, 200).then(function (place) {
+                MapyPlayer.show(place);
+            }, function () {
+                alert("Panorama se nepodařilo zobrazit !");
+            });
+        }
+    }
+    if (nextPlayer === "Google" && fire1) {
+        window.dispatchEvent(new Event('resize'));
+        if (rtded) {
+            document.getElementById("Clear").click();
+        }
+        fire1 = false;
+    }
+
+    if (cond) {
+        RestrictBoundsBtn.lat = global_lat;
+        RestrictBoundsBtn.lng = global_lng;
+    }
+
 }
 
 
