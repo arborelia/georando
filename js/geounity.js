@@ -2962,15 +2962,8 @@ function detectGamePage() {
     }
     function loadModule() {
         // console.log("load module")
-
-        if (toLoad) {
-            // console.log("initializeCanvas")
-            initializeCanvas();
-        }
         waitLoad();
-
     }
-    let toLoad = !playerLoaded && !YANDEX_INJECTED && !KAKAO_INJECTED && !MAPILLARY_INJECTED && !MS_INJECTED && !MAPBOX_INJECTED && !MAPY_INJECTED;
     const PATHNAME = window.location.pathname;
     // console.log(PATHNAME)
     if (PATHNAME.startsWith("/game/") || PATHNAME.startsWith("/challenge/")) {
@@ -3038,23 +3031,6 @@ function detectGamePage() {
 
 function rstValues() {
     ROUND = 0;
-    YandexPlayer = null;
-    KakaoPlayer = null;
-    MapillaryPlayer = null;
-    MSStreetPlayer = null;
-    MapyPlayer = null;
-
-    // MapboxPlayer = null;
-    // MapboxMarker = null;
-
-    BAIDU_INJECTED = false;
-    YANDEX_INJECTED = false;
-    KAKAO_INJECTED = false;
-    MAPILLARY_INJECTED = false;
-    MS_INJECTED = false;
-    MAPBOX_INJECTED = false;
-    MAPY_INJECTED = false;
-
     nextPlayer = "Google";
     nextPlayer_save = "Google";
     global_lat = 0;
@@ -3075,12 +3051,6 @@ function rstValues() {
     playerLoaded = false;
     handleBtwRoundsClear();
     setHidden(true);
-    yandex_map = false;
-    Kakao_map = false;
-    Wikipedia_map = false;
-    Minecraft_map = false;
-    bing_map = false;
-    Mapy_map = false;
     mmKey = 0;
     CURRENT_ROUND_DATA = null;
     ms_radius = 15000;
@@ -3090,34 +3060,14 @@ function rstValues() {
     isBullseye = false;
     isLiveChallenge = false;
 
-    BR_LOAD_KAKAO = false;
-    BR_LOAD_YANDEX = false;
-    BR_LOAD_MS = false;
-    BR_LOAD_MP = false;
-    BR_LOAD_MAPILLARY = false;
-    BR_LOAD_MAPY = false;
-
-    ms_sat_map = false;
     rtded = false;
 
     NM = false;
     NP = false;
     NZ = false;
-    initBing = false;
-
-    bullseyeMapillary = false;
 
     GAME_CANVAS = "";
     DUEL_CANVAS = "";
-
-    //     let RestrictBoundsBtn = document.getElementById("Restrict Bounds Main");
-    //     let RestrictBoundsEnableBtn = document.getElementById("Restrict Bounds Enable");
-    //     if (RestrictBoundsBtn && RestrictBoundsEnableBtn)
-    //     {
-    //         RestrictBoundsBtn.innerHTML = "No Escape Mode Disabled";
-    //         RestrictBoundsBtn.enabled = false;
-    //         RestrictBoundsEnableBtn.innerHTML = "Enable Limit";
-    //     }
 }
 
 /**
@@ -3173,28 +3123,8 @@ function btnAll() {
 }
 
 function waitLoad() {
-    if (!YandexPlayer || !KakaoPlayer || !MapillaryPlayer || !MSStreetPlayer || !MapboxPlayer || !MapyPlayer || !document.getElementById("i_container") || !YANDEX_INJECTED || !KAKAO_INJECTED || !MAPILLARY_INJECTED || !MS_INJECTED || !MAPBOX_INJECTED || !MAPY_INJECTED) {
-        // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
-
-        if ((isBullseye || isLiveChallenge) && (document.getElementById("player") == null)) {
-            BAIDU_INJECTED = false;
-            YANDEX_INJECTED = false;
-            KAKAO_INJECTED = false;
-            MAPILLARY_INJECTED = false;
-            MS_INJECTED = false;
-            MAPBOX_INJECTED = false;
-            MAPY_INJECTED = false;
-            initializeCanvas();
-            // document.querySelector(BULLSEYE_CANVAS).id = "player";
-            // injectContainer();
-        }
-        btnAll();
-        // console.log("wait");
-        // console.log([!YandexPlayer, !KakaoPlayer,!MapillaryPlayer,!MSStreetPlayer,!MapboxPlayer,!MapyPlayer,!document.getElementById("i_container"),!YANDEX_INJECTED,!KAKAO_INJECTED,!MAPILLARY_INJECTED,!MS_INJECTED,!MAPBOX_INJECTED,!MAPY_INJECTED])
-        setTimeout(waitLoad, 250);
-    } else {
-        checkRound();
-    }
+    btnAll();
+    checkRound();
 }
 
 /**
@@ -3566,57 +3496,6 @@ function locationCheck(data) {
     }
 }
 
-
-/**
- * setID for canvas
- */
-
-function initializeCanvas() {
-    GAME_CANVAS = "";
-    DUEL_CANVAS = "";
-    //console.log("Is duels");
-    //console.log(duels);
-
-    if (isBattleRoyale) {
-        if (isDuel) {
-            GAME_CANVAS = document.querySelector(DUELS_CANVAS);
-            DUEL_CANVAS = document.querySelector(DUELS_CANVAS2);
-        }
-        else if (isBullseye) {
-            GAME_CANVAS = document.querySelector(BULLSEYE_CANVAS);
-            DUEL_CANVAS = "dummy";
-        }
-        else if (isLiveChallenge) {
-            GAME_CANVAS = document.querySelector(LIVE_CANVAS);
-            DUEL_CANVAS = "dummy";
-        }
-        else {
-            GAME_CANVAS = document.querySelector(BR_WRAPPER);
-            DUEL_CANVAS = "dummy";
-        }
-    }
-    else {
-        GAME_CANVAS = document.querySelector(GENERAL_LAYOUT);
-        DUEL_CANVAS = "dummy";
-    }
-    if (GAME_CANVAS && DUEL_CANVAS) {
-        console.log("Canvas injected");
-        GAME_CANVAS.id = "player";
-
-        if (isDuel) {
-            DUEL_CANVAS.id = "default_player";
-        }
-
-        let mosaicBtn = document.getElementById("Mosaic Enable");
-        if (mosaicPre) {
-            loadGridBtn(mosaicBtn.grid);
-        }
-    }
-    else {
-        setTimeout(initializeCanvas, 250);
-    }
-
-}
 
 /**
  * Hide or show players based on where the next location is
