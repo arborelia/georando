@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Sequence
 from georando.checks import (
     CONTINENT_CHECKS,
     COUNTRY_CHECKS,
@@ -8,6 +8,7 @@ from georando.maps import GeoGuessrMap
 
 ZOOM = "Progressive Pan/Zoom/Move:2"
 MOVE = "Progressive Pan/Zoom/Move:3"
+CONJUNCTION_LOGIC_CUTOFF = 10
 
 
 def item(name: str) -> str:
@@ -29,38 +30,83 @@ def format_logic(disjunction: List[List[str]]) -> list:
     return formatted
 
 
-def make_country_individual_goal(
-    country: str, maps: List[GeoGuessrMap], skill_modifier: int = 0
-) -> List[dict]:
-    categories = ["Correctly identify countries"]
-    logic_options = []
-    if country in maps:
-        categories.append(country)
-    for map in maps:
-        difficulty_logic = DIFFICULTY_LOGIC[map.difficulty - skill_modifier]
-        if country in map.provides:
-            # this is a freebie, like recognizing Albania on the Albania map
-            difficulty_logic = [[]]
-        if country in map.provides or country in map.may_provide:
-            for diff_option in difficulty_logic:
-                logic_options.append([map.name] + diff_option)
+def switch_conjunction(conjunction: List[Sequence[Sequence[str]]]) -> List[List[str]]:
+    """
+    Convert a list of lists, representing an OR of AND requirements, into the idiosyncratic
+    format that Manual requires. The first AND option is included directly in the list.
+    All other options appear as dictionaries with an "or" key.
+    """
+    print("Conjunction:")
+    print(" AND ".join(str(d) for d in conjunction))
+    # The first disjunction in the list is our starting options
+    options = list(conjunction[0])
+    for disjunction in conjunction[1:]:
+        new_options = [tuple(sorted(set(list(option) + list(req_list))))
+                       for option in options
+                       for req_list in disjunction]
+        new_options = [list(option) for option in sorted(set(new_options))]
+        new_options.sort(key=len)
+        options = []
+        subsumed = False
+        for newopt in new_options:
+            for opt in options:
+                if set(opt) <= set(newopt):
+                    subsumed = True
+                    break
+            if not subsumed:
+                options.append(newopt)
 
-    if logic_options:
-        return [
-            {
-                "name": f"Identify {country}",
-                "category": categories,
-                "requires": format_logic(logic_options),
-            }
-        ]
-    else:
-        return []
+    options.sort(key=len)
+    options = options[:CONJUNCTION_LOGIC_CUTOFF]
+    print("Disjunction:")
+    print(" OR ".join(str(c) for c in options))
+    print()
+    return options
 
 
 def make_country_goals(maps: List[GeoGuessrMap], skill_modifier: int = 0) -> List[dict]:
     goals = []
+    country_difficulty = {}
+    country_logic = {}
     for country in sorted(COUNTRY_CHECKS):
-        goals.extend(make_country_individual_goal(country, maps, skill_modifier))
+        categories = ["Unique countries"]
+        logic_options = []
+        if country in maps:
+            categories.append(country)
+        for map in maps:
+            difficulty = map.difficulty
+            difficulty_logic = DIFFICULTY_LOGIC[difficulty - skill_modifier]
+            if country in map.provides:
+                # this is a freebie, like recognizing Albania on the Albania map
+                difficulty_logic = [[]]
+                difficulty = 0
+
+            if country in map.provides or country in map.may_provide:
+                for diff_option in difficulty_logic:
+                    logic_options.append([map.name] + diff_option)
+
+                if country not in country_difficulty:
+                    country_difficulty[country] = difficulty
+                else:
+                    country_difficulty[country] = min(country_difficulty[country], difficulty)
+        if logic_options and (country in country_difficulty):
+            country_logic[country] = [tuple(logic) for logic in logic_options]
+            country_difficulty[country] += min(len(opt) for opt in country_logic[country]) * 0.01
+
+    by_difficulty = []
+    for country in country_logic:
+        by_difficulty.append(
+            (country_difficulty[country], country_logic[country], country)
+        )
+    accumulated_logic = set()
+    by_difficulty.sort()
+    for idx, (difficulty, logic_options, country) in enumerate(by_difficulty):
+        accumulated_logic.add(tuple(logic_options))
+        goals.append({
+            "name": f"Unique country {idx+1} ({country})",
+            "category": categories,
+            "requires": format_logic(switch_conjunction(list(accumulated_logic))),
+        })
     return goals
 
 
