@@ -338,7 +338,6 @@ let yandex_map = false;
 let Kakao_map = false;
 let Wikipedia_map = false;
 let Minecraft_map = false;
-let Youtube_map = false;
 let bing_map = false;
 let Mapy_map = false;
 
@@ -425,9 +424,6 @@ let randomPlanets = false;
 let corsString = "https://nameless-bastion-28139.herokuapp.com/"
 // Additional: https://cors.eu.org/
 let carteCity = ""
-
-let youtubeIndex = -1;
-let youtubeList = [];
 
 let GAME_CANVAS = "";
 let DUEL_CANVAS = "";
@@ -800,16 +796,9 @@ function convertMMSS(input) {
 }
 
 function handleBtwRoundsClear() {
-    youtubeIndex = -1;
-    youtubeList = [];
     locHistory = [];
     wikiUrl = "";
     one_reset = false;
-    //     let iframe = document.getElementById("i_container");
-    //     if (iframe && nextPlayer !== "Image")
-    //     {
-    //         iframe.src = "";
-    //     }
 }
 
 // Script injection, extracted from extenssr:
@@ -898,7 +887,6 @@ function setButtons() {
 function setButtons2() {
     // console.log("set")
     return [document.getElementById("Show Buttons"),
-    document.getElementById("Youtube Button"),
     document.getElementById("Info Menu"),
     document.getElementById("Teleport Menu"),
     document.getElementById("Satellite Menu"),
@@ -1000,7 +988,6 @@ function handleDropdown() {
 function resetBtnPos() {
     let [
         mainMenuBtn,
-        YoutubeBtn,
         infoMenu,
         teleportMenu,
         satelliteMenu,
@@ -1013,7 +1000,6 @@ function resetBtnPos() {
     // Manu Buttons
 
     mainMenuBtn.style.top = "6em";
-    YoutubeBtn.style.top = "6em";
     infoMenu.style.top = "9.5em";
     teleportMenu.style.top = "12.5em";
     MinimapMenuBtn.style.top = "15.5em";
@@ -1152,9 +1138,6 @@ function hideOtherBtn() {
         if (element.id !== "Show Buttons") {
             element.style.visibility = "hidden";
         }
-        if (nextPlayer == "Youtube" && element.classList.contains("youtube-btn")) {
-            element.style.visibility = "";
-        }
         if (nextPlayer == "Wikipedia" && element.id == "local language") {
             element.style.visibility = "";
         }
@@ -1165,9 +1148,6 @@ function switchBtn(arg) {
     for (let element of document.getElementsByClassName("unity-btn")) {
         if (element.id !== "Show Buttons" && !element.classList.contains("menu-btn") && !element.classList.contains(arg)) {
             element.style.visibility = "hidden";
-        }
-        if (nextPlayer == "Youtube" && element.classList.contains("youtube-btn")) {
-            element.style.visibility = "";
         }
         if (nextPlayer == "Wikipedia" && element.id == "local language") {
             element.style.visibility = "";
@@ -1731,123 +1711,6 @@ function UnityInitiate() {
 
         return locStr2;
     }
-
-    function moduleHandleYoutube() {
-        // console.log(youtubeList);
-        let iframe = document.getElementById("i_container");
-        if (youtubeIndex !== -1) {
-            yId = youtubeList[youtubeIndex];
-        }
-
-        let srcString = "https://www.youtube.com/embed/" + yId + "?&playlist=" + yId + "&autoplay=1&modestbranding=1&controls=0";
-
-        if (yTime !== "0") {
-            srcString += "&start=" + yTime;
-        }
-        if (yEnd) {
-            if (yEnd !== "0") {
-                srcString += "&end=" + yEnd;
-            }
-        }
-        iframe.src = srcString;
-        iframe.style.visibility = "";
-        playYoutubeBtn.innerHTML = `Check | [${youtubeIndex + 1}]`;
-    }
-
-    var youtubeResetBtn = document.createElement("Button");
-    youtubeResetBtn.classList.add("unity-btn", "youtube-btn", "small", "horizontal-1", "vertical-0");
-    youtubeResetBtn.id = "Youtube Reset";
-    youtubeResetBtn.innerHTML = "&#8635;";
-    document.body.appendChild(youtubeResetBtn);
-    youtubeResetBtn.addEventListener("click", () => {
-        if (youtubeIndex !== -1 && youtubeIndex < youtubeList.length - 1) {
-            moduleHandleYoutube();
-        }
-    });
-
-    var youtubeRandomBtn = document.createElement("Button");
-    youtubeRandomBtn.classList.add("unity-btn", "youtube-btn", "small", "horizontal-sp", "vertical-0");
-    youtubeRandomBtn.id = "Youtube Random";
-    youtubeRandomBtn.innerHTML = "&#8677;";
-    document.body.appendChild(youtubeRandomBtn);
-    youtubeRandomBtn.addEventListener("click", () => {
-        if (youtubeIndex !== -1 && youtubeIndex < youtubeList.length - 1) {
-            youtubeIndex++;
-            moduleHandleYoutube();
-        }
-    });
-
-    var youtubeTravelBtn = document.createElement("Button");
-    youtubeTravelBtn.classList.add("unity-btn", "youtube-btn", "small", "horizontal-3", "vertical-0");
-    youtubeTravelBtn.id = "Youtube Travel";
-    youtubeTravelBtn.innerHTML = "<font size=2>Trip</font>";
-    document.body.appendChild(youtubeTravelBtn);
-    youtubeTravelBtn.addEventListener("click", () => {
-        if (playYoutubeBtn.travel) {
-            playYoutubeBtn.travel = false;
-            youtubeTravelBtn.innerHTML = "<font size=2>Any</font>";
-        }
-        else {
-            playYoutubeBtn.travel = true;
-            youtubeTravelBtn.innerHTML = "<font size=2>Trip</font>";
-        }
-        playYoutubeBtn.innerHTML = "Check YouTube";
-
-    });
-
-    var playYoutubeBtn = document.createElement("Button");
-    playYoutubeBtn.classList.add("unity-btn", "lgMinus", "youtube-btn", "vertical-0");
-    playYoutubeBtn.id = "Youtube Button";
-    playYoutubeBtn.travel = true;
-    playYoutubeBtn.innerHTML = "Check YouTube";
-    document.body.appendChild(playYoutubeBtn);
-    playYoutubeBtn.addEventListener("click", () => {
-        let iframe = document.getElementById("i_container");
-        iframe.style.position = "absolute";
-        iframe.allow = "autoplay";
-
-        if (!yEnd) {
-            let url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=10&lat=${global_lat}&lon=${global_lng}`
-            fetch(url).then(function (response) {
-                return response.json();
-            }).then(function (data) {
-                // console.log(data)
-                youtubeList = [];
-                youtubeIndex = -1;
-                let locStr = data.display_name.replaceAll(/[\u3400-\u9FBF]/g, "").replace(/[0-9]/g, '');;
-                // console.log(locStr);
-                let locStr2 = handleCountries(locStr)
-                // console.log(locStr2);
-                let url2 = corsString + `https://youtube-scrape.herokuapp.com/api/search?q=${locStr2}`
-                fetch(url2).then(function (response) {
-                    return response.json();
-                }).then(function (data) {
-                    // console.log(data.results);
-                    for (let vid of data.results) {
-                        if (vid.hasOwnProperty("video")) {
-                            let vidLen = convertMMSS(vid.video.duration);
-                            if (vidLen > 120) {
-                                // console.log(vid.video.title);
-                                youtubeList.push(vid.video.id);
-                            }
-                        }
-                    }
-                    if (youtubeList.length > 0) {
-                        youtubeIndex = 0;
-                    }
-                    yTime = 20;
-                    moduleHandleYoutube();
-                }).catch(function () {
-                    console.log("youtube scrappe failure");
-                });
-            }).catch(function () {
-                console.log("nominatim failure");
-            });
-        }
-        else {
-            moduleHandleYoutube();
-        }
-    });
 
     // Teleport Module Buttons
     // Class: teleport-btn
@@ -3216,7 +3079,6 @@ function rstValues() {
     Kakao_map = false;
     Wikipedia_map = false;
     Minecraft_map = false;
-    Youtube_map = false;
     bing_map = false;
     Mapy_map = false;
     mmKey = 0;
@@ -3596,30 +3458,7 @@ function handleButtons() {
 
     if (waitCond && cpCond && comCond) {
         // console.log("Handle Buttons");
-        if (nextPlayer === "Google" || nextPlayer === "Wikipedia" || nextPlayer === "Youtube") {
-            moduleButtons("");
-        }
-        else if (nextPlayer === "Baidu" || nextPlayer === "Image" || nextPlayer === "Mapbox Satellite" || nextPlayer === "Minecraft" || nextPlayer === "Carte") {
-            moduleButtons("hidden");
-        }
-        else if (nextPlayer === "Yandex" || nextPlayer === "Kakao" || nextPlayer === "Mapillary" || nextPlayer === "Bing Streetside" || nextPlayer === "Mapy") {
-            moduleButtons("hidden");
-            if (nextPlayer === "Yandex" || nextPlayer === "Kakao") {
-                if (C5) {
-                    DEFAULT_COMPASS.style.visibility = "";
-                }
-                if (C6) {
-                    NEW_COMPASS.style.visibility = "";
-                }
-            }
-            if (!NM) {
-                UNDO_MOVE.style.visibility = "";
-                handleUndo();
-            }
-        }
-        if (!NM) {
-            handleReturnToStart();
-        }
+        moduleButtons("");
     }
     else {
         setTimeout(handleButtons, 250);
@@ -3996,110 +3835,6 @@ function goToLocation(cond) {
         YandexPlayer.moveTo([global_lat, global_lng], options);
         YandexPlayer.setDirection([0, 16]);
         YandexPlayer.setSpan([10, 67]);
-    }
-    else if (nextPlayer === "Baidu" || nextPlayer === "Youtube" || nextPlayer === "Image" || nextPlayer === "Wikipedia" || nextPlayer === "Minecraft" || nextPlayer === "Carte") {
-        if (document.getElementById("i_container") !== null) {
-            let iframe = document.getElementById("i_container");
-
-            if (nextPlayer === "Baidu") {
-                if (!isFirefox) {
-                    iframe.style.top = '-60px';
-                    iframe.style.height = (window.innerHeight + 200) + 'px';
-                }
-                else {
-                    iframe.style.top = '-60px';
-                    iframe.style.height = (window.innerHeight + 219) + 'px';
-                }
-
-                if (!isFirefox) {
-                    iframe.style.right = '-55px';
-                    iframe.style.width = (window.innerWidth + 55) + 'px';
-                }
-                else {
-                    iframe.style.right = '-15px';
-                    iframe.style.width = (window.innerWidth + 15) + 'px';
-                }
-                let urlStr2 = "https://map.baidu.com/?panotype=street&pid=" + global_BDID + "&panoid=" + global_BDID + "&from=api";
-                let urlStr = "https://map.baidu.com/@" + global_BDAh + "," + global_BDBh + "#panoid=" + global_BDID + "&panotype=street&l=12&tn=B_NORMAL_MAP&sc=0&newmap=1&shareurl=1&pid=" + global_BDID;
-                // console.log(urlStr)
-                if (global_BDAh != null) {
-                    iframe.src = urlStr;
-                }
-                else {
-                    iframe.src = urlStr2;
-                }
-                iframe.style.visibility = "";
-            }
-            else if (nextPlayer === "Youtube") {
-                iframe.src = "";
-                for (let yBtn of document.getElementsByClassName("youtube-btn")) {
-                    yBtn.style.visibility = "";
-                    if (yBtn.id === "Youtube Button") {
-                        yBtn.innerHTML = "Check YouTube";
-                    }
-                }
-                iframe.allow = "autoplay";
-                iframe.style.visibility = "hidden";
-                iframe.style.top = '-250px';
-                iframe.style.bottom = '250px';
-                iframe.style.height = (window.innerHeight + 500) + 'px';
-                iframe.style.right = '0px';
-                iframe.style.width = window.innerWidth + 'px';
-            }
-            else if (nextPlayer === "Image") {
-                iframe.style.top = '0px';
-                iframe.style.height = (window.innerHeight) + 'px';
-                iframe.style.right = '0px';
-                iframe.style.width = window.innerWidth + 'px';
-                iframe.style.visibility = "";
-                iframe.src = iId;
-            }
-            else if (nextPlayer === "Wikipedia") {
-                let wikiLocalLang = document.getElementById("local language")
-                wikiLocalLang.style.visibility = "";
-                iframe.style.top = '0px';
-                iframe.style.height = (window.innerHeight) + 'px';
-                let fi = "en";
-                if (!wikiLocalLang.state && global_cc) {
-                    let cc = langDict[global_cc];
-                    if (typeof cc !== typeof undefined) {
-                        fi = cc[Math.floor(Math.random() * cc.length)];
-                    }
-                }
-                wiki(fi, iframe, teleportMenu);
-            }
-            else if (nextPlayer === "Minecraft") {
-                iframe.style.top = '0px';
-                iframe.style.height = (window.innerHeight) + 'px';
-                iframe.style.right = '0px';
-                iframe.style.width = window.innerWidth + 'px';
-                iframe.style.visibility = "";
-                iframe.src = "https://classic.minecraft.net/?size=huge";
-            }
-            else if (nextPlayer === "Carte") {
-                iframe.style.bottom = '190px';
-                if ((1.14 * window.innerHeight) >= window.innerWidth) {
-                    iframe.style.top = '-100px';
-                    iframe.style.height = (window.innerHeight + 290) + 'px';
-                }
-                else {
-                    iframe.style.top = '-60px';
-                    iframe.style.height = (window.innerHeight + 250) + 'px';
-                }
-                iframe.style.left = '-20px';
-                iframe.style.right = '20px';
-                iframe.style.width = (window.innerWidth + 40) + 'px';
-                iframe.style.visibility = "";
-                iframe.src = corsString + carteCity;
-            }
-        }
-
-        else {
-            setTimeout(goToLocation(true), 250);
-        }
-        //         let a = new BMap.Point(global_lng, global_lat);
-        //         BaiduPlayer.setPov({ heading: -40, pitch: 6 });
-        //         BaiduPlayer.setPosition(a);
     }
     else if (nextPlayer === "Kakao") {
         var roadviewClient = new kakao.maps.RoadviewClient();
@@ -4560,13 +4295,6 @@ function reportWindowSize() {
             iframeC.style.right = '-55px';
             iframeC.style.width = (window.innerWidth + 55) + 'px';
         }
-        else if (nextPlayer == "Youtube") {
-            iframeC.style.top = '-250px';
-            iframeC.style.bottom = '250px';
-            iframeC.style.height = (window.innerHeight + 500) + 'px';
-            iframeC.style.right = '0px';
-            iframeC.style.width = window.innerWidth + 'px';
-        }
         else if (nextPlayer == "Image" || nextPlayer === "Minecraft") {
             iframeC.style.top = '0px';
             iframeC.style.height = (window.innerHeight) + 'px';
@@ -4608,7 +4336,6 @@ window.onresize = reportWindowSize;
 function injectContainer() {
     myHighlight("iframe container loaded")
     const iframe = document.createElement('iframe');
-    iframe.frameBorder = 0;
     iframe.style.position = "absolute";
     iframe.id = "i_container";
     if (isBattleRoyale) {
