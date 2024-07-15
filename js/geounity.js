@@ -887,13 +887,11 @@ function setButtons() {
 function setButtons2() {
     // console.log("set")
     return [document.getElementById("Show Buttons"),
-    document.getElementById("Info Menu"),
     document.getElementById("Teleport Menu"),
     document.getElementById("Satellite Menu"),
     document.getElementById("Mosaic Menu"),
     document.getElementById("Minimap Menu Button"),
     document.getElementById("Time Machine Button"),
-    document.getElementById("Circus Menu"),
     ]
 }
 
@@ -988,25 +986,21 @@ function handleDropdown() {
 function resetBtnPos() {
     let [
         mainMenuBtn,
-        infoMenu,
         teleportMenu,
         satelliteMenu,
         mosaicMenu,
         MinimapMenuBtn,
         ClockMenuBtn,
-        SpecialMapMenuBtn
     ] = setButtons2();
 
     // Manu Buttons
 
     mainMenuBtn.style.top = "6em";
-    infoMenu.style.top = "9.5em";
     teleportMenu.style.top = "12.5em";
     MinimapMenuBtn.style.top = "15.5em";
     satelliteMenu.style.top = "18.5em";
     mosaicMenu.style.top = "24.5em";
     ClockMenuBtn.style.top = "27.5em";
-    SpecialMapMenuBtn.style.top = "30.5em";
 
     mainMenuBtn.style.right = "0.5em";
     mainMenuBtn.style.width = "3em";
@@ -1113,7 +1107,6 @@ function handleStyles() {
         'Minimap Menu Button': ["url(https://www.svgrepo.com/show/116365/map.svg)", "#faf0be"],
         'Mosaic Menu': ["url(https://www.svgrepo.com/show/77240/map.svg)", "#E6E6FA"],
         'Satellite Menu': ["url(https://www.svgrepo.com/show/29288/satellite.svg)", "#e8f48c"],
-        'Circus Menu': ["url(https://www.svgrepo.com/show/296852/circus.svg)", "#ff99c2"],
     };
 
     for (let element of document.getElementsByClassName("menu-btn")) {
@@ -2396,137 +2389,6 @@ function UnityInitiate() {
     });
 
 
-    var specialMapMain = document.createElement("Button");
-    specialMapMain.classList.add("unity-btn", "special-map-btn", "full", "vertical-1");
-    specialMapMain.id = "Circus Main";
-    specialMapMain.innerHTML = "Circus Mode";
-    document.body.appendChild(specialMapMain);
-
-    var specialMapSky = document.createElement("Button");
-    specialMapSky.classList.add("unity-btn", "special-map-btn", "half", "horizontal-1", "vertical-2");
-    specialMapSky.id = "Circus Sky";
-    specialMapSky.innerHTML = "Sky";
-    document.body.appendChild(specialMapSky);
-    specialMapSky.addEventListener("click", () => {
-        skySpecial = !skySpecial;
-        if (skySpecial) {
-            enterChaosMode(-999);
-        }
-        handleSpecialColor();
-    });
-
-    var specialMapSkewed = document.createElement("Button");
-    specialMapSkewed.classList.add("unity-btn", "special-map-btn", "half", "horizontal-2", "vertical-2");
-    specialMapSkewed.id = "Circus Skewed";
-    specialMapSkewed.innerHTML = "Skewed";
-    document.body.appendChild(specialMapSkewed);
-    specialMapSkewed.addEventListener("click", () => {
-        skewedSpecial = !skewedSpecial;
-        if (skewedSpecial) {
-            enterChaosMode(-999);
-        }
-        handleSpecialColor();
-    });
-
-    var specialMapSoil = document.createElement("Button");
-    specialMapSoil.classList.add("unity-btn", "special-map-btn", "half", "horizontal-1", "vertical-3");
-    specialMapSoil.id = "Circus Soil";
-    specialMapSoil.innerHTML = "Soiled";
-    document.body.appendChild(specialMapSoil);
-    specialMapSoil.addEventListener("click", () => {
-        soilSpecial = !soilSpecial;
-        if (soilSpecial) {
-            enterChaosMode(-999);
-        }
-        handleSpecialColor();
-    });
-
-    var specialMapZoom = document.createElement("Button");
-    specialMapZoom.classList.add("unity-btn", "special-map-btn", "half", "horizontal-2", "vertical-3");
-    specialMapZoom.id = "Circus Zoom";
-    specialMapZoom.innerHTML = "Max Zoom";
-    document.body.appendChild(specialMapZoom);
-    specialMapZoom.addEventListener("click", () => {
-        zoomSpecial = !zoomSpecial;
-        if (zoomSpecial) {
-            enterChaosMode(-999);
-        }
-        handleSpecialColor();
-    });
-
-    var specialMapRandom = document.createElement("Button");
-    specialMapRandom.classList.add("unity-btn", "special-map-btn", "half", "horizontal-2", "vertical-4");
-    specialMapRandom.id = "Circus Random";
-    specialMapRandom.innerHTML = "Random";
-    document.body.appendChild(specialMapRandom);
-    specialMapRandom.addEventListener("click", () => {
-        randomSpecial = !randomSpecial;
-        if (randomSpecial) {
-            enterChaosMode(-999);
-        }
-        handleSpecialColor();
-    });
-
-    var specialMapNMPZ = document.createElement("Button");
-    specialMapNMPZ.classList.add("unity-btn", "special-map-btn", "half", "horizontal-1", "vertical-4");
-    specialMapNMPZ.id = "Circus NMPZ";
-    specialMapNMPZ.innerHTML = "Force NMPZ";
-    document.body.appendChild(specialMapNMPZ);
-    specialMapNMPZ.addEventListener("click", () => {
-        if (!document.getElementById("specialNMPZ")) {
-            loadNMPZ();
-        }
-        else {
-            if (nmpzSpecial) {
-                document.getElementById("specialNMPZ").style.visibility = "hidden";
-            }
-            else {
-                document.getElementById("specialNMPZ").style.visibility = "";
-            }
-            nmpzSpecial = !nmpzSpecial;
-        }
-        handleSpecialColor();
-    });
-
-
-
-    var specialMapClear = document.createElement("Button");
-    specialMapClear.classList.add("unity-btn", "special-map-btn", "half", "horizontal-2", "vertical-5");
-    specialMapClear.id = "Circus Clear";
-    specialMapClear.innerHTML = "Clear All";
-    document.body.appendChild(specialMapClear);
-    specialMapClear.addEventListener("click", () => {
-        skySpecial = false;
-        skewedSpecial = false;
-        soilSpecial = false;
-        zoomSpecial = false;
-        randomSpecial = false;
-        enterChaosMode(-999);
-        handleSpecialColor();
-    });
-
-
-    var specialMapMenu = document.createElement("Button");
-    specialMapMenu.classList.add("unity-btn", "menu-btn");
-    specialMapMenu.id = "Circus Menu";
-    document.body.appendChild(specialMapMenu);
-    specialMapMenu.addEventListener("click", () => {
-        switchBtn("special-map-btn");
-        if (specialMapMain.style.visibility == "hidden") {
-            for (let element of document.getElementsByClassName("special-map-btn")) {
-                element.style.visibility = "";
-            }
-        }
-        else {
-            for (let element of document.getElementsByClassName("special-map-btn")) {
-                element.style.visibility = "hidden";
-            }
-        }
-    });
-
-
-
-
     handleStyles();
 
 
@@ -3255,27 +3117,10 @@ function satCallback() {
     }
 }
 
-function kakaoCallback() {
-    console.log("Kakao callback")
-    if (typeof kakao.maps !== typeof undefined) {
-        goToLocation(true);
-        setTimeout(function () { goToLocation(true); }, 3000);
-    }
-    else {
-        setTimeout(kakaoCallback, 250);
-    }
-}
-
-
 function modularget(data) {
     if (data) {
         locationCheck(data);
-        if (nextPlayer == "Kakao") {
-            kakaoCallback();
-        }
-        else {
-            goToLocation(true);
-        }
+        goToLocation(true);
         // handleMinimapCallback();
         handleButtons();
     }
@@ -3707,106 +3552,6 @@ function goToLocation(cond) {
         handleSpecialColor();
     }
 
-    let OverlayBtn = document.getElementById("Overlay Button");
-
-    if (nextPlayer === "Yandex") {
-        let options = {};
-        YandexPlayer.moveTo([global_lat, global_lng], options);
-        YandexPlayer.setDirection([0, 16]);
-        YandexPlayer.setSpan([10, 67]);
-    }
-    else if (nextPlayer === "Kakao") {
-        var roadviewClient = new kakao.maps.RoadviewClient();
-        var position = new kakao.maps.LatLng(global_lat, global_lng);
-        roadviewClient.getNearestPanoId(position, 500, function (panoId) {
-            KakaoPlayer.setPanoId(panoId, position);
-            KakaoPlayer.setViewpoint({ pan: global_heading, tilt: global_pitch, zoom: -3 })
-        });
-    }
-    else if (nextPlayer === "Mapillary") {
-        MapillaryPlayer.resize()
-        MapillaryPlayer.moveTo(mmKey).then(
-            image => { //console.log(image);
-            },
-            error => { console.log(error); });
-    }
-    else if (nextPlayer === "Google" && !rtded) {
-        if (!bullseyeMapillary) {
-            handleMapillary({ lat: global_lat, lng: global_lng }, { meters: 500, limit: 500 });
-        }
-    }
-    else if (nextPlayer === "Bing Streetside") {
-        let mTId = MSStreetPlayer.getMapTypeId();
-        if (mTId !== Microsoft.Maps.MapTypeId.streetside && mTId !== Microsoft.Maps.MapTypeId.road) {
-            console.log("Reset Bing map type to Streetside")
-            MSStreetPlayer = new Microsoft.Maps.Map(document.getElementById('ms-player'), { disableStreetsideAutoCoverage: true, allowHidingLabelsOfRoad: true });
-        }
-        MSStreetPlayer.setOptions({ disableStreetside: false });
-        MSStreetPlayer.setView({
-            mapTypeId: Microsoft.Maps.MapTypeId.streetside,
-            zoom: 18,
-            streetsideOptions: {
-                overviewMapMode: Microsoft.Maps.OverviewMapMode.hidden,
-                showCurrentAddress: false,
-                showProblemReporting: false,
-                showExitButton: false,
-            },
-            center: new Microsoft.Maps.Location(global_lat, global_lng),
-            heading: 90,
-            pitch: -30
-        });
-    }
-    else if (nextPlayer === "Mapbox Satellite") {
-        // MapboxPlayer.resize();
-        let satelliteStyleBtn = document.getElementById("Satellite Style Button");
-        let satelliteTypeBtn = document.getElementById("Satellite Type Button");
-        function waitSky() {
-            try {
-                let l = [];
-                for (let element of MapboxPlayer.getStyle().layers) {
-                    l.push(element.id);
-                }
-                if (l.includes('sky')) {
-                    styleMapboxAll("All", true);
-                }
-                else {
-                    setTimeout(waitSky, 250);
-                }
-            }
-            catch (error) {
-                console.log(error)
-                setTimeout(waitSky, 250);
-            }
-        }
-        waitSky();
-    }
-    else if (nextPlayer === "Mapy") {
-        if (global_BDID) {
-            SMap.Pano.get(parseInt(global_BDID)).then(function (place) {
-                // console.log(place)
-                MapyPlayer.show(place);
-            }, function () {
-                alert("Panorama se nepodařilo zobrazit !");
-            });
-        }
-        else {
-            let mpcz = SMap.Coords.fromWGS84(global_lng, global_lat);
-            // zobrazime panorama dle ID
-            SMap.Pano.getBest(mpcz, 200).then(function (place) {
-                MapyPlayer.show(place);
-            }, function () {
-                alert("Panorama se nepodařilo zobrazit !");
-            });
-        }
-    }
-    if (nextPlayer === "Google" && fire1) {
-        window.dispatchEvent(new Event('resize'));
-        if (rtded) {
-            document.getElementById("Clear").click();
-        }
-        fire1 = false;
-    }
-
     if (cond) {
         RestrictBoundsBtn.lat = global_lat;
         RestrictBoundsBtn.lng = global_lng;
@@ -3911,10 +3656,8 @@ function handleTeleport() {
                         KakaoPlayer.setPanoId(panoId, position);
                     });
                 }
-                else if (nextPlayer === "Mapillary" || nextPlayer === "Google") {
+                else if (nextPlayer === "Google") {
                     place = FindPointAtDistanceFrom(prevStep[0], prevStep[1], DegreesToRadians(forwardReverse(prevStep[2])), teleportMenu.distance * 0.001);
-                    handleMapillary(place, { meters: 500, limit: 500 });
-                    // locHistory.push([place.lat, place.lng, prevStep[2], prevStep[3]]);
                 }
                 else if (nextPlayer === "Bing Streetside") {
                     //                     console.log("teleport")
@@ -4477,105 +4220,6 @@ function injectMSPlayer() {
 }
 
 
-
-function injectMapillaryPlayer() {
-    return new Promise((resolve, reject) => {
-        if (!MAPILLARY_INJECTED) {
-            if (MAPILLARY_API_KEY === "") {
-                let canvas = document.getElementById("player");
-                console.log("No Mapillary Key")
-            }
-            else {
-                let SCRIPT;
-                if (!partialCreateMapillary) {
-                    SCRIPT = document.createElement("script");
-                    SCRIPT.type = "text/javascript";
-                    SCRIPT.async = true;
-                    SCRIPT.src = `https://unpkg.com/mapillary-js@4.0.0/dist/mapillary.js`;
-                    document.body.appendChild(SCRIPT);
-                    document.querySelector('head').innerHTML += '<link href="https://unpkg.com/mapillary-js@4.0.0/dist/mapillary.css" rel="stylesheet"/>';
-                }
-                let canvas = document.createElement("mmap");
-                if (isBattleRoyale) {
-                    if (isDuel) {
-
-                        canvas.innerHTML = `<div id="mapillary-player" class="inactive" style="zIndex: 99999, position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'"></div>`;
-                    }
-                    else if (isBullseye) {
-                        canvas.innerHTML = `<div id="mapillary-player" class="game-panorama_panorama__ncMwh" style="zIndex: 99999, position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'"></div>`;
-                    }
-                    else if (isLiveChallenge) {
-                        canvas.innerHTML = `<div id="mapillary-player" class="game-panorama_panorama__IuPsO" style="zIndex: 99999, position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'"></div>`;
-                    }
-                    else {
-                        canvas.innerHTML = `<div id="mapillary-player" class="br-game-layout__panorama" style="zIndex: 99999, position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'"></div>`;
-                    }
-                }
-                else {
-                    canvas.innerHTML = `<div id="mapillary-player" class="game-layout__panorama" style="zIndex: 99999, position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'"></div>`;
-                }
-
-                var div = document.getElementById("player");
-                if (isBullseye || isLiveChallenge) {
-                    div.prepend(canvas);
-                    // setTimeout(drawmapMS(), 1000);
-                }
-                else {
-                    div.appendChild(canvas);
-                }
-
-                function drawMapML() {
-                    var { Viewer } = mapillary;
-
-                    MapillaryPlayer = new Viewer({
-                        accessToken: MAPILLARY_API_KEY,
-                        container: 'mapillary-player', // the ID of our container defined in the HTML body
-                    });
-
-                    MapillaryPlayer.on('image', async (event) => {
-                        // cnt = cnt + 1;
-                        // console.log(cnt);
-                        let image = event.image;
-                        let pos = image.originalLngLat;
-                        let cond = true;
-                        for (const element of locHistory) {
-                            if (element[2] == image.id) {
-                                cond = false;
-                            }
-                        }
-                        if (cond) {
-                            // console.log(pos);
-                            locHistory.push([pos.lat, pos.lng, image.id, image.compassAngle]);
-                        }
-                        let btn = document.querySelector("button[data-qa='undo-move']");
-                        if (btn !== null && locHistory.length > 1) {
-                            btn.disabled = false;
-                            btn.classList.remove('styles_disabled__2YdHD');
-                        }
-                    });
-
-                    MAPILLARY_INJECTED = true;
-                }
-                if (partialCreateMapillary) {
-                    drawMapML();
-                }
-                else {
-
-                    SCRIPT.addEventListener('load', () => {
-                        myHighlight("Mapillary API Loaded");
-                        // resolve(BMap);
-                        drawMapML();
-                        resolve();
-                    })
-                }
-            }
-        }
-        else {
-            resolve();
-        }
-    });
-}
-
 function changeInnerHTML(canvas1, init) {
     canvas1.style.display = "";
     var div = document.getElementById("player");
@@ -4969,34 +4613,6 @@ function injectMapboxPlayer() {
 
 function handleMapillary(latlng, options) {
     console.log("handleMapillary")
-    handleMapillaryHelper(latlng, options).then((data) => {
-        //console.log(data.data)
-        let idToSet = 0;
-        let curDist = 100000000;
-        for (const element of data.data) {
-            // console.log(element)
-            if (element.hasOwnProperty("computed_geometry")) {
-                try {
-                    let rCord = element.computed_geometry["coordinates"];
-                    let dist = distance(latlng.lat, latlng.lng, rCord[1], rCord[0])
-                    if (dist < curDist) {
-                        idToSet = element.id;
-                        curDist = dist
-                    }
-                } catch (e) {
-                    console.log("Error")
-                }
-            }
-        }
-        if (idToSet !== 0) {
-            MapillaryPlayer.moveTo(idToSet).then(
-                image => { //console.log(image);
-                },
-                error => { console.log(error); });
-        }
-    }).catch((error) => {
-        console.log(error);
-    });
 }
 
 function handleMapillaryHelper(latlng, options) {
