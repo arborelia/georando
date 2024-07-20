@@ -271,19 +271,6 @@ var YANDEX_API_KEY = "b704b5a9-3d67-4d19-b702-ec7807cecfc6";
 var KAKAO_API_KEY = "cbacbe41e3a223d794f321de4f3e247b";
 var MAPBOX_API_KEY = "pk.eyJ1IjoianVwYW9xcSIsImEiOiJjbDB2dTBnbngweWIzM2NtdWR5NXZ1dncyIn0.bJixk3kN5Mmedw_C3vQmmw";
 const MAPS_API_URL = "https://maps.googleapis.com/maps/api/js"; // removed "?" from the link
-var MAPILLARY_API_KEY_LIST =
-    ["MLY|6723031704435203|5afd537469b114cf814881137ad74b7c",
-        "MLY|6691659414239148|b45e7e82cde126044cbc2cf5d4a7c9b1",
-        "MLY|5074369465929308|f7ad2802cbaf26c63f88046a292df68b",
-        "MLY|7451643761528219|6477f2db0e3928b51e45ec9311983936",
-        "MLY|4855256237866198|6d0464771831c8a4bf2be095e1e1aabc",
-        "MLY|4772941976102161|8458d4f08d2e1970cdfe0a4e242c04ff",
-        "MLY|4492067214235489|94c44703942362ad6f6b70b5d32c3a45",
-        "MLY|4618251611628426|0cef71d6ec8b997a5ec06ecdeabf11ec",
-        "MLY|4096846270415982|fa2ce29641503e6ef665f17459633570",
-        "MLY|4231415756962414|fe353880fd246e8a4a6ae32152f7dbb0",]
-
-var MAPILLARY_API_KEY = MAPILLARY_API_KEY_LIST[Math.floor(Math.random() * MAPILLARY_API_KEY_LIST.length)];
 var MAPY_API_KEY = "placeholder";
 
 console.log("Geoguessr Unity Script v7.0.1 by Jupaoqq");
@@ -291,11 +278,10 @@ console.log("Geoguessr Unity Script v7.0.1 by Jupaoqq");
 
 // Store each player instance
 
-let YandexPlayer, KakaoPlayer, GooglePlayer, MapillaryPlayer, MSStreetPlayer, MapboxPlayer, MapboxMarker, MapyPlayer;
+let YandexPlayer, KakaoPlayer, GooglePlayer, MSStreetPlayer, MapboxPlayer, MapboxMarker, MapyPlayer;
 let YANDEX_INJECTED = false;
 let BAIDU_INJECTED = false;
 let KAKAO_INJECTED = false;
-let MAPILLARY_INJECTED = false;
 let MS_INJECTED = false;
 let MAPBOX_INJECTED = false;
 let MAPY_INJECTED = false;
@@ -341,10 +327,6 @@ let Minecraft_map = false;
 let bing_map = false;
 let Mapy_map = false;
 
-// Mapillary Image Key
-
-let mmKey = 0;
-
 // Handle Yandex compass
 
 let COMPASS = null;
@@ -376,7 +358,6 @@ let sat_choice = false;
 // Create the Maps, but not reload API
 let partialCreateYandex = false;
 let partialCreateKakao = false;
-let partialCreateMapillary = false;
 let partialCreateMS = false;
 let partialCreateMapbox = false;
 let partialCreateMapy = false;
@@ -405,7 +386,6 @@ let BR_LOAD_KAKAO = false;
 let BR_LOAD_YANDEX = false;
 let BR_LOAD_MS = false;
 let BR_LOAD_MP = false;
-let BR_LOAD_MAPILLARY = false;
 let BR_LOAD_MAPY = false;
 
 let ms_sat_map = false;
@@ -418,7 +398,6 @@ let initBing = false;
 
 let menuLocCounter = 0;
 let wikiUrl = "";
-let bullseyeMapillary = false;
 let randomPlanets = false;
 
 let corsString = "https://nameless-bastion-28139.herokuapp.com/"
@@ -2913,7 +2892,6 @@ function rstValues() {
     playerLoaded = false;
     handleBtwRoundsClear();
     setHidden(true);
-    mmKey = 0;
     CURRENT_ROUND_DATA = null;
     ms_radius = 15000;
 
@@ -3405,8 +3383,6 @@ function ZoomControls() {
     let style = `
 	.ymaps-2-1-79-panorama-gotoymaps {display: none !important;}
 	.ymaps-2-1-79-panorama-control__zoom {top: 2rem !important; left: 2rem !important; z-Index: 0}
-    .mapillary-bearing-indicator-container {top: 2rem !important; left: 2rem !important;}
-    .mapillary-zoom-container {top: 6rem !important; left: 2.20rem !important;}
     .NavBar_MapTypeButtonContainerWrapper {visibility: hidden !important;}
     .bm_LocateMeControl {visibility: hidden !important;}
     .NavBar_Container {top: -6rem !important; left: 2rem !important;}
@@ -3434,7 +3410,6 @@ function ZoomControls() {
     let style_element = document.createElement("style");
     style_element.innerHTML = style;
     document.body.appendChild(style_element);
-    // document.getElementById("mapillary-bearing-indicator-container").style.top = "20em"
 }
 
 /**
@@ -4610,22 +4585,6 @@ function injectMapboxPlayer() {
 }
 
 
-
-function handleMapillary(latlng, options) {
-    console.log("handleMapillary")
-}
-
-function handleMapillaryHelper(latlng, options) {
-    return new Promise((resolve, reject) => {
-        // console.log("1")
-        let bbox = getBBox(latlng, options.meters);
-        let URL = "https://graph.mapillary.com/images?access_token={0}&fields=id,computed_geometry&bbox={1}&limit={2}".replace('{0}', MAPILLARY_API_KEY).replace('{1}', bbox).replace('{2}', options.limit)
-        // console.log(URL)
-        fetch(URL)
-            .then((response) => { resolve(response.json()) })
-            .catch((error) => { console.log(error); });
-    });
-}
 
 function injectMapyPlayer() {
     return new Promise((resolve, reject) => {
