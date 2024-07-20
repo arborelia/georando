@@ -692,22 +692,9 @@ function formatDist() {
 
 // Getter function for the button elements
 
-function setButtons() {
-    // console.log("set")
-    return [document.getElementById("Teleport Forward"), document.getElementById("Teleport Reverse"), document.getElementById("Teleport Button"), document.getElementById("plus"), document.getElementById("minus"),
-    document.getElementById("reset"), document.getElementById("Show Buttons"),
-    document.getElementById("Date Button"), document.getElementById("minus year"), document.getElementById("plus year"),
-    document.getElementById("Teleport Options Button"),
-    document.getElementById("Restrict Bounds Main"),
-    document.getElementById("Restrict Distance"), document.getElementById("Increase Restrict Distance"),
-    document.getElementById("Decrease Restrict Distance"), document.getElementById("Restrict Bounds Enable"),
-    document.getElementById("Restrict Distance Reset")];
-}
-
 function setButtons2() {
     // console.log("set")
     return [document.getElementById("Show Buttons"),
-    document.getElementById("Teleport Menu"),
     document.getElementById("Minimap Menu Button"),
     document.getElementById("Time Machine Button"),
     ]
@@ -804,7 +791,6 @@ function handleDropdown() {
 function resetBtnPos() {
     let [
         mainMenuBtn,
-        teleportMenu,
         MinimapMenuBtn,
         ClockMenuBtn,
     ] = setButtons2();
@@ -812,9 +798,8 @@ function resetBtnPos() {
     // Manu Buttons
 
     mainMenuBtn.style.top = "6em";
-    teleportMenu.style.top = "12.5em";
-    MinimapMenuBtn.style.top = "15.5em";
-    ClockMenuBtn.style.top = "27.5em";
+    MinimapMenuBtn.style.top = "15em";
+    ClockMenuBtn.style.top = "17em";
 
     mainMenuBtn.style.right = "0.5em";
     mainMenuBtn.style.width = "3em";
@@ -1478,7 +1463,6 @@ function UnityInitiate() {
     // Buttons: teleportForward, teleportReverse, teleportMain, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, TeleportArisBtn
 
     function teleportModule(dir) {
-        // console.log(teleportMenu.google)
         if (teleportMain.google && GooglePlayer != null) {
             let heading = GooglePlayer.getPov().heading;
             if (!dir) {
@@ -1779,25 +1763,6 @@ function UnityInitiate() {
     });
 
 
-    var teleportMenu = document.createElement("Button");
-    teleportMenu.classList.add("unity-btn", "menu-btn");
-    teleportMenu.id = "Teleport Menu";
-    document.body.appendChild(teleportMenu);
-    teleportMenu.addEventListener("click", () => {
-        switchBtn("teleport-btn");
-        if (teleportForward.style.visibility == "hidden") {
-            for (let element of document.getElementsByClassName("teleport-btn")) {
-                element.style.visibility = "";
-            }
-        }
-        else {
-            for (let element of document.getElementsByClassName("teleport-btn")) {
-                element.style.visibility = "hidden";
-            }
-        }
-    });
-
-
     // Minimap Module
 
     var MinimapBtn = document.createElement("Button");
@@ -1992,16 +1957,6 @@ function setHidden(cond) {
 }
 
 function setDisable(cond) {
-    let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn] = setButtons();
-    let btnList = [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn];
-
-    function setAll(cond1, cond2) {
-        for (let btn of btnList) {
-            btn.style.backgroundColor = cond1;
-            btn.disabled = cond2;
-        }
-    }
-
     function setMapstyle(cond1, cond2) {
         for (let mapDiv of document.getElementsByClassName("preset-minimap")) {
             if (["Borders", "Satellite", "Terrain", "Hybrid", "Custom"].includes(mapDiv.id)) {
@@ -2017,38 +1972,33 @@ function setDisable(cond) {
         }
     }
 
-    if (teleportBtn != null) {
-        if (rtded) {
-            setAll("red", true);
-            setMapstyle("red", true);
-        }
-        else {
-            setMapstyle("#ff69b4", false)
-            if (cond === "NMPZ") {
-                setAll("red", true);
-                if (NZ) {
-                    if (ms_radius > 5000) {
-                        ms_radius = 5000;
-                    }
-                }
-                if (NM) {
-                    if (ms_radius > 2000) {
-                        ms_radius = 2000;
-                    }
-                }
-                if (NM && NP && NZ) {
-                    if (ms_radius > 1000) {
-                        ms_radius = 1000;
-                    }
+    if (rtded) {
+        setMapstyle("red", true);
+    }
+    else {
+        setMapstyle("#ff69b4", false)
+        if (cond === "NMPZ") {
+            if (NZ) {
+                if (ms_radius > 5000) {
+                    ms_radius = 5000;
                 }
             }
-            setAll("#ba55d3", false);
+            if (NM) {
+                if (ms_radius > 2000) {
+                    ms_radius = 2000;
+                }
+            }
+            if (NM && NP && NZ) {
+                if (ms_radius > 1000) {
+                    ms_radius = 1000;
+                }
+            }
         }
-        timeMachineNewerBtn.style.backgroundColor = "red";
-        timeMachineNewerBtn.disabled = true;
-        timeMachineOlderBtn.style.backgroundColor = "red";
-        timeMachineOlderBtn.disabled = true;
     }
+    timeMachineNewerBtn.style.backgroundColor = "red";
+    timeMachineNewerBtn.disabled = true;
+    timeMachineOlderBtn.style.backgroundColor = "red";
+    timeMachineOlderBtn.disabled = true;
 }
 
 
@@ -2376,7 +2326,6 @@ function waitLoad() {
 
 function checkRound() {
     //   console.log("Check Round");
-    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
     if (!isBattleRoyale) {
         // console.log("Check Round");
         let currentRound = getRoundFromPage();
@@ -2423,7 +2372,6 @@ function nextButtonCallback() {
 }
 
 function guessButtonCallback() {
-    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
     let guessButton = document.querySelector("button[data-qa='perform-guess']");
     let mainMenuBtn = document.getElementById("Show Buttons");
     if (guessButton != null) {
@@ -2545,7 +2493,6 @@ function getMapData() {
 }
 
 function handleMinimapCallback() {
-    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
     let MinimapBtn = document.getElementById("Minimap Button");
     if (MinimapBtn) {
         let cur = MinimapBtn.current;
@@ -2626,9 +2573,7 @@ function handleButtons() {
  */
 
 function locationCheck(data) {
-    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
     let round;
-    // console.log(data)
 
     if (isBattleRoyale) {
         if (isDuel || isBullseye) {
@@ -2751,18 +2696,14 @@ function gCanvas() {
 }
 
 function Google() {
-    let teleportMenu = document.getElementById("Teleport Button");
-
     let GOOGLE_MAPS_CANVAS = gCanvas();
 
     if (GOOGLE_MAPS_CANVAS !== null) {
         if (nextPlayer === "Google") {
             GOOGLE_MAPS_CANVAS.style.visibility = "";
-            teleportMenu.google = true;
         }
         else {
             GOOGLE_MAPS_CANVAS.style.visibility = "hidden";
-            teleportMenu.google = false;
         }
     }
     else {
@@ -2825,57 +2766,6 @@ function updateCompass() {
     }
 }
 
-/**
- * Open next location in streetview player given next player and next coordinate
- */
-
-function wiki(cc, iframe, teleportMenu) {
-    let url = `https://${cc}.wikipedia.org/w/api.php`;
-    let widthRight = 325;
-    //     console.log(cc);
-    //     if (cc == "fr")
-    //     {
-    //         widthRight = 1200;
-    //     }
-
-    let params = {
-        action: "query",
-        list: "geosearch",
-        gscoord: `${global_lat}|${global_lng}`,
-        gsradius: "10000",
-        gslimit: "1",
-        format: "json"
-    };
-
-    url = url + "?origin=*";
-    Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
-    let GOOGLE_MAPS_CANVAS = gCanvas();
-
-    fetch(url)
-        .then(function (response) { return response.json(); })
-        .then(function (response) {
-            // console.log(response)
-            var pages = response.query.geosearch;
-            if (pages.length !== 0) {
-                GOOGLE_MAPS_CANVAS.style.visibility = "hidden";
-                let pageId = pages[0].pageid;
-                iframe.src = `https://${cc}.wikipedia.org/?curid=${pageId}`;
-                wikiUrl = `https://${cc}.wikipedia.org/?curid=${pageId}`;
-                iframe.style.visibility = "";
-                iframe.style.right = `-${widthRight}px`;
-                iframe.style.width = (window.innerWidth + widthRight) + 'px';
-
-                // console.log(iframe.style.width);
-                // iframe.style.visibility = "";
-            }
-            else {
-                GOOGLE_MAPS_CANVAS.style.visibility = "";
-                teleportMenu.google = true;
-                iframe.style.right = '0px';
-                iframe.style.width = window.innerWidth + 'px';
-            }
-        }).catch(function (error) { console.log(error); });
-}
 
 function handleSpecialColor() {
     document.getElementById("Circus Sky").style.background = skySpecial ? "#ff1493" : "#ff69b4";
@@ -2888,20 +2778,8 @@ function handleSpecialColor() {
 
 
 function goToLocation(cond) {
-    let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn] = setButtons();
     console.log("Going to location");
     console.log(nextPlayer);
-
-    if (restrictMovement) {
-        //         if (teleportMenu.style.visibility == "hidden")
-        //         {
-        //             document.getElementById("Teleport Menu").click();
-        //         }
-        RestrictBoundsEnableBtn.innerHTML = "Disable Limit";
-        if (RestrictBoundsBtn.innerHTML == "No Escape Mode Disabled") {
-            RestrictBoundsBtn.innerHTML = "No Escape Mode Enabled";
-        }
-    }
 
     if (skySpecial || soilSpecial || skewedSpecial || zoomSpecial || randomSpecial || nmpzSpecial) {
         if (nmpzSpecial && !document.getElementById("specialNMPZ")) {
@@ -2909,12 +2787,6 @@ function goToLocation(cond) {
         }
         handleSpecialColor();
     }
-
-    if (cond) {
-        RestrictBoundsBtn.lat = global_lat;
-        RestrictBoundsBtn.lng = global_lng;
-    }
-
 }
 
 
@@ -2925,7 +2797,6 @@ function goToLocation(cond) {
 function goToUndoMove(data) {
     /*   console.log(global_lat);
       console.log(global_lng); */
-    let teleportMenu = document.getElementById("Teleport Button");
     let options = {};
     let prevStep = null;
     if (locHistory.length === 1) {
@@ -2949,7 +2820,6 @@ function goToUndoMove(data) {
         defaultPanoIdChange = false;
         let position = new kakao.maps.LatLng(prevStep[0], prevStep[1]);
         KakaoPlayer.setPanoId(prevStep[2], position);
-        teleportMenu.google = false;
         // console.log("Undo 1 step");
         // console.log(locHistory);
     }
@@ -2974,93 +2844,7 @@ function goToUndoMove(data) {
 }
 
 function handleTeleport() {
-    let teleportMenu = document.getElementById("Teleport Button");
-    if (teleportMenu) {
-        function tpt(direction) {
-            if (!teleportMenu.google) {
-                // console.log("non-Google Teleport");
-                function forwardReverse(heading) {
-                    if (direction) {
-                        return heading;
-                    }
-                    else {
-                        return (heading + 180) % 360;
-                    }
-                }
-
-                let prevStep = null;
-                if (locHistory.length === 1) {
-                    prevStep = locHistory[0];
-                }
-                else {
-                    prevStep = locHistory[locHistory.length - 1];
-                }
-                // console.log(locHistory);
-
-                let options = {};
-                let place, position, pID;
-                if (nextPlayer === "Yandex") {
-
-                    place = FindPointAtDistanceFrom(prevStep[0], prevStep[1], DegreesToRadians(forwardReverse(prevStep[2])), teleportMenu.distance * 0.001);
-                    YandexPlayer.setDirection([prevStep[2], prevStep[3]]);
-                    YandexPlayer.moveTo([place.lat, place.lng], options);
-                    YandexPlayer.setSpan([10, 67]);
-                }
-                else if (nextPlayer === "Kakao") {
-                    var roadviewClient = new kakao.maps.RoadviewClient();
-                    place = FindPointAtDistanceFrom(prevStep[0], prevStep[1], DegreesToRadians(forwardReverse(prevStep[3])), teleportMenu.distance * 0.001);
-                    position = new kakao.maps.LatLng(place.lat, place.lng);
-                    roadviewClient.getNearestPanoId(position, 500, function (panoId) {
-                        KakaoPlayer.setPanoId(panoId, position);
-                    });
-                }
-                else if (nextPlayer === "Google") {
-                    place = FindPointAtDistanceFrom(prevStep[0], prevStep[1], DegreesToRadians(forwardReverse(prevStep[2])), teleportMenu.distance * 0.001);
-                }
-                else if (nextPlayer === "Bing Streetside") {
-                    //                     console.log("teleport")
-                    //                     console.log(prevStep);
-                    place = FindPointAtDistanceFrom(prevStep[0], prevStep[1], DegreesToRadians(forwardReverse(prevStep[2])), teleportMenu.distance * 0.001);
-                    let bounds = new Microsoft.Maps.LocationRect(new Microsoft.Maps.Location(place.lat, place.lng), 1, 1);
-                    Microsoft.Maps.Map.getClosestPanorama(bounds, onSuccess, onMissingCoverage);
-                    function onSuccess(panoramaInfo) {
-                        //                         console.log("Coverage")
-                        //                         console.log([panoramaInfo.la, panoramaInfo.lo])
-                        MSStreetPlayer.setView({
-                            center: new Microsoft.Maps.Location(panoramaInfo.la, panoramaInfo.lo),
-                        });
-                    }
-                    function onMissingCoverage() {
-                        console.log("No Coverage")
-                    }
-                }
-                else if (nextPlayer === "Mapy") {
-                    place = FindPointAtDistanceFrom(MapyPlayer.getPlace()._data.mark.lat, MapyPlayer.getPlace()._data.mark.lon, MapyPlayer.getCamera().yaw, teleportMenu.distance * 0.001);
-                    let mapyCords = SMap.Coords.fromWGS84(place.lng, place.lat);
-                    SMap.Pano.getBest(mapyCords, 200).then(function (placeN) {
-                        MapyPlayer.show(placeN, {
-                            yaw: MapyPlayer.getCamera().yaw,
-                        });
-                    }, function () {
-                        alert("Panorama se nepodařilo zobrazit !");
-                    });
-                }
-
-                if (teleportMenu.distance > 150) {
-                    teleportMenu.distance = 100;
-                    teleportMenu.innerHTML = "Teleport: " + teleportMain.distance + " m";
-                }
-            }
-        }
-        document.getElementById("Teleport Forward").addEventListener("click", () => {
-            tpt(true);
-
-        });
-        document.getElementById("Teleport Reverse").addEventListener("click", () => {
-            tpt(false);
-
-        });
-    }
+    // TODO: remove references to this
 }
 
 
