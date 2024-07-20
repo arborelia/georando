@@ -3,9 +3,9 @@ SETTINGS = {
     # different settings, the player_name needs to be different.
     "player_name": "arborelia",
     # How many official (country) maps to use. These maps are harder than most community maps.
-    "num_official": 5,
+    "num_official": 3,
     # How many community maps to use.
-    "num_community": 15,
+    "num_community": 12,
     # How many random maps to start with
     "num_starting_maps": 3,
     # Names of maps or countries you find easier, and which should be earlier in logic, because you're
@@ -16,7 +16,7 @@ SETTINGS = {
     # Official maps that should be in the pool.
     "guaranteed_official_maps": [],
     # Community maps that should be in the pool.
-    "guaranteed_community_maps": ["A Community World"],
+    "guaranteed_community_maps": [],
     # Should maps with relatively few locations, such as Andorra or Guam, be included in the official
     # map pool?
     "allow_small_official": True,

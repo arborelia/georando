@@ -311,14 +311,18 @@ COMMUNITY_MAPS = {
         difficulty=2,
         provides=["Canada", "North America"],
         streakable=False,
-        tags=["country", "urban"],
+        tags=["country", "urban", "starter"],
     ),
     "100_rivers_europe": community_map(
         "100 Longest Rivers in Europe",
         "Simi",
         difficulty=2,
         streakable=True,
-        tags=["theme"],
+        provides=[
+            "France", "Czechia", "United Kingdom", "Spain", "Italy", "Hungary",
+            "Poland", "Norway", "Sweden", "Finland", "Greece", "Portugal"
+        ],
+        tags=["theme", "starter"],
         # could this be a starter? we need country stats if so
     ),
     "aesthetic_world": community_map(
@@ -735,7 +739,7 @@ COMMUNITY_MAPS = {
         url="https://www.geoguessr.com/maps/635c797dac045a96b9333016",
         difficulty=4,
         provides=["United States"],
-        tags=["country"],
+        tags=["country", "starter"],
     ),
     "dads_world": community_map(
         "Dads of the World",
@@ -1245,10 +1249,19 @@ COMMUNITY_MAPS = {
         "McDonald's Worldwide",
         "aurahack",
         difficulty=3,
+        # observed so far
         may_provide=[
             "Canada",
             "United States",
+            "Mexico",
+            "Brazil",
             "Japan",
+            "United Arab Emirates",
+            "Singapore",
+            "Indonesia",
+            "Taiwan",
+            "Türkiye",
+            "South Korea",
             "North America",
             "Europe",
             "Asia",
@@ -1331,7 +1344,18 @@ COMMUNITY_MAPS = {
         url="https://www.geoguessr.com/maps/636418e95b55886295653efa",
         difficulty=3,
         streakable=True,
-        may_provide=CONTINENT_CHECKS + ["United Kingdom", "France", "Japan"],
+        # observed so far
+        may_provide=CONTINENT_CHECKS + [
+            "United States",
+            "United Kingdom",
+            "France",
+            "Spain",
+            "Luxembourg",
+            "Japan",
+            "Italy",
+            "Poland",
+            "Taiwan",
+        ],
         tags=["world", "urban", "theme", "starter"],
     ),
     "pro_world": community_map(

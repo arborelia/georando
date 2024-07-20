@@ -799,7 +799,7 @@ function resetBtnPos() {
 
     mainMenuBtn.style.top = "6em";
     MinimapMenuBtn.style.top = "15em";
-    ClockMenuBtn.style.top = "17em";
+    ClockMenuBtn.style.top = "18em";
 
     mainMenuBtn.style.right = "0.5em";
     mainMenuBtn.style.width = "3em";
@@ -900,17 +900,15 @@ function handleStyles() {
     }
 
     let dict = {
-        'Info Menu': ["url(https://www.svgrepo.com/show/299161/big-data.svg)", "#ff9999"],
-        'Teleport Menu': ["url(https://www.svgrepo.com/show/12767/car.svg)", "#ffcba4"],
-        "Time Machine Button": ["url(https://www.svgrepo.com/show/38630/clock.svg)", "#D8BFD8"],
-        'Minimap Menu Button': ["url(https://www.svgrepo.com/show/116365/map.svg)", "#faf0be"],
+        'Info Menu': ["I", "#ff9999"],
+        'Teleport Menu': ["G", "#ffcba4"],
+        "Time Machine Button": ["T", "#aaddaa"],
+        'Minimap Menu Button': ["M", "#faf0be"],
     };
 
     for (let element of document.getElementsByClassName("menu-btn")) {
-        element.style.backgroundImage = dict[element.id][0];
+        element.textContent = dict[element.id][0];
         element.style.backgroundColor = dict[element.id][1];
-        element.style.backgroundRepeat = "no-repeat";
-        element.style.backgroundOrigin = "content-box";
         element.style.visibility = "";
     }
 
@@ -1995,10 +1993,6 @@ function setDisable(cond) {
             }
         }
     }
-    timeMachineNewerBtn.style.backgroundColor = "red";
-    timeMachineNewerBtn.disabled = true;
-    timeMachineOlderBtn.style.backgroundColor = "red";
-    timeMachineOlderBtn.disabled = true;
 }
 
 
