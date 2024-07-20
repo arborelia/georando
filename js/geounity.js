@@ -105,165 +105,6 @@ let GEOJSON_STYLE =
     clickable: false,
 }
 
-// replace the URL with your desired link
-// For example, search "Germany GeoJson" on Github, find this link (https://github.com/isellsoap/deutschlandGeoJSON/blob/main/4_kreise/4_niedrig.geo.json)
-// Then click "Download" to get the raw.githubusercontent.com link (https://raw.githubusercontent.com/isellsoap/deutschlandGeoJSON/main/4_kreise/4_niedrig.geo.json)
-// and replace the URL below with that URL.
-// State zipcode: see this site https://github.com/OpenDataDE/State-zip-code-GeoJSON
-
-let YOUR_URL = "https://raw.githubusercontent.com/severinlandolt/map-switzerland/main/02%20GeoJSON/CH_Kantonsgrenzen_100_geo.json"
-
-// set it to true to add your custom GeoJSON by copy it to the code below (this is for
-
-let GeoJsonCustomUser = false
-
-// replace with your custom GeoJson, go to https://geojson.io/ to customize it then copy the Json to here
-
-let CUSTOM_GEOJSON =
-
-{
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "properties": {},
-            "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                    [
-                        2.493896484375,
-                        52.7163309360463
-                    ],
-                    [
-                        2.4609375,
-                        53.15994678846807
-                    ],
-                    [
-                        3.2025146484375,
-                        53.179703893605385
-                    ],
-                    [
-                        3.2080078125,
-                        52.96518371955126
-                    ],
-                    [
-                        2.48291015625,
-                        52.948637884883205
-                    ]
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {},
-            "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                    [
-                        3.218994140625,
-                        52.05586831074774
-                    ],
-                    [
-                        3.218994140625,
-                        52.13685974852633
-                    ],
-                    [
-                        2.515869140625,
-                        52.1267438596429
-                    ],
-                    [
-                        2.515869140625,
-                        51.77803705914517
-                    ],
-                    [
-                        3.2354736328125,
-                        51.78993084774129
-                    ],
-                    [
-                        3.228607177734375,
-                        51.96119237712624
-                    ],
-                    [
-                        2.8571319580078125,
-                        51.95230623740452
-                    ]
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "stroke": "#555555",
-                "stroke-width": 2,
-                "stroke-opacity": 1
-            },
-            "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                    [
-                        2.5048828125,
-                        52.619725272670266
-                    ],
-                    [
-                        2.5103759765625,
-                        52.274880130680536
-                    ],
-                    [
-                        2.867431640625,
-                        52.284962354465726
-                    ],
-                    [
-                        3.2299804687499996,
-                        52.29504228453735
-                    ],
-                    [
-                        3.2135009765625,
-                        52.63973017532399
-                    ],
-                    [
-                        2.5096893310546875,
-                        52.621392697207625
-                    ]
-                ]
-            }
-        }
-    ]
-}
-
-/**
- * Overlay a custom image:
- */
-
-// set it to true to add your image overlay
-
-let OverlayCustom = false
-
-// replace the URL with your desired link
-
-let OVERLAY_URL = "https://www.battleface.com/blog/wp-content/uploads/2020/10/patreon-profile-tom-geowizard.jpg"
-
-// set the bounds for the image - latitude (North and South), longitude (North and South)
-
-let OVERLAY_BOUNDS =
-{
-    north: 53,
-    west: -3,
-    south: 51,
-    east: 1,
-};
-
-// change the image overlay display style.
-
-let OVERLAY_STYLE =
-{
-    fillOpacity: 0.2,
-    clickable: false,
-}
-
-/**
- * End of Minimap Overlay instruction section
- */
-
 // API Keys
 
 var MS_API_KEY = "Ap2DwDDitzY7jJuYeIJF6YyfqDkYt-QxIBjeQ6SDEJelSfb6ghAVb-V4I-G3om-s";
@@ -856,7 +697,7 @@ function setButtons() {
     return [document.getElementById("Teleport Forward"), document.getElementById("Teleport Reverse"), document.getElementById("Teleport Button"), document.getElementById("plus"), document.getElementById("minus"),
     document.getElementById("reset"), document.getElementById("Show Buttons"),
     document.getElementById("Date Button"), document.getElementById("minus year"), document.getElementById("plus year"),
-    document.getElementById("Teleport Options Button"), document.getElementById("Satellite Switch"),
+    document.getElementById("Teleport Options Button"),
     document.getElementById("Restrict Bounds Main"),
     document.getElementById("Restrict Distance"), document.getElementById("Increase Restrict Distance"),
     document.getElementById("Decrease Restrict Distance"), document.getElementById("Restrict Bounds Enable"),
@@ -867,8 +708,6 @@ function setButtons2() {
     // console.log("set")
     return [document.getElementById("Show Buttons"),
     document.getElementById("Teleport Menu"),
-    document.getElementById("Satellite Menu"),
-    document.getElementById("Mosaic Menu"),
     document.getElementById("Minimap Menu Button"),
     document.getElementById("Time Machine Button"),
     ]
@@ -966,8 +805,6 @@ function resetBtnPos() {
     let [
         mainMenuBtn,
         teleportMenu,
-        satelliteMenu,
-        mosaicMenu,
         MinimapMenuBtn,
         ClockMenuBtn,
     ] = setButtons2();
@@ -977,8 +814,6 @@ function resetBtnPos() {
     mainMenuBtn.style.top = "6em";
     teleportMenu.style.top = "12.5em";
     MinimapMenuBtn.style.top = "15.5em";
-    satelliteMenu.style.top = "18.5em";
-    mosaicMenu.style.top = "24.5em";
     ClockMenuBtn.style.top = "27.5em";
 
     mainMenuBtn.style.right = "0.5em";
@@ -1084,8 +919,6 @@ function handleStyles() {
         'Teleport Menu': ["url(https://www.svgrepo.com/show/12767/car.svg)", "#ffcba4"],
         "Time Machine Button": ["url(https://www.svgrepo.com/show/38630/clock.svg)", "#D8BFD8"],
         'Minimap Menu Button': ["url(https://www.svgrepo.com/show/116365/map.svg)", "#faf0be"],
-        'Mosaic Menu': ["url(https://www.svgrepo.com/show/77240/map.svg)", "#E6E6FA"],
-        'Satellite Menu': ["url(https://www.svgrepo.com/show/29288/satellite.svg)", "#e8f48c"],
     };
 
     for (let element of document.getElementsByClassName("menu-btn")) {
@@ -1160,39 +993,6 @@ function setVar(argm) {
     }
 }
 
-function handleSatColor(cond1, cond2) {
-    let sC = document.getElementById("Satellite Type Button");
-    if (cond1) {
-        for (let element of satType) {
-            let ele0 = document.getElementById(element[0]);
-            let strNmHere;
-            if (ele0.id !== "SunPos") {
-                strNmHere = getVar(ele0.id);
-            }
-            else {
-                strNmHere = ele0.id;
-            }
-            if (strNmHere) {
-                ele0.innerHTML = element[1];
-                ele0.style.background = "#ff1493";
-            }
-            else {
-                ele0.innerHTML = element[2];
-                ele0.style.background = "#ff69b4";
-            }
-        }
-    }
-    if (cond2) {
-        for (let element of document.getElementsByClassName("satellite-style")) {
-            if (element.id == sC.currentTime) {
-                element.style.background = "#ff1493";
-            }
-            else {
-                element.style.background = "#ff69b4";
-            }
-        }
-    }
-}
 
 function enterChaosMode(heading) {
     if (heading === -999) {
@@ -1292,18 +1092,6 @@ function UnityInitiate() {
     google.maps.Map = class extends google.maps.Map {
         constructor(...args) {
             super(...args);
-            if (GeoJsonCustomUser) {
-                if (GeoJsonCustomUser) {
-                    this.data.addGeoJson(CUSTOM_GEOJSON);
-                }
-                this.data.setStyle(function (feature) {
-                    return GEOJSON_STYLE
-                });
-            }
-            if (OverlayCustom) {
-                let customOverlay = new google.maps.GroundOverlay(OVERLAY_URL, OVERLAY_BOUNDS, OVERLAY_STYLE);
-                customOverlay.setMap(this);
-            }
 
             for (let mapDiv of document.getElementsByClassName("preset-minimap")) {
                 google.maps.event.addDomListener(mapDiv, "click", () => {
@@ -2009,309 +1797,6 @@ function UnityInitiate() {
         }
     });
 
-    // Satellite Module Buttons
-    // Class: satelliteSwitchButton, satellite-menu
-    // subclass 1: satellite-btn-type
-    // subclass 2: satellite-btn-style
-    // Buttons: satelliteRadius, satelliteType, satelliteStyle
-    // satelliteDefault, satelliteNight, satelliteClassic, roadDefault, roadClassic
-    // skyDefault, skyCurrent, skyLocal
-
-    var satelliteTypeBtn = document.createElement("Button");
-    satelliteTypeBtn.classList.add("unity-btn", "satellite-btn", "half", "horizontal-1", "vertical-2");
-    satelliteTypeBtn.id = "Satellite Type Button";
-    satelliteTypeBtn.innerHTML = "Map Style";
-    satelliteTypeBtn.currentTime = "solarNoon";
-    document.body.appendChild(satelliteTypeBtn);
-
-
-    var satelliteStyleBtn = document.createElement("Button");
-    satelliteStyleBtn.classList.add("unity-btn", "satellite-btn", "half", "horizontal-2", "vertical-2");
-    satelliteStyleBtn.id = "Satellite Style Button";
-    satelliteStyleBtn.innerHTML = "Time";
-
-    document.body.appendChild(satelliteStyleBtn);
-
-
-
-    for (let satT of satType) {
-        let satTButton = document.createElement("Button");
-        satTButton.id = satT[0];
-        satTButton.classList.add("unity-btn", "satellite-btn", "satellite-type", "half", "horizontal-1");
-        satTButton.addEventListener("click", () => {
-            // let sB = document.getElementById("Satellite Type Button");
-            let strNm = satTButton.id;
-            let val = getVar(strNm);
-            styleMapboxAll(strNm, !val);
-            setVar(strNm);
-            handleSatColor(true, false);
-        })
-        document.body.appendChild(satTButton);
-    }
-
-
-
-    for (let satS of satStyle) {
-        let satSButton = document.createElement("Button");
-        satSButton.id = satS[0];
-        satSButton.classList.add("unity-btn", "satellite-btn", "satellite-style", "half", "horizontal-2");
-        satSButton.innerHTML = satS[1];
-        satSButton.addEventListener("click", () => {
-            styleMapboxAll("SunPos", satSButton.id);
-            satelliteTypeBtn.currentTime = satSButton.id;
-            handleSatColor(false, true);
-        })
-        document.body.appendChild(satSButton);
-    }
-
-
-
-    function handleSatMenu(cond) {
-        let transition = true;
-        if (cond) {
-            transition = (satelliteSwitchButton.innerHTML == "Streetview mode");
-        }
-        else {
-            transition = (satelliteSwitchButton.innerHTML !== "Streetview mode");
-        }
-        if (transition) {
-            for (let element of document.getElementsByClassName("satellite-btn")) {
-                if (element.id !== "Satellite Switch") {
-                    element.style.visibility = "hidden";
-                }
-            }
-        }
-        else {
-            for (let element of document.getElementsByClassName("satellite-btn")) {
-                if (element.id !== "Satellite Switch") {
-                    element.style.visibility = "";
-                }
-            }
-        }
-    }
-
-    var satelliteSwitchButton = document.createElement("Button");
-    satelliteSwitchButton.classList.add("unity-btn", "satellite-btn", "full", "vertical-1");
-    satelliteSwitchButton.id = "Satellite Switch";
-    satelliteSwitchButton.state = false;
-    satelliteSwitchButton.innerHTML = "Streetview mode";
-    document.body.appendChild(satelliteSwitchButton);
-    satelliteSwitchButton.addEventListener("click", () => {
-        handleSatMenu(false);
-        if (!initBing) {
-            let di = formatDist();
-            //             satelliteRadius.innerHTML = `Satellite (${di})`;
-            satelliteSwitchButton.innerHTML = `Satellite (${di})`;
-
-            initBing = true;
-            MAPBOX_INJECTED = false;
-            BR_LOAD_MP = true;
-
-            let canvas = document.getElementById("sat_map");
-            if (!canvas) {
-                injectMapboxPlayer();
-            }
-            else {
-                changeInnerHTML(canvas, false);
-                MAPBOX_INJECTED = true;
-            }
-            nextPlayer = "Mapbox Satellite";
-            injectCanvas();
-            satCallback();
-
-            sat_choice = true;
-            console.log("Load Mapbox Satellite API")
-            //
-        }
-        else {
-            if (!satelliteSwitchButton.innerHTML.includes("Satellite")) {
-                // console.log("true!!")
-                let di2 = formatDist();
-                satelliteSwitchButton.innerHTML = `Satellite (${di2})`;
-
-                nextPlayer = "Mapbox Satellite";
-                injectCanvas();
-                satCallback();
-                nextPlayer = nextPlayer_save;
-
-                sat_choice = true;
-                // console.log("hello")
-            }
-            else {
-                satelliteSwitchButton.innerHTML = "Streetview mode";
-                if (nextPlayer_save == "Mapbox Satellite") {
-                    nextPlayer = "Google";
-                }
-                else {
-                    nextPlayer = nextPlayer_save;
-                }
-
-                injectCanvas();
-                if (sat_choice) {
-                    if (nextPlayer !== "Google") {
-                        goToLocation(true);
-                    }
-                    handleButtons();
-                }
-                sat_choice = false;
-            }
-        }
-    });
-
-    var satelliteMenu = document.createElement("Button");
-    satelliteMenu.classList.add("unity-btn", "menu-btn");
-    satelliteMenu.id = "Satellite Menu";
-    document.body.appendChild(satelliteMenu);
-    satelliteMenu.addEventListener("click", () => {
-        switchBtn("satellite-btn");
-        if (satelliteSwitchButton.style.visibility == "hidden") {
-            satelliteSwitchButton.style.visibility = "";
-            handleSatMenu(true);
-        }
-        else {
-            for (let element of document.getElementsByClassName("satellite-btn")) {
-                element.style.visibility = "hidden";
-            }
-        }
-
-    });
-
-
-    // Mosaic Module Buttons
-
-    var mosaicMain = document.createElement("Button");
-    mosaicMain.classList.add("unity-btn", "mosaic-btn", "full", "vertical-1");
-    mosaicMain.id = "Mosaic Enable";
-    mosaicMain.grid = 0;
-    // mosaicMain.random = false;
-    mosaicMain.color = false;
-    mosaicMain.label = true;
-    // mosaicMain.blink = false;
-    mosaicMain.innerHTML = "Mosaic Mode";
-    document.body.appendChild(mosaicMain);
-
-    var mosaicGridSize = document.createElement("Button");
-    mosaicGridSize.classList.add("unity-btn", "mosaic-btn", "half", "horizontal-2", "vertical-2");
-    mosaicGridSize.id = "Mosaic Grid";
-    mosaicGridSize.innerHTML = "Grid Size";
-    document.body.appendChild(mosaicGridSize);
-
-    let gridWidth = [0, 3, 5, 7, 10, 20, 50, 100];
-    for (let i = 0; i < gridWidth.length; i++) {
-        let gridButton = document.createElement("Button");
-        gridButton.id = `Grid ${gridWidth[i]}`;
-        gridButton.classList.add("unity-btn", "mosaic-btn", "grid-size", "half", "horizontal-2");
-        if (i !== 0) {
-            gridButton.innerHTML = `${gridWidth[i]} x ${gridWidth[i]}`;
-        }
-        else {
-            gridButton.innerHTML = `No Grid`;
-        }
-        document.body.appendChild(gridButton);
-        gridButton.addEventListener("click", () => {
-            mosaicMain.color = false;
-            mosaicMain.label = true;
-            loadGridBtn(gridWidth[i]);
-        });
-    }
-
-    var mosaicGridOpt = document.createElement("Button");
-    mosaicGridOpt.classList.add("unity-btn", "mosaic-btn", "half", "horizontal-1", "vertical-2");
-    mosaicGridOpt.id = "Mosaic Options";
-    mosaicGridOpt.innerHTML = "Options";
-    document.body.appendChild(mosaicGridOpt);
-
-    // ["Blink Mode"]
-    let gridOpt = ["Add Color", "Remove Label", "Reveal 5%", "Reveal All", "Peek 0.01s", "Peek 0.1s", "Peek 0.25s", "Peek 0.5s", "Peek 1s", "Peek 3s"];
-    for (let i = 0; i < gridOpt.length; i++) {
-        let gridButton = document.createElement("Button");
-        gridButton.id = `Grid ${gridOpt[i]}`;
-        gridButton.classList.add("unity-btn", "mosaic-btn", "grid-opt", "half", "horizontal-1");
-        gridButton.innerHTML = `${gridOpt[i]}`;
-        document.body.appendChild(gridButton);
-        if (gridOpt[i] == "Reveal All") {
-            gridButton.addEventListener("click", () => {
-                let gridCanvas = document.getElementById("grid");
-                if (gridCanvas) {
-                    gridCanvas.style.visibility = "hidden";
-                }
-            });
-        }
-        else if (gridOpt[i].includes("Peek")) {
-            gridButton.addEventListener("click", () => {
-                let gridCanvas = document.getElementById("grid");
-                if (gridCanvas) {
-                    gridCanvas.style.visibility = "hidden";
-                    let time = 500;
-                    if (gridOpt[i].includes("0.01s")) {
-                        time = 10;
-                    }
-                    else if (gridOpt[i].includes("0.1s")) {
-                        time = 100;
-                    }
-                    else if (gridOpt[i].includes("0.25s")) {
-                        time = 250;
-                    }
-                    else if (gridOpt[i].includes("0.5s")) {
-                        time = 500;
-                    }
-                    else if (gridOpt[i].includes("1s")) {
-                        time = 1000;
-                    }
-                    else if (gridOpt[i].includes("3s")) {
-                        time = 3000;
-                    }
-                    setTimeout(function () { gridCanvas.style.visibility = ""; }, time);
-                }
-            });
-        }
-        else if (gridOpt[i] == "Reveal 5%") {
-            gridButton.addEventListener("click", () => {
-                for (let grid of document.getElementsByClassName("grid-btn")) {
-                    let num = Math.random();
-                    if (num > 0.95) {
-                        grid.style.visibility = "hidden";
-                    }
-                }
-            });
-        }
-        else if (gridOpt[i] == "Add Color") {
-            gridButton.addEventListener("click", () => {
-                mosaicMain.color = true;
-                for (let grid of document.getElementsByClassName("grid-btn")) {
-                    grid.style.background = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-                }
-            });
-        }
-        else if (gridOpt[i] == "Remove Label") {
-            gridButton.addEventListener("click", () => {
-                mosaicMain.label = false;
-                for (let grid of document.getElementsByClassName("grid-btn")) {
-                    grid.innerHTML = "";
-                }
-            });
-        }
-    }
-
-    var mosaicMenu = document.createElement("Button");
-    mosaicMenu.classList.add("unity-btn", "menu-btn");
-    mosaicMenu.id = "Mosaic Menu";
-    document.body.appendChild(mosaicMenu);
-    mosaicMenu.addEventListener("click", () => {
-        switchBtn("mosaic-btn");
-        if (mosaicMain.style.visibility == "hidden") {
-            for (let element of document.getElementsByClassName("mosaic-btn")) {
-                element.style.visibility = "";
-            }
-        }
-        else {
-            for (let element of document.getElementsByClassName("mosaic-btn")) {
-                element.style.visibility = "hidden";
-            }
-        }
-    });
-
-
 
     // Minimap Module
 
@@ -2391,88 +1876,6 @@ function loadNMPZ() {
                 z-index: 1;
                 `;
     GAME_CANVAS.appendChild(gridBtn);
-}
-
-// Handle Grid Mode
-
-function loadGridBtn(num) {
-    let gridCanvas = document.getElementById("grid");
-    let reload = false;
-    if (!gridCanvas && num !== 0) {
-        let gridBtn = document.createElement("div");
-        gridBtn.id = "grid";
-        //                 visibility: hidden;
-        gridBtn.style =
-            `
-                display: grid;
-                gap: 0px;
-                top: 0px;
-                left: 0px;
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                z-index: 1;
-                `;
-        GAME_CANVAS.appendChild(gridBtn);
-        gridCanvas = gridBtn;
-        reload = true;
-    }
-
-    if (gridCanvas) {
-        let mosaicMenu = document.getElementById("Mosaic Enable");
-        if (num !== mosaicMenu.grid || reload) {
-            console.log("Generate Mosaic tiles");
-            gridCanvas.innerHTML = "";
-            mosaicMenu.grid = num;
-            // cond = true;
-            if (num !== 0) {
-                gridCanvas.style.visibility = "";
-                for (let i = 1; i < num + 1; i++) {
-                    for (let ii = 1; ii < num + 1; ii++) {
-                        let btn1 = document.createElement("Button");
-                        btn1.style =
-                            `grid-column: ${ii};
-                            grid-row: ${i};
-                         `;
-                        btn1.classList.add("grid-btn");
-                        if (num < 21 && mosaicMenu.label) {
-                            btn1.innerHTML = `(${ii}, ${i})`;
-                        }
-                        btn1.addEventListener("click", () => {
-                            btn1.style.visibility = "hidden";
-                        });
-                        if (mosaicMenu.color) {
-                            btn1.style.background = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-                        }
-                        gridCanvas.appendChild(btn1);
-                    }
-                }
-                mosaicMenu.grid = num;
-            }
-            else {
-                gridCanvas.style.visibility = "hidden";
-
-            }
-
-            for (let grid2 of document.getElementsByClassName("grid-size")) {
-                grid2.style.background = "#ff69b4";
-                if (parseInt(grid2.id.replace(/\D/g, '')) == mosaicMenu.grid) {
-                    grid2.style.background = "#ff1493";
-                }
-            }
-        }
-
-        if (num !== 0) {
-            gridCanvas.style.visibility = "";
-            for (let grid1 of document.getElementsByClassName("grid-btn")) {
-                grid1.style.visibility = "";
-            }
-            mosaicPre = true;
-        }
-        else {
-            mosaicPre = false;
-        }
-    }
 }
 
 
@@ -2589,8 +1992,8 @@ function setHidden(cond) {
 }
 
 function setDisable(cond) {
-    let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn] = setButtons();
-    let btnList = [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn];
+    let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn] = setButtons();
+    let btnList = [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn];
 
     function setAll(cond1, cond2) {
         for (let btn of btnList) {
@@ -2973,7 +2376,7 @@ function waitLoad() {
 
 function checkRound() {
     //   console.log("Check Round");
-    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
+    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
     if (!isBattleRoyale) {
         // console.log("Check Round");
         let currentRound = getRoundFromPage();
@@ -3020,7 +2423,7 @@ function nextButtonCallback() {
 }
 
 function guessButtonCallback() {
-    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
+    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
     let guessButton = document.querySelector("button[data-qa='perform-guess']");
     let mainMenuBtn = document.getElementById("Show Buttons");
     if (guessButton != null) {
@@ -3142,7 +2545,7 @@ function getMapData() {
 }
 
 function handleMinimapCallback() {
-    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
+    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
     let MinimapBtn = document.getElementById("Minimap Button");
     if (MinimapBtn) {
         let cur = MinimapBtn.current;
@@ -3223,9 +2626,8 @@ function handleButtons() {
  */
 
 function locationCheck(data) {
-    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
+    // let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn ] = setButtons();
     let round;
-    let satelliteSwitchButton = document.getElementById("Satellite Switch");
     // console.log(data)
 
     if (isBattleRoyale) {
@@ -3303,13 +2705,6 @@ function locationCheck(data) {
         nextPlayer = "Mapbox Satellite";
     }
 
-    if (nextPlayer == "Mapbox Satellite") {
-        let di3 = formatDist();
-        satelliteSwitchButton.innerHTML = `Satellite (${di3})`;
-    }
-    else {
-        satelliteSwitchButton.innerHTML = "Streetview mode";
-    }
     console.log(nextPlayer_save + "," + nextPlayer);
     if (!rtded) {
         injectCanvas();
@@ -3493,21 +2888,9 @@ function handleSpecialColor() {
 
 
 function goToLocation(cond) {
-    let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, satelliteSwitchButton, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn] = setButtons();
+    let [teleportBtn, teleportReverse, teleportMenu, teleportMoreBtn, teleportLessBtn, teleportDistResetBtn, mainMenuBtn, timeMachineBtn, timeMachineOlderBtn, timeMachineNewerBtn, TeleportArisBtn, RestrictBoundsBtn, RestrictBoundsDistBtn, RestrictMoreBtn, RestrictLessBtn, RestrictBoundsEnableBtn, RestrictResetBtn] = setButtons();
     console.log("Going to location");
     console.log(nextPlayer);
-
-    let mosaicBtn = document.getElementById("Mosaic Enable");
-    if (mosaicPre) {
-        if (mosaicPre && mosaicBtn.grid == 0) {
-            mosaicBtn.grid = 5;
-            document.getElementById("Mosaic Menu").click();
-        }
-        else if (mosaicBtn.grid !== 0) {
-            document.getElementById("Mosaic Menu").click();
-        }
-        loadGridBtn(mosaicBtn.grid);
-    }
 
     if (restrictMovement) {
         //         if (teleportMenu.style.visibility == "hidden")
@@ -4516,7 +3899,6 @@ function injectMapboxPlayer() {
                     SCRIPT.src = `https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js`;
                     document.body.appendChild(SCRIPT);
                     document.querySelector('head').innerHTML += '<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet"/>';
-                    handleSatColor(true, true);
                     SCRIPT.addEventListener('load', () => {
                         const SCRIPT3 = document.createElement("script");
                         SCRIPT3.type = "text/javascript";
@@ -5211,121 +4593,4 @@ let presetOverlay = [
     ["Watercolor", ""],
     ["Toner", ""],
     ["Fire", ""],
-    ["Longitude", "https://raw.githubusercontent.com/Jupaoqq/Jupaoqq.github.io/main/lonl.json"],
-    ["Latitude", "https://raw.githubusercontent.com/Jupaoqq/Jupaoqq.github.io/main/latl.json"],
-    ["US County", "https://raw.githubusercontent.com/CodeForCary/CountyDataUSA5m/master/cb_2017_us_county_5m.json"],
-    ["France", "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson"],
-    ["Time Zone", "https://raw.githubusercontent.com/treyerl/timezones/master/timezones_wVVG8.geojson"],
-    ["UK Parliament", "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/electoral/gb/wpc.json"],
-    ["Custom", YOUR_URL]
 ]
-
-
-let langDict = {
-    "sn": ["fr"],
-    "za": ["af"],
-    "mg": ["mg", "fr"],
-    "tn": ["ar"],
-    "bd": ["bn"],
-    "kh": ["km"],
-    "in": ["hi"],
-    "cn": ["zh"],
-    "hk": ["zh"],
-    "id": ["id"],
-    "ir": ["fa"],
-    "il": ["he"],
-    "jp": ["ja"],
-    "jo": ["ar"],
-    "ky": ["ru", "ky"],
-    "la": ["lo"],
-    "my": ["ms"],
-    "mn": ["mn"],
-    "np": ["ne"],
-    "ru": ["ru"],
-    "sg": ["zh"],
-    "kr": ["ko"],
-    "lk": ["ta"],
-    "tw": ["zh"],
-    "th": ["th"],
-    "ae": ["ar"],
-    "vn": ["vi"],
-    "al": ["sq"],
-    "ad": ["es", "fr"],
-    "at": ["de"],
-    "be": ["nl", "fr"],
-    "bg": ["bg"],
-    "hr": ["hr"],
-    "cy": ["el"],
-    "cz": ["cs"],
-    "dk": ["da"],
-    "ee": ["et"],
-    "fo": ["fo"],
-    "fi": ["fi"],
-    "fr": ["fr"],
-    "de": ["de"],
-    "gr": ["el"],
-    "hu": ["hu"],
-    "is": ["is"],
-    "ie": ["ga"],
-    "it": ["it"],
-    "lv": ["lv"],
-    "lt": ["lt"],
-    "lu": ["lb", "fr", "de"],
-    "mc": ["fr"],
-    "nl": ["nl"],
-    "mk": ["mk"],
-    "no": ["no"],
-    "pl": ["pl"],
-    "pt": ["pt"],
-    "ro": ["ro"],
-    "sm": ["it"],
-    "rs": ["sr"],
-    "sk": ["sk"],
-    "si": ["sl"],
-    "es": ["es"],
-    "se": ["sv"],
-    "ch": ["de", "fr"],
-    "tr": ["tr"],
-    "ua": ["uk"],
-    "cw": ["nl"],
-    "do": ["es"],
-    "gt": ["es"],
-    "mx": ["es"],
-    "pr": ["es"],
-    "ar": ["es"],
-    "bo": ["es"],
-    "br": ["pt"],
-    "cl": ["es"],
-    "ec": ["es"],
-    "pe": ["es"],
-    "uy": ["es"]
-};
-
-// ch, lu, be, ad
-
-let carteDict = {
-    "AG": "agadir",
-    "AS": "asilah",
-    "CA": "casablanca",
-    "ER": "errachidia",
-    "ES": "essaouira",
-    "FE": "fes",
-    "IR": "ifrane",
-    "MA": "marrakech",
-    "ME": "meknes",
-    "RA": "rabat",
-};
-
-let satType = [["Weather", "Weather: On", "Weather: Off"],
-["Building", "Building: On", "Building: Off"],
-["Dimension", "3D", "2D"],
-["mapSty", "Satellite", "Road"]];
-
-let satStyle = [["solarNoon", "Noon"],
-["sunriseEnd", "Sunrise"],
-["goldenHourEnd", "Morning"],
-["goldenHour", "Evening"],
-["sunsetStart", "Sunset"],
-["nadir", "Midnight"],
-["getlocal", "Local Time"],
-];
