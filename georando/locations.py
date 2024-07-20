@@ -103,7 +103,7 @@ def make_country_goals(maps: List[GeoGuessrMap], skill_modifier: int = 0) -> Lis
     for idx, (difficulty, logic_options, country) in enumerate(by_difficulty):
         accumulated_logic.add(tuple(logic_options))
         goals.append({
-            "name": f"Unique country {idx+1} ({country})",
+            "name": f"Unique country {idx+1}",
             "category": categories,
             "requires": format_logic(switch_conjunction(list(accumulated_logic))),
         })
@@ -220,13 +220,42 @@ DIFFICULTY_LOGIC = {
         ],
         [MOVE, "Compass", "+10 seconds:24"],
     ],
-    11: [[MOVE, "Compass", "+10 seconds:32"]],
-    12: [[MOVE, "Compass", "+10 seconds:40"]],
-    13: [[MOVE, "Compass", "+10 seconds:48"]],
+    11: [
+        [
+            ZOOM,
+            "Compass",
+            "Car visibility",
+            "Terrain Map View",
+            "Satellite Map View",
+            "+10 seconds:52",
+        ],
+        [MOVE, "Compass", "+10 seconds:32"]
+    ],
+    12: [
+        [
+            ZOOM,
+            "Compass",
+            "Car visibility",
+            "Terrain Map View",
+            "Satellite Map View",
+            "+10 seconds:56",
+        ],
+        [MOVE, "Compass", "+10 seconds:40"]
+    ],
+    13: [
+        [
+            ZOOM,
+            "Compass",
+            "Car visibility",
+            "Terrain Map View",
+            "Satellite Map View",
+            "+10 seconds:61",
+        ],
+        [MOVE, "Compass", "+10 seconds:48"]
+    ],
     # Difficulty 14+
     # Examples:
     # - 22.5k round on A World of Plants
-    # - 20k round on A World of Waterfalls (not considered possible because you won't have Move)
     14: [
         [
             MOVE,
@@ -311,19 +340,19 @@ def make_map_goals(
             continue
         difficulty = map.difficulty + goal["difficulty"] - skill_modifier
         goal_name = goal["name"]
+        base_logic_options = DIFFICULTY_LOGIC[difficulty]
         if map.official_coverage:
             # Streaks are easier if they're narrowed down to a continent
             if (set(map.provides) & set(CONTINENT_CHECKS)) and "streak" in goal:
                 difficulty -= 1
-            base_logic_options = DIFFICULTY_LOGIC[difficulty]
         else:
             # Streaks are harder when there's unofficial coverage
             if "streak" in goal["name"]:
                 difficulty += 1
             # "Move" can't be relied on when there's unofficial coverage
-            base_logic_options = [
-                option for option in DIFFICULTY_LOGIC[difficulty] if MOVE not in option
-            ]
+            # base_logic_options = [
+            #     option for option in DIFFICULTY_LOGIC[difficulty] if MOVE not in option
+            # ]
 
         logic_options = [([map.name] + option) for option in base_logic_options]
 

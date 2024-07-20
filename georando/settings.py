@@ -43,4 +43,6 @@ SETTINGS = {
     "medals_to_win": 3,
     # Maximum number of community maps that are allowed to have the "troll" tag.
     "max_troll": 1,
+    # Maximum number of very easy maps (difficulty 1)
+    "max_easy": 1,
 }

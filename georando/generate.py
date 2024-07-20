@@ -43,7 +43,9 @@ def run():
             if map.name not in guaranteed_community_names
         ]
         n_troll = len([map for map in random_community_maps if "troll" in map.tags])
-        if n_troll <= SETTINGS["max_troll"]:
+        n_easy = len([map for map in random_community_maps if map.difficulty == 1])
+        if n_troll <= SETTINGS["max_troll"] and n_easy <= SETTINGS["max_easy"]:
+            # keep it
             break
     selected_community_maps = guaranteed_community_maps + random.sample(
         random_community_maps, num_random_community_maps
