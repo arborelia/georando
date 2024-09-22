@@ -68,13 +68,17 @@ def make_country_goals(maps: List[GeoGuessrMap], skill_modifier: int = 0) -> Lis
     goals = []
     country_difficulty = {}
     country_logic = {}
-    for country in sorted(COUNTRY_CHECKS):
+    for idx, country in enumerate(sorted(COUNTRY_CHECKS)):
         categories = ["Unique countries"]
         logic_options = []
         if country in maps:
             categories.append(country)
         for map in maps:
-            difficulty = map.difficulty
+            difficulty = map.difficulty + 1
+            if "world" in map.tags:
+                difficulty += 1
+            if not map.official_coverage:
+                difficulty += 1
             difficulty_logic = DIFFICULTY_LOGIC[difficulty - skill_modifier]
             if country in map.provides:
                 # this is a freebie, like recognizing Albania on the Albania map
