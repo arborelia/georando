@@ -87,7 +87,7 @@ def run():
             }
         ]
     )
-    possible_starter_maps = [map.name for map in selected_maps if "starter" in map.tags]
+    possible_starter_maps = [map.item_name() for map in selected_maps if "starter" in map.tags]
     starting_items = [
         {"items": possible_starter_maps, "random": 1},
         {"item_categories": ["Maps"], "random": SETTINGS["num_starting_maps"] - 1},
@@ -109,7 +109,7 @@ def run():
     game_data = {
         "game": "GeoGuessr",
         "player": "arborelia",
-        "filler_item_name": "Score Boost +100",
+        "filler_item_name": "Score +10",
         "starting_items": starting_items,
     }
     region_data = {}

@@ -68,8 +68,8 @@ def make_country_goals(maps: List[GeoGuessrMap], skill_modifier: int = 0) -> Lis
     goals = []
     country_difficulty = {}
     country_logic = {}
-    for idx, country in enumerate(sorted(COUNTRY_CHECKS)):
-        categories = ["Unique countries"]
+    categories = ["Unique countries"]
+    for country in sorted(COUNTRY_CHECKS):
         logic_options = []
         if country in maps:
             categories.append(country)
@@ -87,7 +87,7 @@ def make_country_goals(maps: List[GeoGuessrMap], skill_modifier: int = 0) -> Lis
 
             if country in map.provides or country in map.may_provide:
                 for diff_option in difficulty_logic:
-                    logic_options.append([map.name] + diff_option)
+                    logic_options.append([map.item_name()] + diff_option)
 
                 if country not in country_difficulty:
                     country_difficulty[country] = difficulty
@@ -97,20 +97,13 @@ def make_country_goals(maps: List[GeoGuessrMap], skill_modifier: int = 0) -> Lis
             country_logic[country] = [tuple(logic) for logic in logic_options]
             country_difficulty[country] += min(len(opt) for opt in country_logic[country]) * 0.01
 
-    by_difficulty = []
     for country in country_logic:
-        by_difficulty.append(
-            (country_difficulty[country], country_logic[country], country)
-        )
-    accumulated_logic = set()
-    by_difficulty.sort()
-    for idx, (difficulty, logic_options, country) in enumerate(by_difficulty):
-        accumulated_logic.add(tuple(logic_options))
         goals.append({
-            "name": f"Unique country {idx+1}",
+            "name": f"Identify {country}",
             "category": categories,
-            "requires": format_logic(switch_conjunction(list(accumulated_logic))),
+            "requires": format_logic(country_logic[country])
         })
+
     return goals
 
 
@@ -175,7 +168,7 @@ DIFFICULTY_LOGIC = {
             "Progressive Pan/Zoom/Move",
             "Compass",
             "+10 seconds:12",
-            "Terrain Map View",
+            "Score +100:1",
         ],
         [
             "Progressive Pan/Zoom/Move",
@@ -191,8 +184,8 @@ DIFFICULTY_LOGIC = {
     # - 5k location on A Speedrun World
     8: [
         [MOVE, "Compass", "+10 seconds:8"],
-        [ZOOM, "Compass", "+10 seconds:12", "Satellite Map View", "Car visibility"],
-        [ZOOM, "Compass", "+10 seconds:15", "Terrain Map View", "Car visibility"],
+        [ZOOM, "Compass", "+10 seconds:12", "Score +100:2", "Car visibility"],
+        [ZOOM, "Compass", "+10 seconds:15", "Score +100:1", "Car visibility"],
     ],
     # Difficulty 9
     # Examples:
@@ -202,8 +195,8 @@ DIFFICULTY_LOGIC = {
     # - 5k location on I Saw the Sign
     9: [
         [MOVE, "Compass", "+10 seconds:12"],
-        [ZOOM, "Compass", "+10 seconds:18", "Satellite Map View", "Car visibility"],
-        [ZOOM, "Compass", "+10 seconds:21", "Terrain Map View", "Car visibility"],
+        [ZOOM, "Compass", "+10 seconds:18", "Score +100:3", "Car visibility"],
+        [ZOOM, "Compass", "+10 seconds:21", "Score +100:2", "Car visibility"],
     ],
     # Difficulty 10
     # Examples:
@@ -218,8 +211,7 @@ DIFFICULTY_LOGIC = {
             ZOOM,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:5",
             "+10 seconds:48",
         ],
         [MOVE, "Compass", "+10 seconds:24"],
@@ -229,8 +221,7 @@ DIFFICULTY_LOGIC = {
             ZOOM,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:8",
             "+10 seconds:52",
         ],
         [MOVE, "Compass", "+10 seconds:32"]
@@ -240,22 +231,20 @@ DIFFICULTY_LOGIC = {
             ZOOM,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:13",
             "+10 seconds:56",
         ],
-        [MOVE, "Compass", "+10 seconds:40"]
+        [MOVE, "Compass", "+10 seconds:40", "Score +100:1"]
     ],
     13: [
         [
             ZOOM,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:20",
             "+10 seconds:61",
         ],
-        [MOVE, "Compass", "+10 seconds:48"]
+        [MOVE, "Compass", "+10 seconds:48", "Score +100:2"]
     ],
     # Difficulty 14+
     # Examples:
@@ -265,8 +254,7 @@ DIFFICULTY_LOGIC = {
             MOVE,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:3",
             "+10 seconds:60",
         ]
     ],
@@ -275,8 +263,7 @@ DIFFICULTY_LOGIC = {
             MOVE,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:5",
             "+10 seconds:60",
         ]
     ],
@@ -285,8 +272,7 @@ DIFFICULTY_LOGIC = {
             MOVE,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:8",
             "+10 seconds:60",
         ]
     ],
@@ -295,8 +281,7 @@ DIFFICULTY_LOGIC = {
             MOVE,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:13",
             "+10 seconds:60",
         ]
     ],
@@ -305,8 +290,7 @@ DIFFICULTY_LOGIC = {
             MOVE,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:21",
             "+10 seconds:60",
         ]
     ],
@@ -315,8 +299,7 @@ DIFFICULTY_LOGIC = {
             MOVE,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:34",
             "+10 seconds:60",
         ]
     ],
@@ -325,8 +308,7 @@ DIFFICULTY_LOGIC = {
             MOVE,
             "Compass",
             "Car visibility",
-            "Terrain Map View",
-            "Satellite Map View",
+            "Score +100:50",
             "+10 seconds:60",
         ]
     ],
@@ -358,7 +340,7 @@ def make_map_goals(
             #     option for option in DIFFICULTY_LOGIC[difficulty] if MOVE not in option
             # ]
 
-        logic_options = [([map.name] + option) for option in base_logic_options]
+        logic_options = [([map.item_name()] + option) for option in base_logic_options]
 
         if logic_options:
             goal_data = {
@@ -366,7 +348,7 @@ def make_map_goals(
                 "category": [map.name],
                 "requires": format_logic(logic_options),
             }
-            if goal_name == "22.5k round":
+            if goal_name == "22.5k round" or goal_name == "25k round":
                 goal_data["place_item"] = ["Gold Medal"]
                 goal_data["category"].append("Gold Medals")
             goals.append(goal_data)
@@ -383,7 +365,7 @@ def make_goals(
     goals.extend(make_country_goals(maps, skill_modifier))
     for map in maps:
         map_skill_mod = skill_modifier
-        if map.name in familiar or (set(familiar) & set(map.provides)):
+        if map.item_name() in familiar or (set(familiar) & set(map.provides)):
             map_skill_mod += 1
         goals.extend(make_map_goals(map, settings, map_skill_mod))
     return goals

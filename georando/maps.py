@@ -14,7 +14,7 @@ class GeoGuessrMap:
     # suggested difficulty range: 1-7
     difficulty: int
     # streakable: whether the map covers a reasonable number of countries, so that country streaks
-    # are meaningfule
+    # are meaningful
     streakable: bool
     # True (default) for maps that only contain official Google coverage, False when there are
     # photospheres or unofficial street cams
@@ -30,7 +30,13 @@ class GeoGuessrMap:
     url: Optional[str] = None
 
     def as_item(self):
-        return {"name": self.name, "progression": True, "category": ["Maps"]}
+        if self.creator == "GeoGuessr":
+            return {"name": self.name, "progression": True, "category": ["Maps"]}
+        else:
+            return {"name": f"{self.name}, by {self.creator}", "progression": True, "category": ["Maps"]}
+
+    def item_name(self):
+        return self.as_item()["name"]
 
 
 def official_map(
@@ -597,8 +603,18 @@ COMMUNITY_MAPS = {
         "Camera Obscura - An Interesting World",
         "Souvlaki Zeitgeist",
         url="https://www.geoguessr.com/maps/60f43c5a93939800017c7c38",
-        difficulty=4,
+        difficulty=5,
         streakable=True,
+        tags=["world", "theme"],
+    ),
+    "cat_world": community_map(
+        "A Cat World",
+        "Vinz3210",
+        url="https://www.geoguessr.com/maps/66cb040731342682512ce153",
+        difficulty=4,
+        official_coverage=False,
+        streakable=True,
+        may_provide=["United States"],
         tags=["world", "theme"],
     ),
     "cities_bold": community_map(
@@ -741,6 +757,14 @@ COMMUNITY_MAPS = {
         provides=["United States"],
         tags=["country", "starter"],
     ),
+    "crossroads_nz": community_map(
+        "Crossroads of New Zealand",
+        "slashP",
+        url="https://www.geoguessr.com/maps/66c25b104f2a406e1d7ea8a9",
+        difficulty=5,
+        provides=["New Zealand"],
+        tags=["country"]
+    ),
     "dads_world": community_map(
         "Dads of the World",
         "Arsemann",
@@ -820,6 +844,44 @@ COMMUNITY_MAPS = {
         ]
         + CONTINENT_CHECKS,
         tags=["balanced", "world", "starter"],
+    ),
+    "extensive_urban": community_map(
+        "An Extensive Urban World",
+        "slashP",
+        difficulty=3,
+        streakable=True,
+        may_provide=[
+            "Argentina",
+            "Australia",
+            "Brazil",
+            "Canada",
+            "Chile",
+            "Colombia",
+            "Denmark",
+            "Spain",
+            "Finland",
+            "France",
+            "United Kingdom",
+            "Indonesia",
+            "India",
+            "Italy",
+            "Japan",
+            "Kazakhstan",
+            "Mexico",
+            "Myanmar",
+            "Norway",
+            "Peru",
+            "Philippines",
+            "Poland",
+            "Romania",
+            "Russia",
+            "Sweden",
+            "Thailand",
+            "Türkiye",
+            "United States",
+            "South Africa"
+        ],
+        tags=["urban", "world", "starter"],
     ),
     "extraordinary_cow": community_map(
         "An Extraordinary Cow",
@@ -1175,7 +1237,8 @@ COMMUNITY_MAPS = {
     ),
     "look_mountains": community_map(
         "Look at dem mountains tho *o*",
-        "傻乎乎",
+        # "傻乎乎",
+        "shahuhu",
         url="https://www.geoguessr.com/maps/62305f2bd4b923000103a5f9",
         difficulty=5,
         may_provide=CONTINENT_CHECKS + ["Italy", "Norway", "Japan"],
@@ -1284,24 +1347,24 @@ COMMUNITY_MAPS = {
         may_provide=CONTINENT_CHECKS,
         tags=["theme", "world", "rural", "troll"],
     ),
-    "obbt": community_map(
-        "OBBTCFUCITDAMALL",
-        "0xGG",
-        difficulty=5,
-        streakable=True,
-        may_provide=CONTINENT_CHECKS
-        + [
-            "United States",
-            "Japan",
-            "Brazil",
-            "Canada",
-            "Australia",
-            "Taiwan",
-            "Italy",
-            "Russia",
-        ],
-        tags=["world", "troll"],
-    ),
+    #"obbt": community_map(
+    #    "OBBTCFUCITDAMALL",
+    #    "0xGG",
+    #    difficulty=5,
+    #    streakable=True,
+    #    may_provide=CONTINENT_CHECKS
+    #    + [
+    #        "United States",
+    #        "Japan",
+    #        "Brazil",
+    #        "Canada",
+    #        "Australia",
+    #        "Taiwan",
+    #        "Italy",
+    #        "Russia",
+    #    ],
+    #    tags=["world", "troll"],
+    #),
     "oops_islands": community_map(
         "Oops! All Islands",
         "Hindemith",
@@ -1323,7 +1386,8 @@ COMMUNITY_MAPS = {
     ),
     "pinpointable_mongolia": community_map(
         "A Pinpointable Mongolia",
-        "クリプトナイト",
+        "kuriputonaito",
+        # "クリプトナイト",
         url="https://www.geoguessr.com/maps/655f6d7e812a91133b381b53",
         difficulty=3,
         provides=["Mongolia", "Asia"],
@@ -1337,6 +1401,14 @@ COMMUNITY_MAPS = {
         streakable=True,
         may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON,
         tags=["pinpointable", "world"],
+    ),
+    "place_name_world": community_map(
+        "A Place Name World",
+        "Sweating Geography",
+        difficulty=2,
+        streakable=True,
+        may_provide=CONTINENT_CHECKS + COUNTRY_CHECKS_VERY_COMMON,
+        tags=["world"],
     ),
     "public_transit": community_map(
         "Public Transit of the World",
@@ -1649,14 +1721,14 @@ COMMUNITY_MAPS = {
         tags=["country", "urban"],
         provides=["Australia", "Oceania"],
     ),
-    "usobbt": community_map(
-        "USOBBTCFUCITCCAKF",
-        "0xGG",
-        url="https://www.geoguessr.com/maps/64d49bba794a5cc300cd8430",
-        difficulty=5,
-        provides=["United States", "North America"],
-        tags=["country", "troll"],
-    ),
+    #"usobbt": community_map(
+    #    "USOBBTCFUCITCCAKF",
+    #    "0xGG",
+    #    url="https://www.geoguessr.com/maps/64d49bba794a5cc300cd8430",
+    #    difficulty=5,
+    #    provides=["United States", "North America"],
+    #    tags=["country", "troll"],
+    #),
     "well_covered_world": community_map(
         "A Well-Covered World",
         "0xGG",
