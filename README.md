@@ -20,7 +20,7 @@ Here are instructions for how to get an APworld:
 - Install Python 3.8 or later
 - Check out this git repository
 - Edit `georando/settings.py` with the settings that you want. This is where you can change things like the difficulty of the logic based on how good you are at GeoGuessr. See [Settings](#settings) below for more information.
-- Run `python3 georando/generate.py` from the root of the repository
+- Run `generate.bat` (Windows) or `generate.sh` (Linux), or `python3 georando/generate.py` on any platform
 - It outputs an .apworld, which you can copy into Archipelago/lib/worlds
 - An example .yaml template is in the main directory here. Put it in your Archipelago/Players folder and generate a world.
 - Run the ArchipelagoLauncher and choose "Manual Client" to play the world
@@ -37,7 +37,7 @@ Run the Manual Client from the Archipelago Launcher so you can see what you have
 
 If you don't have additional starting items, you will start with:
 
-- Some number of GeoGuessr maps to play (default 3)
+- Some number of GeoGuessr maps to play (default 2)
 - 10 seconds per round
 - No features unlocked -- no panning, zooming, or moving, no compass, and no car visibility
 
@@ -72,12 +72,12 @@ Some country checks just won't exist -- this particularly happens when it's a ch
 ### Unlocking features
 
 - Increase your time per round whenever you get a **+10 Seconds** item.
-- The first time you get a **Progressive Pan/Zoom/Move** item, enable the Pan ability. The second time, enable Zoom, and the third time, enable Move.
-- When you get the **Compass**, press Shift+K to un-hide the compass.
+- **Pan** and **Zoom** are features that you unlock with checks. I know they're not configured separately in the GeoGuessr interface anymore -- if you don't have Pan, don't pan, and if you don't have Zoom, don't zoom.
+- There are 3 **Progressive Move** items. The first one lets you move a single step from your starting location. The second one lets you move 10 steps. When you have all 3 of them, you can move as much as you want.
+- When you get **Compass**, press Shift+K to un-hide the compass.
 - When you get **Car visibility**, turn off the GeoNoCar script from the Tampermonkey menu, and reload the page. Incidentally, because of the way this is implemented, if you don't have Compass yet, this gives you the compass for free! You probably won't mind.
 - When you get **Terrain Map View** or **Satellite Map View**, you can click the yellow sidebar button that the Unity script added and choose "Satellite" or "Terrain" as appropriate, to change your mini-map view. **Satellite Map View** also allows you to choose "Hybrid", to overlay roads on the satellite map.
 - When you get **Show Author Names**, if you are using GeoGuessr Ultimate Script to block out the name of the location creator, you can unblock it. Otherwise, it's just a meaningless item.
-- If you have Move unlocked and you get **Fast Driving**, you're now allowed to press "4" to go forward 100 meters using the GeoGuessr Unity Script.
 - Some items name a new map that you're now allowed to play on -- you can choose that map and get unlocks on it from now on.
 
 ### Traps
