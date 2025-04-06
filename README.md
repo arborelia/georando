@@ -55,7 +55,7 @@ For example, if you scored 11,000 on A Community World, you unlock **A Community
 
 On maps that are not localized to one country, you can get country streaks from correctly identifying the country N times in a row. The map category will have **3 Country Streak**, **4 Country Streak**, and **5 Country Streak** unlocks for when you accomplish this.
 
-Some of the filler items are "Score Boost +100" and "Score Boost +500" items. You can consume these to add to your score for a round when you get close to a target score. You cannot add them to a single location.
+There are "Score +100" and "Score +10" items that add 100 to your round score (not location score) from here on. There are also items like "Country Score +100" that add to your score for the round if it's on a country-specific map, because those are usually harder.
 
 ### Sometimes checks are easy
 
@@ -87,7 +87,9 @@ Some country checks just won't exist -- this particularly happens when it's a ch
 
 ### The goal
 
-When you score 22,500 or more on a GeoGuessr map, choose the appropriate 22.5k unlock to get a Gold Medal. You have to get that score naturally, without using Score Boosts.
+When you score 25k on a map, you can award yourself a Gold Medal! Some number of Gold Medals (specified in the settings) are required to win.
+
+Of course, perfect 25k runs are very hard and require a lot of features unlocked, and are not even feasible on some maps. Fortunately, you have Score +100 items that are considered in logic (plus score +10 items that aren't). These score bonuses effectively decrease the actual target score you're going for.
 
 Score some number of Gold Medals (default 3) on different maps to win.
 
