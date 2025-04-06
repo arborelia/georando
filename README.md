@@ -21,7 +21,7 @@ Here are instructions for how to get an APworld:
 - Check out this git repository
 - Edit `georando/settings.py` with the settings that you want. This is where you can change things like the difficulty of the logic based on how good you are at GeoGuessr. See [Settings](#settings) below for more information.
 - Run `generate.bat` (Windows) or `generate.sh` (Linux), or `python3 georando/generate.py` on any platform
-- It outputs an .apworld, which you can copy into Archipelago/lib/worlds
+- It outputs an .apworld, which you should copy into Archipelago/custom_worlds
 - An example .yaml template is in the main directory here. Put it in your Archipelago/Players folder and generate a world.
 - Run the ArchipelagoLauncher and choose "Manual Client" to play the world
 
