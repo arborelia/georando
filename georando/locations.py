@@ -6,8 +6,10 @@ from georando.checks import (
 )
 from georando.maps import GeoGuessrMap
 
-ZOOM = "Progressive Pan/Zoom/Move:2"
-MOVE = "Progressive Pan/Zoom/Move:3"
+PAN = "Pan"
+ZOOM = "Zoom"
+STEP = "Progressive Move:1"
+MOVE = "Progressive Move:3"
 CONJUNCTION_LOGIC_CUTOFF = 10
 
 
@@ -41,9 +43,11 @@ def switch_conjunction(conjunction: List[Sequence[Sequence[str]]]) -> List[List[
     # The first disjunction in the list is our starting options
     options = list(conjunction[0])
     for disjunction in conjunction[1:]:
-        new_options = [tuple(sorted(set(list(option) + list(req_list))))
-                       for option in options
-                       for req_list in disjunction]
+        new_options = [
+            tuple(sorted(set(list(option) + list(req_list))))
+            for option in options
+            for req_list in disjunction
+        ]
         new_options = [list(option) for option in sorted(set(new_options))]
         new_options.sort(key=len)
         options = []
@@ -92,17 +96,23 @@ def make_country_goals(maps: List[GeoGuessrMap], skill_modifier: int = 0) -> Lis
                 if country not in country_difficulty:
                     country_difficulty[country] = difficulty
                 else:
-                    country_difficulty[country] = min(country_difficulty[country], difficulty)
+                    country_difficulty[country] = min(
+                        country_difficulty[country], difficulty
+                    )
         if logic_options and (country in country_difficulty):
             country_logic[country] = [tuple(logic) for logic in logic_options]
-            country_difficulty[country] += min(len(opt) for opt in country_logic[country]) * 0.01
+            country_difficulty[country] += (
+                min(len(opt) for opt in country_logic[country]) * 0.01
+            )
 
     for country in country_logic:
-        goals.append({
-            "name": f"Identify {country}",
-            "category": categories,
-            "requires": format_logic(country_logic[country])
-        })
+        goals.append(
+            {
+                "name": f"Identify {country}",
+                "category": categories,
+                "requires": format_logic(country_logic[country]),
+            }
+        )
 
     return goals
 
@@ -135,7 +145,7 @@ DIFFICULTY_LOGIC = {
     # - 10k round on A Speedrun World
     # - 4k location on Chile or Japan
     4: [
-        ["Progressive Pan/Zoom/Move", "+10 seconds:2"],
+        [PAN, "+10 seconds:2"],
         ["Compass", "+10 seconds:3"],
     ],
     # Difficulty 5
@@ -143,7 +153,7 @@ DIFFICULTY_LOGIC = {
     # - 10k round on A Linguistic World
     # - 5k round on An Arbitrary Asia
     5: [
-        ["Progressive Pan/Zoom/Move", "Compass", "+10 seconds:4"],
+        [PAN, "Compass", "+10 seconds:2"],
     ],
     # Difficulty 6
     # Examples:
@@ -152,8 +162,8 @@ DIFFICULTY_LOGIC = {
     # - 3k location on A Soiled World
     # - 3 country streak on Attractive Bollards of the Universe
     6: [
-        [ZOOM, "Compass", "+10 seconds:4"],
-        ["Progressive Pan/Zoom/Move", "Compass", "+10 seconds:9"],
+        [ZOOM, PAN, "Compass", "+10 seconds:2"],
+        [PAN, "Compass", "+10 seconds:5"],
     ],
     # Difficulty 7
     # Examples:
@@ -162,18 +172,19 @@ DIFFICULTY_LOGIC = {
     # - 4k location on A Soiled World
     # - 3k location on a troll map
     7: [
-        [MOVE, "Compass", "+10 seconds:3"],
-        [ZOOM, "Compass", "+10 seconds:6", "Satellite Map View"],
+        [MOVE, ZOOM, PAN, "Compass", "+10 seconds:2"],
+        [STEP, ZOOM, PAN, "Compass", "+10 seconds:3", "Car visibility"],
+        [ZOOM, PAN, "Compass", "+10 seconds:3", "Car visibility"],
         [
-            "Progressive Pan/Zoom/Move",
+            PAN,
             "Compass",
-            "+10 seconds:12",
-            "Score +100:1",
+            "+10 seconds:6",
+            "Score +100:2",
         ],
         [
-            "Progressive Pan/Zoom/Move",
+            PAN,
             "Compass",
-            "+10 seconds:15",
+            "+10 seconds:8",
         ],
     ],
     # Difficulty 8
@@ -183,9 +194,10 @@ DIFFICULTY_LOGIC = {
     # - 20k round on A Speedrun World
     # - 5k location on A Speedrun World
     8: [
-        [MOVE, "Compass", "+10 seconds:8"],
-        [ZOOM, "Compass", "+10 seconds:12", "Score +100:2", "Car visibility"],
-        [ZOOM, "Compass", "+10 seconds:15", "Score +100:1", "Car visibility"],
+        [MOVE, ZOOM, PAN, "Compass", "+10 seconds:4"],
+        [STEP, ZOOM, PAN, "Compass", "+10 seconds:5"],
+        [ZOOM, PAN, "Compass", "+10 seconds:6", "Score +100:4", "Car visibility"],
+        [ZOOM, PAN, "Compass", "+10 seconds:8", "Score +100:2", "Car visibility"],
     ],
     # Difficulty 9
     # Examples:
@@ -194,9 +206,10 @@ DIFFICULTY_LOGIC = {
     # - 4 country streak on A Community World
     # - 5k location on I Saw the Sign
     9: [
-        [MOVE, "Compass", "+10 seconds:12"],
-        [ZOOM, "Compass", "+10 seconds:18", "Score +100:3", "Car visibility"],
-        [ZOOM, "Compass", "+10 seconds:21", "Score +100:2", "Car visibility"],
+        [MOVE, ZOOM, PAN, "Compass", "+10 seconds:6"],
+        [STEP, ZOOM, PAN, "Compass", "+10 seconds:8"],
+        [ZOOM, PAN, "Compass", "+10 seconds:9", "Score +100:6", "Car visibility"],
+        [ZOOM, PAN, "Compass", "+10 seconds:12", "Score +100:4", "Car visibility"],
     ],
     # Difficulty 10
     # Examples:
@@ -209,42 +222,66 @@ DIFFICULTY_LOGIC = {
     10: [
         [
             ZOOM,
+            PAN,
+            "Compass",
+            "Car visibility",
+            "Score +100:10",
+            "+10 seconds:12",
+        ],
+        [
+            STEP,
+            ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
             "Score +100:5",
-            "+10 seconds:48",
+            "+10 seconds:12",
         ],
-        [MOVE, "Compass", "+10 seconds:24"],
+        [MOVE, ZOOM, PAN, "Compass", "+10 seconds:16"],
     ],
     11: [
         [
             ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:8",
-            "+10 seconds:52",
+            "Score +100:16",
+            "+10 seconds:12",
         ],
-        [MOVE, "Compass", "+10 seconds:32"]
+        [
+            STEP,
+            ZOOM,
+            PAN,
+            "Compass",
+            "Car visibility",
+            "Score +100:16",
+            "+10 seconds:12",
+        ],
+        [MOVE, ZOOM, PAN, "Compass", "+10 seconds:16"],
     ],
     12: [
         [
             ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:13",
-            "+10 seconds:56",
+            "Score +100:25",
+            "+10 seconds:12",
         ],
-        [MOVE, "Compass", "+10 seconds:40", "Score +100:1"]
+        [STEP, ZOOM, PAN, "Compass", "+10 seconds:16", "Score +100:10"],
+        [MOVE, ZOOM, PAN, "Compass", "+10 seconds:20", "Score +100:2"],
     ],
     13: [
         [
             ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:20",
-            "+10 seconds:61",
+            "Score +100:40",
+            "+10 seconds:12",
         ],
-        [MOVE, "Compass", "+10 seconds:48", "Score +100:2"]
+        [STEP, ZOOM, PAN, "Compass", "+10 seconds:18", "Score +100:20"],
+        [MOVE, ZOOM, PAN, "Compass", "+10 seconds:24", "Score +100:4"],
     ],
     # Difficulty 14+
     # Examples:
@@ -252,64 +289,78 @@ DIFFICULTY_LOGIC = {
     14: [
         [
             MOVE,
+            ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:3",
-            "+10 seconds:60",
+            "Score +100:6",
+            "+10 seconds:30",
         ]
     ],
     15: [
         [
             MOVE,
+            ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:5",
-            "+10 seconds:60",
+            "Score +100:10",
+            "+10 seconds:30",
         ]
     ],
     16: [
         [
             MOVE,
+            ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:8",
-            "+10 seconds:60",
+            "Score +100:16",
+            "+10 seconds:30",
         ]
     ],
     17: [
         [
             MOVE,
+            ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:13",
-            "+10 seconds:60",
+            "Score +100:25",
+            "+10 seconds:30",
         ]
     ],
     18: [
         [
             MOVE,
+            ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:21",
-            "+10 seconds:60",
+            "Score +100:40",
+            "+10 seconds:30",
         ]
     ],
     19: [
         [
             MOVE,
+            ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:34",
-            "+10 seconds:60",
+            "Score +100:70",
+            "+10 seconds:30",
         ]
     ],
     20: [
         [
             MOVE,
+            ZOOM,
+            PAN,
             "Compass",
             "Car visibility",
-            "Score +100:50",
-            "+10 seconds:60",
+            "Score +100:100",
+            "+10 seconds:30",
         ]
     ],
 }

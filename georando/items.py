@@ -1,8 +1,20 @@
 NON_MAP_ITEMS = [
     {
-        "name": "Progressive Pan/Zoom/Move",
+        "name": "Progressive Move",
         "progression": True,
         "count": 3,
+        "category": ["Features"],
+    },
+    {
+        "name": "Pan",
+        "progression": True,
+        "count": 1,
+        "category": ["Features"],
+    },
+    {
+        "name": "Zoom",
+        "progression": True,
+        "count": 1,
         "category": ["Features"],
     },
     {
@@ -29,12 +41,12 @@ NON_MAP_ITEMS = [
     {"name": "Borders Map View", "useful": True, "category": ["Features"]},
     {"name": "Coverage Overlay", "useful": True, "category": ["Features"]},
     {"name": "Time Machine", "useful": True, "category": ["Features"]},
-    {"name": "Score +100", "progression": True, "count": 50, "category": ["Boosts"]},
+    {"name": "Score +100", "progression": True, "count": 100, "category": ["Boosts"]},
     {"name": "Country score +100", "useful": True, "count": 25, "category": ["Boosts"]},
     {"name": "+10 seconds", "progression": True, "count": 62, "category": ["Features"]},
-    {"name": "20 Second Timer Trap", "count": 2, "trap": True, "category": ["Traps"]},
+    {"name": "20 Second Timer Trap", "count": 3, "trap": True, "category": ["Traps"]},
     # {"name": "Show Author Names", "useful": True, "category": ["Features"]},
-    {"name": "Death Metal Map Trap", "count": 1, "trap": True, "category": ["Traps"]},
-    {"name": "Labelless Trap", "count": 1, "trap": True, "category": ["Traps"]},
-    {"name": "Mega Plonk Trap", "count": 3, "trap": True, "category": ["Traps"]},
+    # {"name": "Death Metal Map Trap", "count": 1, "trap": True, "category": ["Traps"]},
+    {"name": "Labelless Trap", "count": 2, "trap": True, "category": ["Traps"]},
+    {"name": "Mega Plonk Trap", "count": 5, "trap": True, "category": ["Traps"]},
 ]

@@ -87,21 +87,23 @@ def run():
             }
         ]
     )
-    possible_starter_maps = [map.item_name() for map in selected_maps if "starter" in map.tags]
+    possible_starter_maps = [
+        map.item_name() for map in selected_maps if "starter" in map.tags
+    ]
     starting_items = [
         {"items": possible_starter_maps, "random": 1},
         {"item_categories": ["Maps"], "random": SETTINGS["num_starting_maps"] - 1},
     ]
     if skill_modifier == -4:
-        starting_items.append({"items": ["Progressive Pan/Zoom/Move"], "random": 1})
+        starting_items.append({"items": ["Pan"], "random": 1})
         starting_items.append({"items": ["Compass"]})
         starting_items.append({"items": ["+10 seconds"], "random": 6})
     elif skill_modifier == -3:
-        starting_items.append({"items": ["Progressive Pan/Zoom/Move"], "random": 1})
+        starting_items.append({"items": ["Pan"], "random": 1})
         starting_items.append({"items": ["Compass"]})
         starting_items.append({"items": ["+10 seconds"], "random": 3})
     elif skill_modifier == -2:
-        starting_items.append({"items": ["Progressive Pan/Zoom/Move"], "random": 1})
+        starting_items.append({"items": ["Pan"], "random": 1})
         starting_items.append({"items": ["+10 seconds"], "random": 2})
     else:
         starting_items.append({"items": ["+10 seconds"], "random": 1})
@@ -133,6 +135,7 @@ def run():
 
         with the_zip.open(f"{world_name}/data/regions.json", "w") as out:
             out.write(json.dumps(region_data, indent=4).encode("utf-8"))
+    print(f"wrote {world_name}.apworld")
 
 
 if __name__ == "__main__":
