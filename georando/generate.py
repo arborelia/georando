@@ -120,7 +120,6 @@ def run():
         world_template = Path("world")
         for path in world_template.rglob("*"):
             path_str = str(path)
-            assert path_str.startswith("world/")
             path_in_zip = world_name + path_str[5:]
             the_zip.write(path_str, arcname=path_in_zip)
 
