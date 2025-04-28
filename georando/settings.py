@@ -32,7 +32,7 @@ SETTINGS = {
     #  3: Include some hard maps, start with Pan, get Zoom and Move early in the logic
     #  4: Include most hard maps, with generous logic
     #  5: Default skill level. All maps included. arborelia's skill level that she designed the rando around
-    #  6: I'd defeat arborelia in a GeoGuessr duel
+    #  6: I'd defeat arborelia (currently Gold 1) in a GeoGuessr duel
     #  7: I'm a GeoGuessr expert
     #  8: I'm a GeoGuessr expert and I want to suffer
     #  9: I'm a world class GeoGuessr player
