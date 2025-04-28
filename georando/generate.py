@@ -110,7 +110,7 @@ def run():
 
     game_data = {
         "game": "GeoGuessr",
-        "player": "arborelia",
+        "player": player_name,
         "filler_item_name": "Score +10",
         "starting_items": starting_items,
     }
