@@ -1,3 +1,3 @@
 set PYTHONPATH=.
-python3 georando/generate.py
+python georando/generate.py
 pause

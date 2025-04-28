@@ -329,7 +329,6 @@ COMMUNITY_MAPS = {
             "Poland", "Norway", "Sweden", "Finland", "Greece", "Portugal"
         ],
         tags=["theme", "starter"],
-        # could this be a starter? we need country stats if so
     ),
     "aesthetic_world": community_map(
         "Aesthetic World",
@@ -360,13 +359,6 @@ COMMUNITY_MAPS = {
             "United Kingdom",
         ],
         tags=["world_region", "starter"],
-    ),
-    "amaizing_corn": community_map(
-        "An Amaizing World of Corn",
-        "Cinnamonique",
-        difficulty=3,
-        streakable=True,
-        tags=["theme", "world"],
     ),
     "animals_world": community_map(
         "Animals of the World",
@@ -1228,9 +1220,6 @@ COMMUNITY_MAPS = {
             "Italy",
             "South Africa",
             "Russia",
-            "Europe",
-            "Asia",
-            "Africa",
         ],
         difficulty=2,
         tags=["world", "theme"],
@@ -1249,6 +1238,7 @@ COMMUNITY_MAPS = {
         "Lots of Languages",
         "arborelia",
         # may_provide country list could be more complete
+        official_coverage=False,
         may_provide=CONTINENT_CHECKS
         + [
             "France",
@@ -1261,9 +1251,6 @@ COMMUNITY_MAPS = {
             "Russia",
             "South Africa",
             "Russia",
-            "Europe",
-            "Asia",
-            "Africa",
         ],
         difficulty=2,
         tags=["world", "theme"],
@@ -1347,24 +1334,24 @@ COMMUNITY_MAPS = {
         may_provide=CONTINENT_CHECKS,
         tags=["theme", "world", "rural", "troll"],
     ),
-    #"obbt": community_map(
-    #    "OBBTCFUCITDAMALL",
-    #    "0xGG",
-    #    difficulty=5,
-    #    streakable=True,
-    #    may_provide=CONTINENT_CHECKS
-    #    + [
-    #        "United States",
-    #        "Japan",
-    #        "Brazil",
-    #        "Canada",
-    #        "Australia",
-    #        "Taiwan",
-    #        "Italy",
-    #        "Russia",
-    #    ],
-    #    tags=["world", "troll"],
-    #),
+    "obbt": community_map(
+        "OBBTCFUCITDAMALL",
+        "0xGG",
+        difficulty=5,
+        streakable=True,
+        may_provide=CONTINENT_CHECKS
+        + [
+            "United States",
+            "Japan",
+            "Brazil",
+            "Canada",
+            "Australia",
+            "Taiwan",
+            "Italy",
+            "Russia",
+        ],
+        tags=["world", "troll"],
+    ),
     "oops_islands": community_map(
         "Oops! All Islands",
         "Hindemith",
